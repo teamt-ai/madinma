@@ -1,0 +1,2369 @@
+/**
+ * MADINMA COLLECTIONS — APPLE VISION PRO EXACT DESIGN REPLICA
+ * Pixel-perfect adaptation of https://www.apple.com/apple-vision-pro/
+ * Clean Apple White/Light Gray Canvas (#FFFFFF, #F5F5F7), SF Pro Typography,
+ * Sticky Translucent Localnav, Animated Giant Title Hero, Two-Column Rounded
+ * #F5F5F7 Cards with 360-rotate icon button, and Editorial Caption Text.
+ */
+
+/* ==========================================================================
+   1. DESIGN TOKENS (APPLE SYSTEM PALETTE)
+   ========================================================================== */
+:root {
+  /* Canvas & Backgrounds */
+  --apple-white: #FFFFFF;
+  --apple-bg-subtle: #F5F5F7;
+  --apple-bg-card: #F5F5F7;
+  --apple-bg-card-hover: #EBEBED;
+  --apple-bg-dark: #1D1D1F;
+
+  /* Text Colors */
+  --apple-text-primary: #1D1D1F;
+  --apple-text-secondary: #86868B;
+  --apple-text-tertiary: #6E6E73;
+  --apple-text-white: #FFFFFF;
+
+  /* Borders & Dividers */
+  --apple-border: rgba(0, 0, 0, 0.16);
+  --apple-border-subtle: rgba(0, 0, 0, 0.08);
+  --apple-border-hairline: #D2D2D7;
+
+  /* Brand Accents */
+  --apple-blue: #0071E3;
+  --apple-blue-hover: #0077ED;
+  --wa-green: #25D366;
+
+  /* Typography */
+  --font-apple: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* Elevation */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.12);
+
+  /* Radii */
+  --radius-pill: 980px;
+  --radius-card: 28px;
+
+  /* Transitions */
+  --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 0.2s;
+  --duration-normal: 0.35s;
+}
+
+/* ==========================================================================
+   2. RESET & BASE
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  background-color: var(--apple-white);
+  color: var(--apple-text-primary);
+  font-family: var(--font-apple);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--apple-white);
+  color: var(--apple-text-primary);
+  line-height: 1.47059;
+  font-weight: 400;
+  letter-spacing: -0.016em;
+  overflow-x: hidden;
+}
+
+.apple-container {
+  width: 100%;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ==========================================================================
+   3. APPLE GLOBAL NAV (SLIM 44PX LIGHT GREY BAR)
+   ========================================================================== */
+.apple-globalnav {
+  position: relative;
+  width: 100%;
+  height: 44px;
+  background: rgba(245, 245, 247, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--apple-border-subtle);
+  z-index: 1000;
+}
+
+.globalnav-inner {
+  max-width: 1024px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.globalnav-apple-icon {
+  width: 16px;
+  height: 16px;
+  fill: #1D1D1F;
+  display: flex;
+  align-items: center;
+}
+
+.globalnav-links {
+  display: none;
+  list-style: none;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 860px) {
+  .globalnav-links {
+    display: flex;
+  }
+}
+
+.globalnav-links li a {
+  font-size: 0.75rem;
+  color: #1D1D1F;
+  opacity: 0.8;
+  transition: opacity var(--duration-fast);
+}
+
+.globalnav-links li a:hover {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   4. APPLE VISION PRO STICKY LOCAL NAV (EXACT FROM SCREENSHOT)
+   ========================================================================== */
+.apple-localnav {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 52px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 999;
+  transition: border-color var(--duration-fast);
+}
+
+.localnav-inner {
+  max-width: 1220px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.localnav-title a {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--apple-text-primary);
+  letter-spacing: -0.025em;
+}
+
+.localnav-menu {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.localnav-links {
+  display: none;
+  list-style: none;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+@media (min-width: 860px) {
+  .localnav-links {
+    display: flex;
+  }
+}
+
+.localnav-links li a {
+  font-size: 0.8rem;
+  color: var(--apple-text-primary);
+  opacity: 0.82;
+  transition: opacity var(--duration-fast);
+}
+
+.localnav-links li a:hover {
+  opacity: 1;
+}
+
+.localnav-links li.active a {
+  font-weight: 600;
+  opacity: 1;
+  border-bottom: 2px solid var(--apple-text-primary);
+  padding-bottom: 4px;
+}
+
+.localnav-btn-demo {
+  border: 1px solid var(--apple-text-primary);
+  background: transparent;
+  color: var(--apple-text-primary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.35rem 0.95rem;
+  border-radius: var(--radius-pill);
+  transition: all var(--duration-fast);
+  white-space: nowrap;
+}
+
+.localnav-btn-demo:hover {
+  background: var(--apple-bg-subtle);
+}
+
+.localnav-btn-buy {
+  background: #25D366;
+  color: #FFFFFF;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  padding: 0.38rem 1.05rem;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.28);
+  transition: background var(--duration-fast), transform var(--duration-fast), box-shadow var(--duration-fast);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.localnav-btn-buy:hover {
+  background: #20ba59;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.42);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   5. HERO SECTION (GIANT TYPOGRAPHY & MOTTO)
+   ========================================================================== */
+.vision-hero {
+  position: relative;
+  background: var(--apple-white);
+  padding: 4rem 0 5rem;
+  overflow: hidden;
+}
+
+.hero-giant-typography {
+  text-align: center;
+  padding: 2rem 1rem 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-giant-title {
+  font-size: clamp(5.5rem, 18vw, 14.5rem);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  color: #0c1017;
+  margin-bottom: 1.8rem;
+  opacity: 1;
+  animation: appleHeroFadeUp 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both,
+             chromaticNoirText 18s ease-in-out infinite alternate;
+  will-change: transform, opacity, color;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.4s ease;
+}
+
+.hero-giant-title:hover {
+  filter: contrast(1.2) brightness(1.1);
+}
+
+/* ==========================================================================
+   MADINMA INDIVIDUAL LETTER WIGGLE & CHOREOGRAPHY
+   Each letter shakes its body distinctly with organic luxury damping physics
+   ========================================================================== */
+.hero-giant-title {
+  user-select: none;
+}
+
+.hero-giant-title .wiggle-letter {
+  display: inline-block;
+  color: inherit;
+  transform-origin: 50% 85%;
+  will-change: transform;
+  animation-duration: 1.25s;
+  animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+  animation-fill-mode: both;
+}
+
+/* Staggered entry wave on first page open */
+.hero-giant-title .wiggle-1 { animation-name: letterWiggle1; animation-delay: 0.45s; }
+.hero-giant-title .wiggle-2 { animation-name: letterWiggle2; animation-delay: 0.53s; }
+.hero-giant-title .wiggle-3 { animation-name: letterWiggle3; animation-delay: 0.61s; }
+.hero-giant-title .wiggle-4 { animation-name: letterWiggle4; animation-delay: 0.69s; }
+.hero-giant-title .wiggle-5 { animation-name: letterWiggle5; animation-delay: 0.77s; }
+.hero-giant-title .wiggle-6 { animation-name: letterWiggle6; animation-delay: 0.85s; }
+.hero-giant-title .wiggle-7 { animation-name: letterWiggle7; animation-delay: 0.93s; }
+
+/* Interactive re-trigger wave on hover / tap */
+.hero-giant-title .wiggle-1.is-wiggling { animation: letterWiggle1 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0s both; }
+.hero-giant-title .wiggle-2.is-wiggling { animation: letterWiggle2 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.08s both; }
+.hero-giant-title .wiggle-3.is-wiggling { animation: letterWiggle3 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.16s both; }
+.hero-giant-title .wiggle-4.is-wiggling { animation: letterWiggle4 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.24s both; }
+.hero-giant-title .wiggle-5.is-wiggling { animation: letterWiggle5 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.32s both; }
+.hero-giant-title .wiggle-6.is-wiggling { animation: letterWiggle6 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.40s both; }
+.hero-giant-title .wiggle-7.is-wiggling { animation: letterWiggle7 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.48s both; }
+
+/* Letter 1: 'M' - Confident, regal shoulder sway */
+@keyframes letterWiggle1 {
+  0% { transform: translateY(0) rotate(0deg) scale(1); }
+  20% { transform: translateY(-3px) rotate(-2.2deg) scale(1.01); }
+  40% { transform: translateY(2px) rotate(1.8deg) scale(0.99); }
+  60% { transform: translateY(-1px) rotate(-0.8deg); }
+  80% { transform: translateY(0.5px) rotate(0.4deg); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+/* Letter 2: 'a' - Curvy bounce and tilt */
+@keyframes letterWiggle2 {
+  0% { transform: translateY(0) rotate(0deg); }
+  22% { transform: translateY(2.5px) rotate(2.4deg) scale(1.02); }
+  44% { transform: translateY(-2px) rotate(-1.8deg) scale(0.99); }
+  66% { transform: translateY(1px) rotate(0.9deg); }
+  85% { transform: translateY(-0.4px) rotate(-0.3deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* Letter 3: 'd' - Tall ascender spring twist */
+@keyframes letterWiggle3 {
+  0% { transform: translateY(0) rotate(0deg); }
+  18% { transform: translateY(-3.5px) rotate(-2.5deg); }
+  38% { transform: translateY(2px) rotate(2deg); }
+  58% { transform: translateY(-1.2px) rotate(-1deg); }
+  78% { transform: translateY(0.6px) rotate(0.5deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* Letter 4: 'i' - Dynamic centerpiece pop & shimmy */
+@keyframes letterWiggle4 {
+  0% { transform: translateY(0) rotate(0deg) scale(1); }
+  24% { transform: translateY(-4px) rotate(3deg) scale(1.03); }
+  46% { transform: translateY(2px) rotate(-2.5deg) scale(0.98); }
+  68% { transform: translateY(-1.2px) rotate(1.2deg); }
+  86% { transform: translateY(0.5px) rotate(-0.5deg); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+/* Letter 5: 'n' - Gentle arch swing */
+@keyframes letterWiggle5 {
+  0% { transform: translateY(0) rotate(0deg) skewX(0); }
+  20% { transform: translateY(2px) rotate(-2deg) skewX(1.5deg); }
+  42% { transform: translateY(-2px) rotate(1.6deg) skewX(-1deg); }
+  64% { transform: translateY(1px) rotate(-0.8deg); }
+  82% { transform: translateY(-0.3px) rotate(0.4deg); }
+  100% { transform: translateY(0) rotate(0deg) skewX(0); }
+}
+
+/* Letter 6: 'm' - Broad double-arch wave */
+@keyframes letterWiggle6 {
+  0% { transform: translateY(0) rotate(0deg); }
+  22% { transform: translateY(-2.8px) rotate(2deg) scaleX(1.01); }
+  45% { transform: translateY(1.8px) rotate(-1.6deg) scaleX(0.99); }
+  68% { transform: translateY(-1px) rotate(0.8deg); }
+  86% { transform: translateY(0.4px) rotate(-0.3deg); }
+  100% { transform: translateY(0) rotate(0deg) scaleX(1); }
+}
+
+/* Letter 7: 'a' - Playful finishing flourish */
+@keyframes letterWiggle7 {
+  0% { transform: translateY(0) rotate(0deg) scale(1); }
+  24% { transform: translateY(2.5px) rotate(-2.4deg) scale(1.02); }
+  48% { transform: translateY(-2px) rotate(1.8deg) scale(0.99); }
+  70% { transform: translateY(1px) rotate(-0.9deg); }
+  88% { transform: translateY(-0.3px) rotate(0.3deg); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+
+
+@keyframes appleHeroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes chromaticNoirText {
+  0% { color: #081735; }
+  25% { color: #082e1c; }
+  50% { color: #2a0a28; }
+  75% { color: #2c1a08; }
+  100% { color: #081735; }
+}
+
+@keyframes chromaticDarkMorph {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 50% 100%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 50% 0%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.hero-giant-motto {
+  font-size: clamp(1.2rem, 2.5vw, 1.95rem);
+  font-weight: 500;
+  color: #55575d;
+  max-width: 860px;
+  margin: 0 auto;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.18em;
+  background-color: #11141a;
+  vertical-align: -0.15em;
+  margin-left: 3px;
+  animation: cursorBlink 0.75s infinite;
+  border-radius: 1px;
+}
+
+@keyframes cursorBlink {
+  0%, 45% { opacity: 1; }
+  50%, 95% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.typewriter-cursor.cursor-fade-out {
+  animation: cursorFadeOut 1.2s forwards;
+}
+
+@keyframes cursorFadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; display: none; }
+}
+
+@keyframes appleMottoFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-giant-motto strong {
+  font-weight: 700;
+  background: linear-gradient(
+    135deg,
+    #091d3d 0%,
+    #082e1c 34%,
+    #2a0a28 68%,
+    #2c1a08 100%
+  );
+  background-size: 250% 250%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: chromaticDarkMorph 18s ease-in-out infinite alternate;
+}
+
+/* ==========================================================================
+   6. TAKE A CLOSER LOOK (EXACT APPLE VISION PRO 2-COLUMN HARDWARE CARDS)
+   ========================================================================== */
+.vision-closer-look {
+  padding: 3rem 0 6rem;
+  background: var(--apple-white);
+  overflow: hidden;
+}
+
+.closer-look-header-wrap {
+  margin-bottom: 2.5rem;
+}
+
+.closer-look-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.closer-look-title {
+  font-size: clamp(2.4rem, 4.8vw, 3.8rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  color: var(--apple-text-primary);
+  line-height: 1.08;
+}
+
+.closer-look-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.slider-arrow-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(245, 245, 247, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--apple-text-primary);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slider-arrow-btn:hover:not(:disabled) {
+  background: #E5E5EA;
+  transform: scale(1.06);
+}
+
+.slider-arrow-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.slider-arrow-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Horizontal Viewport that extends to the screen edge while padding aligns with container */
+.apple-carousel-viewport {
+  width: 100%;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 max(1.5rem, calc((100vw - 1220px) / 2 + 1.5rem)) 2rem;
+}
+
+.apple-carousel-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.apple-carousel-track {
+  display: flex;
+  gap: 28px;
+  width: max-content;
+}
+
+/* Individual Carousel Slide: Box + Caption directly below */
+.apple-vision-item {
+  width: clamp(340px, 68vw, 840px);
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Rounded #F5F5F7 Box with Centered Product & 360-degree button */
+/* Rounded Luxury Box with Romantic Ambient Lighting */
+.apple-vision-box {
+  position: relative;
+  width: 100%;
+  height: clamp(340px, 45vw, 480px);
+  background-color: #121014;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.apple-vision-box:hover {
+  transform: translateY(-6px) scale(1.008);
+  box-shadow: 0 20px 48px rgba(35, 15, 30, 0.18);
+}
+
+/* Subtle Romantic Candlelight / Champagne Ambient Shimmer Glow */
+.apple-vision-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 15%, rgba(255, 230, 240, 0.12) 0%, rgba(255, 215, 225, 0.03) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 3;
+  mix-blend-mode: screen;
+  transition: opacity 0.8s ease;
+}
+
+.apple-vision-slides {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: #141118;
+}
+
+/* Base Image with Dedicated IN & OUT Transitions */
+.apple-vision-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.0);
+  pointer-events: none;
+  will-change: opacity, transform, filter;
+}
+
+/* Steady Active Slide: Slow romantic Ken Burns breathing drift */
+.apple-vision-img.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  filter: blur(0px) brightness(1.0);
+  pointer-events: auto;
+  z-index: 2;
+  animation: romanticKenBurns 7s ease-in-out infinite alternate;
+}
+
+/* =========================================================================
+   ALTERNATING DIRECTIONAL SLIDE ANIMATIONS
+   Box 1, 3, 5, 7...: Next slides in from RIGHT -> outgoing slides out to LEFT
+   Box 2, 4, 6, 8...: Next slides in from LEFT  -> outgoing slides out to RIGHT
+   ========================================================================= */
+
+/* 1. SLIDE IN FROM RIGHT (Box 1, 3, 5, 7...) */
+.apple-vision-img.anim-slide-in-right {
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 3;
+  opacity: 1;
+  animation: slideInFromRight 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* 2. SLIDE OUT TO LEFT (Box 1, 3, 5, 7...) */
+.apple-vision-img.anim-slide-out-left {
+  visibility: visible;
+  pointer-events: none;
+  z-index: 1;
+  animation: slideOutToLeft 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+@keyframes slideOutToLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0.6;
+  }
+}
+
+/* 3. SLIDE IN FROM LEFT (Box 2, 4, 6, 8...) */
+.apple-vision-img.anim-slide-in-left {
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 3;
+  opacity: 1;
+  animation: slideInFromLeft 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* 4. SLIDE OUT TO RIGHT (Box 2, 4, 6, 8...) */
+.apple-vision-img.anim-slide-out-right {
+  visibility: visible;
+  pointer-events: none;
+  z-index: 1;
+  animation: slideOutToRight 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+@keyframes slideOutToRight {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0.6;
+  }
+}
+
+/* Romantic Slow Ken Burns Breathing Drift */
+@keyframes romanticKenBurns {
+  0% {
+    transform: scale(1.0);
+  }
+  100% {
+    transform: scale(1.042) translate(0, -1%);
+  }
+}
+
+.apple-vision-box:hover .apple-vision-img.active {
+  animation-play-state: paused;
+  transform: scale(1.055);
+}
+
+/* Elegant Romantic Pearl Slide Indicators */
+.apple-vision-dots {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 5;
+  padding: 5px 9px;
+  background: rgba(18, 12, 20, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 235, 245, 0.22);
+  pointer-events: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  transition: opacity 0.3s ease;
+}
+
+.apple-vision-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.apple-vision-dot.active {
+  width: 16px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFE8F0 100%);
+  box-shadow: 0 0 10px rgba(255, 220, 235, 0.95), 0 0 3px #FFFFFF;
+}
+
+/* In-Image Romantic Luxury Overlay */
+.apple-vision-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2.4rem 1.8rem 1.6rem;
+  background: linear-gradient(to top, rgba(14, 10, 18, 0.88) 0%, rgba(24, 16, 26, 0.52) 50%, rgba(255, 240, 250, 0.02) 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.2rem;
+  z-index: 3;
+  transition: background 0.3s ease;
+}
+
+.apple-vision-box:hover .apple-vision-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.5) 60%, transparent 100%);
+}
+
+.apple-vision-overlay-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.apple-vision-overlay-title {
+  font-size: clamp(1.35rem, 2.6vw, 1.95rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #FFFFFF;
+  line-height: 1.25;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+}
+
+.apple-vision-overlay-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: #25D366;
+  transition: color 0.2s ease, transform 0.2s ease;
+  width: fit-content;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.65);
+}
+
+.apple-vision-overlay-link:hover {
+  color: #4df387;
+  transform: translateX(3px);
+}
+
+.apple-vision-overlay-link .chevron {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+/* Circular 360-degree Action Button inside overlay */
+.apple-360-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #25D366;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.42);
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.25s ease,
+              box-shadow 0.25s ease;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.apple-360-btn:hover {
+  transform: scale(1.1);
+  background: #20ba59;
+  color: #FFFFFF;
+  box-shadow: 0 6px 22px rgba(37, 211, 102, 0.6);
+}
+
+/* ==========================================================================
+   7. WHATSAPP CONCIERGE & SPECIALIST (APPLE SPECIALIST SECTION)
+   ========================================================================== */
+.vision-concierge-section {
+  padding: 6rem 0;
+  background: var(--apple-white);
+  border-top: 1px solid var(--apple-border-subtle);
+}
+
+.concierge-hero-box {
+  background: var(--apple-bg-subtle);
+  border-radius: var(--radius-card);
+  padding: 3.5rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (min-width: 860px) {
+  .concierge-hero-box {
+    grid-template-columns: 1.2fr 0.8fr;
+    padding: 4.5rem;
+  }
+}
+
+.headline-eyebrow {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--apple-text-primary);
+  margin-bottom: 0.6rem;
+  display: block;
+}
+
+.concierge-left h2 {
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--apple-text-primary);
+  margin-bottom: 1rem;
+  line-height: 1.15;
+}
+
+.concierge-left p {
+  font-size: 1.1rem;
+  color: var(--apple-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.btn-hero-buy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #25D366;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  padding: 0.85rem 2.2rem;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+  transition: background var(--duration-fast), transform var(--duration-fast), box-shadow var(--duration-fast);
+  text-decoration: none;
+}
+
+.btn-hero-buy:hover {
+  background: #20ba59;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.48);
+  transform: translateY(-2px);
+}
+
+.btn-hero-demo {
+  display: inline-block;
+  border: 1px solid var(--apple-text-primary);
+  color: var(--apple-text-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.65rem 1.4rem;
+  border-radius: var(--radius-pill);
+  transition: background var(--duration-fast);
+}
+
+.btn-hero-demo:hover {
+  background: var(--apple-bg-subtle);
+}
+
+.concierge-specialist-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-card);
+  padding: 2.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.specialist-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--apple-bg-dark);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+
+.specialist-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--wa-green);
+  margin: 0.4rem 0 1.6rem;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--wa-green);
+}
+
+/* ==========================================================================
+   8. CLOSING CALL TO ACTION
+   ========================================================================== */
+.vision-buy-bar {
+  padding: 5rem 0;
+  text-align: center;
+  background: var(--apple-bg-subtle);
+  border-top: 1px solid var(--apple-border-subtle);
+}
+
+.buy-bar-title {
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--apple-text-primary);
+  margin-bottom: 1rem;
+  transform-origin: center bottom;
+  will-change: transform, opacity;
+  cursor: default;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Primed for scroll elevation by JavaScript */
+.buy-bar-title.js-elevate-ready:not(.is-elevating) {
+  opacity: 0;
+  transform: translateY(35px) scale(0.96, 0.72);
+}
+
+/* Dynamic scroll-triggered upward elevation stretch */
+.buy-bar-title.is-elevating {
+  animation: appleElevateStretch 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.buy-bar-title.is-elevating:hover {
+  transform: translateY(-5px) scale(0.99, 1.07);
+}
+
+@keyframes appleElevateStretch {
+  0% {
+    opacity: 0;
+    transform: translateY(35px) scale(0.95, 0.72);
+    filter: blur(3px);
+  }
+  32% {
+    opacity: 0.95;
+    /* Dramatic upward stretch & elevation */
+    transform: translateY(-16px) scale(0.98, 1.25);
+    filter: blur(0px);
+  }
+  56% {
+    /* Gentle downward absorption */
+    transform: translateY(4px) scale(1.02, 0.94);
+  }
+  76% {
+    /* Soft secondary micro-lift */
+    transform: translateY(-2px) scale(0.99, 1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1, 1);
+    filter: blur(0px);
+  }
+}
+
+.buy-bar-sub {
+  font-size: 1.15rem;
+  color: var(--apple-text-secondary);
+  margin-bottom: 2.2rem;
+}
+
+/* ==========================================================================
+   9. APPLE MINIMAL DIRECTORY FOOTER
+   ========================================================================== */
+/* ==========================================================================
+   APPLE OFFICIAL FOOTER & FOOTNOTES DESIGN SYSTEM
+   ========================================================================== */
+.apple-footer {
+  background: var(--apple-bg-subtle);
+  border-top: 1px solid var(--apple-border-hairline);
+  padding: 2.8rem 0 2.2rem;
+  font-size: 0.72rem;
+  color: var(--apple-text-tertiary);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* Apple Official Footnotes (Sosumi) */
+.apple-footnotes {
+  padding-bottom: 1rem;
+  margin-bottom: 0.85rem;
+  border-bottom: 1px solid var(--apple-border-hairline);
+}
+
+.apple-footnotes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.apple-footnotes-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  font-size: 0.72rem;
+  line-height: 1.55;
+  color: var(--apple-text-tertiary);
+}
+
+.apple-footnotes-list .footnote-num {
+  font-weight: 500;
+  color: var(--apple-text-secondary);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  min-width: 14px;
+}
+
+.apple-footnotes-list .footnote-content {
+  flex: 1;
+}
+
+.apple-footnotes-list strong {
+  font-weight: 600;
+  color: var(--apple-text-primary);
+}
+
+/* Apple Breadcrumb Trail */
+.apple-breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  padding: 0 0 1.25rem;
+  border-bottom: 1px solid var(--apple-border-hairline);
+  margin-bottom: 1.6rem;
+  font-size: 0.72rem;
+  color: var(--apple-text-tertiary);
+}
+
+.apple-breadcrumbs .crumb-home {
+  color: var(--apple-text-primary);
+  display: inline-flex;
+  align-items: center;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+.apple-breadcrumbs .crumb-home:hover {
+  opacity: 1;
+}
+
+.apple-breadcrumbs .crumb-separator {
+  color: var(--apple-text-secondary);
+  font-size: 0.85rem;
+  line-height: 1;
+  opacity: 0.5;
+}
+
+.apple-breadcrumbs .crumb-link {
+  color: var(--apple-text-tertiary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.apple-breadcrumbs .crumb-link:hover {
+  color: var(--apple-text-primary);
+  text-decoration: underline;
+}
+
+.apple-breadcrumbs .crumb-current {
+  color: var(--apple-text-primary);
+  font-weight: 500;
+}
+
+/* Streamlined Essential Footer Navigation (Uncluttered Luxury) */
+.footer-essential-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.footer-essential-nav a {
+  color: var(--apple-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-essential-nav a:hover {
+  color: var(--apple-text-primary);
+  text-decoration: underline;
+}
+
+.footer-essential-nav .nav-bullet {
+  color: var(--apple-border-hairline);
+  font-size: 0.75rem;
+}
+
+/* Apple Footer Legal Bar */
+.footer-legal-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 1.1rem;
+  font-size: 0.68rem;
+  color: var(--apple-text-secondary);
+  border-top: 1px solid var(--apple-border-hairline);
+}
+
+@media (min-width: 860px) {
+  .footer-legal-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.footer-legal-copyright {
+  color: var(--apple-text-tertiary);
+}
+
+.footer-legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.footer-legal-links a {
+  color: var(--apple-text-tertiary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-legal-links a:hover {
+  color: var(--apple-text-primary);
+  text-decoration: underline;
+}
+
+.legal-pipe {
+  color: var(--apple-border-hairline);
+  font-size: 0.65rem;
+}
+
+.footer-locale a {
+  color: var(--apple-text-tertiary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.footer-locale a:hover {
+  color: var(--apple-text-primary);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   10. INTERACTIVE 360 SPECIFICATION DIALOG
+   ========================================================================== */
+.apple-spec-dialog {
+  border: none;
+  border-radius: var(--radius-card);
+  padding: 0;
+  max-width: 580px;
+  width: 90%;
+  margin: auto;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+  background: #FFFFFF;
+}
+
+.apple-spec-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.dialog-content {
+  position: relative;
+  padding: 2.8rem 2.4rem;
+}
+
+.dialog-close-btn {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.4rem;
+  font-size: 1.8rem;
+  color: var(--apple-text-secondary);
+  line-height: 1;
+  transition: color var(--duration-fast);
+}
+
+.dialog-close-btn:hover {
+  color: var(--apple-text-primary);
+}
+
+.dialog-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--apple-blue);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.dialog-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--apple-text-primary);
+  letter-spacing: -0.025em;
+  margin-bottom: 0.8rem;
+}
+
+.dialog-tagline {
+  font-size: 1.05rem;
+  color: var(--apple-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 1.8rem;
+}
+
+.dialog-specs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.dialog-spec-card {
+  background: var(--apple-bg-subtle);
+  border-radius: 16px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.spec-label {
+  font-size: 0.75rem;
+  color: var(--apple-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.spec-value {
+  font-size: 0.95rem;
+  color: var(--apple-text-primary);
+  font-weight: 600;
+}
+
+.dialog-action-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* =========================================================================
+   APPLE VISION PRO LUXURY WHATSAPP TEMPLATE MODAL DIALOG
+   ========================================================================= */
+.whatsapp-template-dialog {
+  max-width: 620px;
+  width: 92%;
+  max-height: 88vh;
+  overflow-y: auto;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.26), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  padding: 0;
+}
+
+/* Custom Minimal Webkit Scrollbars */
+.whatsapp-template-dialog::-webkit-scrollbar,
+.template-collections-grid::-webkit-scrollbar,
+.template-preview-box::-webkit-scrollbar {
+  width: 5px;
+}
+
+.whatsapp-template-dialog::-webkit-scrollbar-thumb,
+.template-collections-grid::-webkit-scrollbar-thumb,
+.template-preview-box::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+}
+
+.whatsapp-template-dialog::-webkit-scrollbar-track,
+.template-collections-grid::-webkit-scrollbar-track,
+.template-preview-box::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dialog-content {
+  position: relative;
+  padding: 2.2rem 2rem 2.4rem;
+}
+
+@media (max-width: 600px) {
+  .dialog-content {
+    padding: 1.6rem 1.25rem 1.8rem;
+  }
+}
+
+.dialog-close-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--apple-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.dialog-close-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--apple-text-primary);
+  transform: scale(1.05);
+}
+
+.template-header-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #128C7E;
+  background: rgba(37, 211, 102, 0.1);
+  padding: 5px 13px;
+  border-radius: 20px;
+  margin-bottom: 0.85rem;
+  border: 1px solid rgba(37, 211, 102, 0.18);
+}
+
+.live-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #25D366;
+  box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.25);
+  animation: liveDotPulse 2s infinite ease-in-out;
+}
+
+@keyframes liveDotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(1.2); }
+}
+
+.template-tools-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--apple-text-secondary);
+  margin: 1.1rem 0 0.5rem;
+  font-weight: 500;
+}
+
+.tools-label {
+  color: var(--apple-text-secondary);
+}
+
+.tools-actions {
+  display: flex;
+  align-items: center;
+}
+
+.template-action-link {
+  background: none;
+  border: none;
+  color: #0071E3;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.template-action-link:hover {
+  text-decoration: underline;
+  color: #0077ED;
+}
+
+.tools-pipe {
+  margin: 0 6px;
+  color: var(--apple-border-hairline);
+  font-size: 0.75rem;
+}
+
+.template-collections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 7px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 6px;
+  background: #F5F5F7;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  margin-bottom: 1.1rem;
+}
+
+.template-chip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 11px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  position: relative;
+}
+
+.template-chip input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.chip-indicator {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1.5px solid #C7C7CC;
+  background: #FFFFFF;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.template-chip.selected .chip-indicator {
+  background: #25D366;
+  border-color: #25D366;
+  box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.2);
+}
+
+.template-chip.selected .chip-indicator::after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #FFFFFF;
+}
+
+.template-chip:hover {
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.18);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.template-chip.selected {
+  background: #FFFFFF;
+  border-color: rgba(37, 211, 102, 0.45);
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.12);
+}
+
+.template-chip .chip-text {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--apple-text-primary);
+  line-height: 1.3;
+}
+
+.template-chip.selected .chip-text {
+  font-weight: 600;
+}
+
+.template-note-wrap {
+  margin-bottom: 0.9rem;
+}
+
+.template-field-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--apple-text-secondary);
+  margin-bottom: 5px;
+  letter-spacing: -0.01em;
+}
+
+.chat-custom-input {
+  width: 100%;
+  padding: 10px 14px;
+  background: #F5F5F7;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  font-size: 0.86rem;
+  color: var(--apple-text-primary);
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.chat-custom-input:focus {
+  background: #FFFFFF;
+  border-color: #25D366;
+  box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.16);
+}
+
+.template-preview-card {
+  background: #F5F5F7;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 14px;
+  padding: 10px 14px;
+  margin-bottom: 1.2rem;
+  border-left: 3.5px solid #25D366;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.preview-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--apple-text-tertiary);
+}
+
+.preview-tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #128C7E;
+  background: rgba(37, 211, 102, 0.12);
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+
+.template-preview-box {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  font-size: 0.81rem;
+  line-height: 1.48;
+  color: var(--apple-text-primary);
+  white-space: pre-wrap;
+  max-height: 85px;
+  overflow-y: auto;
+}
+
+.btn-whatsapp-direct {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 13px 24px;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #FFFFFF;
+  font-size: 0.98rem;
+  font-weight: 600;
+  border-radius: 980px;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.32);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-whatsapp-direct:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.42);
+  filter: brightness(1.04);
+}
+
+.dialog-disclaimer {
+  font-size: 0.75rem;
+  color: var(--apple-text-tertiary);
+  text-align: center;
+  margin: 8px 0 0;
+  line-height: 1.4;
+}
+
+/* =========================================================================
+   PROFESSIONAL MINIMALIST LUXURY FOOTER
+   ========================================================================= */
+.luxury-footer {
+  background: #F5F5F7;
+  border-top: 1px solid var(--apple-border-hairline);
+  padding: 3.5rem 0 2.2rem;
+  font-size: 0.85rem;
+  color: var(--apple-text-secondary);
+}
+
+.luxury-footer-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+@media (min-width: 768px) {
+  .luxury-footer-main {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.luxury-footer-brand {
+  max-width: 480px;
+}
+
+.luxury-footer-logo .brand-text {
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--apple-text-primary);
+}
+
+.luxury-footer-logo .brand-dot {
+  color: #25D366;
+}
+
+.luxury-footer-tagline {
+  font-size: 0.92rem;
+  color: var(--apple-text-secondary);
+  line-height: 1.5;
+  margin: 0.5rem 0 0.8rem;
+}
+
+.luxury-footer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1D1D1F;
+  background: #FFFFFF;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #E5E5EA;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.luxury-footer-badge .badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #25D366;
+}
+
+.luxury-footer-contact {
+  flex-shrink: 0;
+}
+
+.footer-contact-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E5EA;
+  border-radius: 20px;
+  padding: 1.2rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+.contact-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--apple-text-tertiary);
+}
+
+.footer-wa-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1D1D1F;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-wa-pill:hover {
+  color: #25D366;
+  transform: translateX(2px);
+}
+
+.contact-sub {
+  font-size: 0.78rem;
+  color: var(--apple-text-tertiary);
+}
+
+.luxury-footer-bottom {
+  padding-top: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.luxury-footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-size: 0.86rem;
+  font-weight: 500;
+}
+
+.luxury-footer-nav a {
+  color: var(--apple-text-secondary);
+  transition: color 0.2s ease;
+}
+
+.luxury-footer-nav a:hover {
+  color: var(--apple-text-primary);
+}
+
+.luxury-footer-legal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.8rem;
+  font-size: 0.78rem;
+  color: var(--apple-text-tertiary);
+  padding-top: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .luxury-footer-legal {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.legal-links {
+  display: flex;
+  gap: 1.4rem;
+}
+
+.legal-links a {
+  color: var(--apple-text-tertiary);
+  transition: color 0.2s ease;
+}
+
+.legal-links a:hover {
+  color: var(--apple-text-primary);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   COMPREHENSIVE ALL-DEVICE RESPONSIVE SYSTEM
+   Fluid perfection for Mobile (320px - 480px), Phablets (481px - 768px),
+   Tablets (769px - 1024px), Laptops & Ultra-Wide Desktops.
+   ========================================================================== */
+
+/* --- MOBILE DEVICES (320px to 640px) --- */
+@media (max-width: 640px) {
+  /* Prevent horizontal edge clipping with iOS Safe Area support */
+  .apple-container {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  /* 1. Header (Sticky Localnav) */
+  .apple-localnav {
+    height: 48px;
+  }
+  .localnav-inner {
+    padding: 0 1rem;
+    gap: 0.5rem;
+  }
+  .localnav-title a {
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+  .localnav-menu {
+    gap: 0.4rem;
+  }
+  /* On compact screens, streamline to high-impact primary WhatsApp button */
+  .localnav-btn-demo {
+    display: none;
+  }
+  .localnav-btn-buy {
+    padding: 5px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  /* 2. Hero Section */
+  .hero-giant-typography {
+    padding: 1.4rem 0.5rem 2.2rem;
+  }
+  .hero-giant-title {
+    font-size: clamp(3.2rem, 16.5vw, 4.8rem);
+    line-height: 0.96;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.1rem;
+  }
+  .hero-giant-motto {
+    font-size: clamp(1.05rem, 4.2vw, 1.25rem);
+    line-height: 1.45;
+    padding: 0 0.4rem;
+  }
+
+  /* 3. Collections Section Header */
+  .vision-closer-look {
+    padding: 2.2rem 0 3.8rem;
+  }
+  .closer-look-header-wrap {
+    margin-bottom: 1.2rem;
+    padding: 0 1rem;
+  }
+  .closer-look-title {
+    font-size: clamp(1.75rem, 6.5vw, 2.4rem);
+    line-height: 1.15;
+  }
+
+  /* 4. Horizontal Peek Carousel on Mobile (Signature Apple Card Peek) */
+  .apple-carousel-viewport {
+    padding: 0 1rem 1.6rem;
+  }
+  .apple-carousel-track {
+    gap: 12px;
+  }
+  .apple-vision-item {
+    /* 82vw allows the next card to subtly peek, signaling swipeability */
+    width: 82vw;
+    min-width: 270px;
+    max-width: 380px;
+    scroll-snap-align: center;
+  }
+  .apple-vision-box {
+    height: 380px;
+    border-radius: 20px;
+  }
+  .apple-vision-overlay {
+    padding: 1.1rem 1rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.52) 55%, transparent 100%);
+  }
+  .apple-vision-overlay-title {
+    font-size: 1.22rem;
+    line-height: 1.22;
+  }
+  .apple-vision-overlay-link {
+    font-size: 0.85rem;
+  }
+  .apple-360-btn {
+    width: 36px;
+    height: 36px;
+  }
+  .apple-360-btn svg {
+    width: 17px;
+    height: 17px;
+  }
+  .apple-vision-dots {
+    top: 10px;
+    right: 10px;
+    padding: 4px 7px;
+    gap: 5px;
+  }
+  .apple-vision-dot {
+    width: 5px;
+    height: 5px;
+  }
+  .apple-vision-dot.active {
+    width: 14px;
+  }
+
+  /* 5. Closing CTA */
+  .vision-buy-bar {
+    padding: 3.2rem 1rem;
+  }
+  .buy-bar-title {
+    font-size: clamp(1.75rem, 6.5vw, 2.3rem);
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+  .buy-bar-sub {
+    font-size: 0.95rem;
+    line-height: 1.45;
+    margin-bottom: 1.6rem;
+    padding: 0 0.5rem;
+  }
+  .vision-buy-bar .btn-hero-buy {
+    width: 100%;
+    max-width: 310px;
+    padding: 0.85rem 1.6rem;
+    font-size: 0.96rem;
+    justify-content: center;
+  }
+
+  /* 6. Footer Navigation on Mobile */
+  .apple-footer {
+    padding: 1.6rem 0 max(1.6rem, env(safe-area-inset-bottom));
+  }
+  .footer-essential-nav {
+    flex-direction: column;
+    gap: 0.85rem;
+    text-align: center;
+    padding: 0.8rem 1rem;
+    font-size: 0.82rem;
+  }
+  .footer-essential-nav .nav-bullet {
+    display: none;
+  }
+  .footer-essential-nav a {
+    display: inline-block;
+    padding: 4px 8px;
+  }
+
+  /* 7. WhatsApp Template Modal on Mobile */
+  .whatsapp-template-dialog {
+    width: 95%;
+    max-height: 90vh;
+    border-radius: 22px;
+    margin: auto 2.5%;
+  }
+  .whatsapp-template-dialog .dialog-content {
+    padding: 1.5rem 1rem 1.8rem;
+  }
+  .template-header-pill {
+    font-size: 0.68rem;
+    padding: 4px 10px;
+    margin-bottom: 0.65rem;
+  }
+  .dialog-title {
+    font-size: 1.45rem;
+    line-height: 1.2;
+    margin-bottom: 0.45rem;
+  }
+  .dialog-tagline {
+    font-size: 0.86rem;
+    line-height: 1.4;
+    margin-bottom: 0.8rem;
+  }
+  .template-tools-row {
+    margin: 0.75rem 0 0.4rem;
+    font-size: 0.78rem;
+  }
+  .template-collections-grid {
+    grid-template-columns: 1fr;
+    max-height: 170px;
+    padding: 5px;
+    gap: 6px;
+  }
+  .template-chip {
+    padding: 7px 10px;
+  }
+  .template-chip .chip-text {
+    font-size: 0.8rem;
+  }
+  .chat-custom-input {
+    /* Prevent iOS Safari viewport auto-zoom when tapping inputs */
+    font-size: 16px;
+    padding: 9px 12px;
+  }
+  .template-preview-card {
+    padding: 8px 12px;
+    margin-bottom: 1rem;
+  }
+  .template-preview-box {
+    max-height: 75px;
+    font-size: 0.78rem;
+  }
+  .btn-whatsapp-direct {
+    padding: 12px 18px;
+    font-size: 0.92rem;
+  }
+  .dialog-disclaimer {
+    font-size: 0.7rem;
+  }
+
+  /* 8. 360 Specification Modal on Mobile */
+  .apple-spec-dialog {
+    width: 95%;
+    border-radius: 22px;
+    margin: auto 2.5%;
+  }
+  .apple-spec-dialog .dialog-content {
+    padding: 1.8rem 1.2rem;
+  }
+  .dialog-specs-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+/* --- TABLETS & MEDIUM SCREENS (641px to 1024px) --- */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .localnav-inner {
+    padding: 0 1.25rem;
+  }
+  .localnav-title a {
+    font-size: 1.18rem;
+  }
+  .localnav-btn-demo {
+    padding: 5px 11px;
+    font-size: 0.78rem;
+  }
+  .localnav-btn-buy {
+    padding: 5px 12px;
+    font-size: 0.78rem;
+  }
+  .hero-giant-title {
+    font-size: clamp(5.2rem, 15vw, 8.5rem);
+  }
+  .apple-vision-item {
+    width: 62vw;
+    max-width: 520px;
+  }
+  .apple-vision-box {
+    height: 420px;
+  }
+  .template-collections-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-height: 220px;
+  }
+  .footer-essential-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.8rem;
+  }
+}
+
+
+/* ==========================================================================
+   PURE MINIMAL WHATSAPP MESSAGE PAGE (ZERO CLUTTER)
+   ========================================================================== */
+.minimal-msg-body {
+  background: #FFFFFF;
+  color: var(--apple-text-primary);
+  min-height: 100vh;
+}
+
+.minimal-nav-back {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #000000;
+  text-decoration: none;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  transition: all 0.2s ease;
+}
+
+.minimal-nav-back:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #000000;
+  opacity: 0.75;
+}
+
+.minimal-msg-main {
+  padding: 5rem 1rem 7rem;
+}
+
+.minimal-msg-container {
+  max-width: 660px;
+  margin: 0 auto;
+}
+
+.minimal-msg-header {
+  text-align: center;
+  margin-bottom: 2.8rem;
+}
+
+.minimal-msg-title {
+  font-size: clamp(2.4rem, 6.5vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: #0c1017;
+  margin-bottom: 0.8rem;
+  animation: chromaticNoirText 18s ease-in-out infinite alternate;
+}
+
+.minimal-msg-subtitle {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: #6e6e73;
+  line-height: 1.5;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.minimal-msg-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.minimal-msg-textarea {
+  width: 100%;
+  padding: 20px 22px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #11141a;
+  background: #F5F5F7;
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  resize: vertical;
+  min-height: 180px;
+  transition: all 0.25s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.minimal-msg-textarea:focus {
+  outline: none;
+  background: #FFFFFF;
+  border-color: #25D366;
+  box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.16);
+}
+
+.minimal-send-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: #25D366;
+  color: #FFFFFF;
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  padding: 1.15rem 2rem;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  box-shadow: 0 6px 22px rgba(37, 211, 102, 0.38);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.minimal-send-btn:hover {
+  background: #20ba59;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5);
+}
+
+@media (max-width: 640px) {
+  .minimal-msg-main {
+    padding: 3rem 1rem 5rem;
+  }
+  .minimal-msg-title {
+    font-size: clamp(2.1rem, 9vw, 3rem);
+  }
+  .minimal-msg-textarea {
+    padding: 16px 18px;
+    font-size: 1rem;
+    min-height: 150px;
+    border-radius: 16px;
+  }
+  .minimal-send-btn {
+    padding: 1rem 1.4rem;
+    font-size: 1.05rem;
+  }
+}
+/* ==========================================================================
+   AMBIENT MOVING WHATSAPP BACKGROUND ICON
+   Glides smoothly from one end of the screen to another
+   ========================================================================== */
+.ambient-wa-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ambient-wa-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: clamp(280px, 38vw, 540px);
+  height: clamp(280px, 38vw, 540px);
+  filter: drop-shadow(0 20px 50px rgba(37, 211, 102, 0.18));
+  animation: ambientWhatsAppFloat 28s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+  will-change: transform;
+}
+
+@keyframes ambientWhatsAppFloat {
+  0% {
+    transform: translate3d(-10vw, 14vh, 0) rotate(-14deg) scale(0.92);
+  }
+  25% {
+    transform: translate3d(24vw, 40vh, 0) rotate(8deg) scale(1.05);
+  }
+  50% {
+    transform: translate3d(62vw, 15vh, 0) rotate(-8deg) scale(0.98);
+  }
+  75% {
+    transform: translate3d(32vw, -5vh, 0) rotate(12deg) scale(1.06);
+  }
+  100% {
+    transform: translate3d(88vw, 34vh, 0) rotate(-12deg) scale(0.94);
+  }
+}
+
+/* Ensure foreground content floats over background with frosted glass */
+.minimal-msg-main,
+.apple-localnav,
+.apple-vision-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.minimal-msg-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: saturate(180%) blur(24px);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 28px;
+  padding: 2.4rem;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.04);
+}
+
+@media (max-width: 640px) {
+  .ambient-wa-svg {
+    width: clamp(220px, 60vw, 340px);
+    height: clamp(220px, 60vw, 340px);
+  }
+  .minimal-msg-card {
+    padding: 1.6rem 1.3rem;
+    border-radius: 22px;
+  }
+}
