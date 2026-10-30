@@ -346,6 +346,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('resize', () => snapToFace(currentIndex));
     snapToFace(0);
+
+    // =========================================================================
+    // ON VIEW: SEMI-ROTATE 3D PEEK HINT (Auto Semi-Rotate -> Return, 3 Times, 2s each)
+    // Signals to the user that the cube is 3D swipable
+    // =========================================================================
+    let hasPlayedSemiRotateHint = false;
+
+    function playSemiRotatePeekHint() {
+      if (hasPlayedSemiRotateHint) return;
+      hasPlayedSemiRotateHint = true;
+
+      const peekAngle = 26; // Semi-rotation angle (26 degrees peek showing the next category on the side)
+      const r = getRadius();
+      let iteration = 0;
+      const maxIterations = 3; // Exactly 3 times
+
+      function runOneSemiRotate() {
+        if (iteration >= maxIterations || isDragging) return;
+        iteration++;
+
+        // 1. Semi-rotate towards next category (peek out over 750ms)
+        carouselTrack.style.transition = 'transform 0.75s cubic-bezier(0.25, 1, 0.5, 1)';
+        updateCubeFaces(currentAngle - peekAngle);
+
+        // 2. Return back to previous/current face
+        setTimeout(() => {
+          if (isDragging) return;
+          carouselTrack.style.transition = 'transform 0.75s cubic-bezier(0.25, 1, 0.5, 1)';
+          updateCubeFaces(currentAngle);
+
+          setTimeout(() => {
+            if (isDragging) return;
+            carouselTrack.style.transition = 'none';
+
+            // 3. Repeat after 2 seconds total cycle (2s between each of the 3 iterations)
+            if (iteration < maxIterations) {
+              setTimeout(runOneSemiRotate, 500); // 750ms out + 750ms back + 500ms pause = exactly 2.0s per iteration
+            }
+          }, 750);
+        }, 750);
+      }
+
+      // Start initial semi-rotate after 600ms of entering view
+      setTimeout(runOneSemiRotate, 600);
+    }
+
+    // Trigger peek hint when user scrolls the carousel section into view
+    const viewObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          playSemiRotatePeekHint();
+          viewObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.35 });
+
+    viewObserver.observe(carouselViewport);
   }
 
   // =========================================================================
