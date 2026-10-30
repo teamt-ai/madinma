@@ -258,8 +258,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let wasClickPrevented = false;
 
     function onPointerDown(e) {
-      // For mouse events: strictly primary left-click (button === 0)
-      if (e.type === 'mousedown' && e.button !== 0) return;
+      // Prevent browser native image selection/ghost ghost dragging
+      if (e.type === 'mousedown') {
+        if (e.button !== 0) return;
+        e.preventDefault();
+      }
       
       // Don't hijack clicks on WhatsApp buttons or links
       if (e.target.closest('a, button')) return;
