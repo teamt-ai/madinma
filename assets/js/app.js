@@ -216,21 +216,30 @@ document.addEventListener('DOMContentLoaded', () => {
       // Apply world rotation to the cube scene
       carouselTrack.style.transform = `translateZ(-${r}px) rotateY(${rotY}deg)`;
 
-      // Map each of the 14 items to 3D cylinder/cube facets
-      const stepAngle = 90; // 90 degrees between faces creates a true 4-sided solid cube!
+      // A 4-sided cube has 4 faces: center, right, left, and back
+      // Calculate which face index we are centered on
+      const baseK = Math.round(-rotY / 90);
+      
+      // Map exactly one item to each of the 4 cube faces [-1: left, 0: front, 1: right, 2: back]
+      const activeIndices = new Map();
+      [-1, 0, 1, 2].forEach((offset) => {
+        const k = baseK + offset;
+        const itemIdx = ((k % totalItems) + totalItems) % totalItems;
+        const faceAngle = k * 90;
+        const relAngle = ((faceAngle + rotY) % 360 + 360) % 360;
+        if (!activeIndices.has(itemIdx)) {
+          activeIndices.set(itemIdx, { faceAngle, relAngle });
+        }
+      });
+
+      // Render ONLY the active cube faces; strictly hide all other 10 items to prevent overlapping
       items.forEach((item, idx) => {
         item.classList.add('cube-face-3d');
-        const faceAngle = idx * stepAngle;
-        
-        // Relative angle from current view
-        const relAngle = ((faceAngle + rotY) % 360 + 360) % 360;
-        // Only render the front, left, and right faces for maximum sharpness and 3D solidity
-        const isVisible = relAngle < 105 || relAngle > 255;
-        
-        if (isVisible) {
+        if (activeIndices.has(idx)) {
+          const { faceAngle, relAngle } = activeIndices.get(idx);
           item.style.display = 'flex';
           item.style.transform = `rotateY(${faceAngle}deg) translateZ(${r}px)`;
-          
+
           // Side lighting shadow for solid 3D mass
           const distFromFront = Math.min(relAngle, 360 - relAngle);
           const shadowOpacity = Math.min(0.55, (distFromFront / 90) * 0.55);
@@ -247,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function snapToFace(targetIndex) {
       currentIndex = ((targetIndex % totalItems) + totalItems) % totalItems;
       carouselTrack.style.transition = 'transform 0.65s cubic-bezier(0.16, 1, 0.3, 1)';
-      currentAngle = -currentIndex * 90;
+      currentAngle = -targetIndex * 90;
       updateCubeFaces(currentAngle);
       if (typeof window.resetActiveImageIndex === 'function') {
         window.resetActiveImageIndex();
