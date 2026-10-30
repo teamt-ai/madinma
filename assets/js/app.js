@@ -254,9 +254,18 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 650);
     }
 
-    // Touch & Pointer Gesture Listeners (Drag / Swipe to Rotate the Cube)
+    // Strictly Click-and-Hold (or Touch) Drag Listeners
+    let wasClickPrevented = false;
+
     function onPointerDown(e) {
+      // For mouse events: strictly primary left-click (button === 0)
+      if (e.type === 'mousedown' && e.button !== 0) return;
+      
+      // Don't hijack clicks on WhatsApp buttons or links
+      if (e.target.closest('a, button')) return;
+
       isDragging = true;
+      wasClickPrevented = false;
       startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
       startAngle = currentAngle;
       dragDistance = 0;
@@ -264,21 +273,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function onPointerMove(e) {
+      // Must be actively clicking/holding down
       if (!isDragging) return;
+      
+      // If mouse leaves or loses button pressure (buttons === 0 on mousemove)
+      if (e.type === 'mousemove' && e.buttons === 0) {
+        onPointerUp(e);
+        return;
+      }
+
       const currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
       dragDistance = currentX - startX;
-      // Convert pixel drag to 3D rotation angle
-      const angleDelta = (dragDistance / carouselViewport.offsetWidth) * 90;
-      updateCubeFaces(startAngle + angleDelta);
-      if (Math.abs(dragDistance) > 8 && e.cancelable) {
-        e.preventDefault();
+
+      // Only treat as drag after moving at least 6px
+      if (Math.abs(dragDistance) > 6) {
+        wasClickPrevented = true;
+        // Convert pixel drag to 3D rotation angle
+        const angleDelta = (dragDistance / carouselViewport.offsetWidth) * 90;
+        updateCubeFaces(startAngle + angleDelta);
+        if (e.cancelable) {
+          e.preventDefault();
+        }
       }
     }
 
-    function onPointerUp() {
+    function onPointerUp(e) {
       if (!isDragging) return;
       isDragging = false;
-      const threshold = carouselViewport.offsetWidth * 0.15;
+      const threshold = carouselViewport.offsetWidth * 0.14;
       if (dragDistance < -threshold) {
         // Dragged left -> rotate to next face
         snapToFace(currentIndex + 1);
@@ -291,15 +313,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Bind Touch events
+    // Touch events (Mobile)
     carouselViewport.addEventListener('touchstart', onPointerDown, { passive: true });
     window.addEventListener('touchmove', onPointerMove, { passive: false });
     window.addEventListener('touchend', onPointerUp, { passive: true });
+    window.addEventListener('touchcancel', onPointerUp, { passive: true });
 
-    // Bind Mouse events
+    // Mouse events (Desktop: Strictly only while mouse is held down)
     carouselViewport.addEventListener('mousedown', onPointerDown);
     window.addEventListener('mousemove', onPointerMove);
     window.addEventListener('mouseup', onPointerUp);
+    window.addEventListener('mouseleave', onPointerUp);
 
     // Initial positioning
     const cubePrevBtn = document.getElementById('cube-prev-btn');
