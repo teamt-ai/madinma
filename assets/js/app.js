@@ -431,7 +431,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let slideTimer = null;
     let activeImageIndex = 0; // 0, 1, 2
-    const IMAGE_DURATION = 5000; // 5000ms = 5s
+    const IMAGE_DURATION = 3000; // 3000ms = 3s
 
     function setBoxImage(itemEl, imageIndex) {
       if (!itemEl) return;
