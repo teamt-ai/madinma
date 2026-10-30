@@ -185,30 +185,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const nextBtn = document.getElementById('carousel-next');
 
   function updateCarouselArrows() {
-    if (!carouselViewport || !prevBtn || !nextBtn) return;
-    const scrollLeft = carouselViewport.scrollLeft;
-    const maxScroll = carouselViewport.scrollWidth - carouselViewport.clientWidth;
-    prevBtn.disabled = scrollLeft <= 10;
-    nextBtn.disabled = scrollLeft >= maxScroll - 10;
+    if (!carouselViewport) return;
+    if (prevBtn && nextBtn) {
+      const scrollLeft = carouselViewport.scrollLeft;
+      const maxScroll = carouselViewport.scrollWidth - carouselViewport.clientWidth;
+      prevBtn.disabled = scrollLeft <= 10;
+      nextBtn.disabled = scrollLeft >= maxScroll - 10;
+    }
   }
 
-  if (carouselViewport && prevBtn && nextBtn) {
-    prevBtn.addEventListener('click', () => {
-      const slide = carouselViewport.querySelector('.apple-vision-item');
-      const slideWidth = slide ? slide.offsetWidth + 28 : 600;
-      carouselViewport.scrollBy({ left: -slideWidth, behavior: 'smooth' });
-    });
+  if (carouselViewport) {
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        const slide = carouselViewport.querySelector('.apple-vision-item');
+        const slideWidth = slide ? slide.offsetWidth + 28 : 600;
+        carouselViewport.scrollBy({ left: -slideWidth, behavior: 'smooth' });
+      });
+    }
 
-    nextBtn.addEventListener('click', () => {
-      const slide = carouselViewport.querySelector('.apple-vision-item');
-      const slideWidth = slide ? slide.offsetWidth + 28 : 600;
-      carouselViewport.scrollBy({ left: slideWidth, behavior: 'smooth' });
-    });
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        const slide = carouselViewport.querySelector('.apple-vision-item');
+        const slideWidth = slide ? slide.offsetWidth + 28 : 600;
+        carouselViewport.scrollBy({ left: slideWidth, behavior: 'smooth' });
+      });
+    }
 
-    // 3D Box / Cube Rotation on Carousel Swipe
+    // High-impact 3D Rotating Box / Cylinder Carousel Effect
     let ticking3D = false;
     function update3DBoxRotation() {
-      if (!carouselViewport) return;
       const viewportRect = carouselViewport.getBoundingClientRect();
       const viewportCenter = viewportRect.left + viewportRect.width / 2;
       const items = carouselViewport.querySelectorAll('.apple-vision-item');
@@ -218,16 +223,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const itemCenter = itemRect.left + itemRect.width / 2;
         // Normalized distance from center (-1 to 1 across viewport width)
         const diff = (itemCenter - viewportCenter) / (viewportRect.width / 2);
-        const clampedDiff = Math.max(-1.5, Math.min(1.5, diff));
+        const clampedDiff = Math.max(-1.4, Math.min(1.4, diff));
 
-        // 3D rotation angle: like a 3D rotating box / cylinder
-        const rotateY = clampedDiff * 28; // Up to ~28 degrees rotation
-        const translateZ = -Math.abs(clampedDiff) * 120; // Pushes sides backward in 3D depth
-        const scale = 1 - Math.min(0.12, Math.abs(clampedDiff) * 0.08);
-        const opacity = 1 - Math.min(0.35, Math.abs(clampedDiff) * 0.25);
+        // 3D Box facet angle: prominent 3D cube rotation
+        const rotateY = clampedDiff * 38; // 38 degrees 3D box turn
+        const translateZ = -Math.abs(clampedDiff) * 160; // 160px deep 3D curve
+        const scale = 1 - Math.min(0.18, Math.abs(clampedDiff) * 0.12);
+        const opacity = 1 - Math.min(0.45, Math.abs(clampedDiff) * 0.35);
 
-        item.style.transform = `perspective(1200px) rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`;
-        item.style.opacity = `${opacity}`;
+        // Transform the inner .apple-vision-box so it doesn't fight native layout
+        const box = item.querySelector('.apple-vision-box');
+        if (box) {
+          box.style.transform = `rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`;
+          box.style.opacity = `${opacity}`;
+        }
       });
 
       ticking3D = false;
@@ -246,10 +255,13 @@ document.addEventListener('DOMContentLoaded', () => {
       updateCarouselArrows();
       update3DBoxRotation();
     });
-    setTimeout(() => {
-      updateCarouselArrows();
-      update3DBoxRotation();
-    }, 150);
+
+    // Execute immediately and on multiple intervals to ensure DOM is ready
+    updateCarouselArrows();
+    update3DBoxRotation();
+    setTimeout(update3DBoxRotation, 80);
+    setTimeout(update3DBoxRotation, 300);
+    setTimeout(update3DBoxRotation, 800);
   }
 
   // =========================================================================
