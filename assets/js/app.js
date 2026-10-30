@@ -414,73 +414,55 @@ document.addEventListener('DOMContentLoaded', () => {
   // Box 2, 4, 6, 8...: Next slides in from LEFT  -> outgoing slides out to RIGHT
     // =========================================================================
   // 4. ACTIVE CATEGORY 5-SECOND IMAGE CYCLER & AUTO CUBE ROTATION
-  // Shows Image 1 (5s) -> Image 2 (5s) -> Image 3 (5s) -> Rotates to Next Category
+  // Exactly 5 seconds per image: Image 1 (5s) -> Image 2 (5s) -> Image 3 (5s) -> Next Category
   // =========================================================================
   function initAppleVisionSlideshow() {
-    const boxes = document.querySelectorAll('.apple-vision-box[data-carousel-box]');
-    if (!boxes.length) return;
+    const items = document.querySelectorAll('.apple-vision-item');
+    if (!items.length) return;
 
     let slideTimer = null;
-    let activeImageIndex = 0; // 0 = first image, 1 = second, 2 = third
-    const IMAGE_DURATION = 5000; // Exact 5 seconds per image
+    let activeImageIndex = 0; // 0, 1, 2
+    const IMAGE_DURATION = 5000; // 5000ms = 5s
 
-    // Helper to transition the box belonging to categoryIndex to a target image
-    function transitionBoxImage(boxIdx, fromIdx, toIdx) {
-      const box = boxes[boxIdx];
-      if (!box) return;
-      const slides = box.querySelectorAll('.apple-vision-img');
-      const dots = box.querySelectorAll('.apple-vision-dot');
-      if (slides.length <= 1) return;
+    function setBoxImage(itemEl, imageIndex) {
+      if (!itemEl) return;
+      const slides = itemEl.querySelectorAll('.apple-vision-img');
+      const dots = itemEl.querySelectorAll('.apple-vision-dot');
+      if (!slides.length) return;
 
-      const prevSlide = slides[fromIdx];
-      const nextSlide = slides[toIdx];
-      const prevDot = dots[fromIdx];
-      const nextDot = dots[toIdx];
-
-      const isSlideFromRight = (boxIdx % 2 === 0);
-      const inClass = isSlideFromRight ? 'anim-slide-in-right' : 'anim-slide-in-left';
-      const outClass = isSlideFromRight ? 'anim-slide-out-left' : 'anim-slide-out-right';
-
-      // Clean animation classes
-      slides.forEach((s) => {
-        s.classList.remove('anim-slide-in-right', 'anim-slide-out-left', 'anim-slide-in-left', 'anim-slide-out-right');
+      slides.forEach((slide, sIdx) => {
+        if (sIdx === imageIndex) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active', 'anim-slide-in-right', 'anim-slide-out-left', 'anim-slide-in-left', 'anim-slide-out-right');
+        }
       });
 
-      if (prevSlide) {
-        prevSlide.classList.remove('active');
-        prevSlide.classList.add(outClass);
-      }
-      if (prevDot) prevDot.classList.remove('active');
-
-      if (nextSlide) {
-        nextSlide.classList.add(inClass, 'active');
-      }
-      if (nextDot) nextDot.classList.add('active');
-
-      setTimeout(() => {
-        if (prevSlide) prevSlide.classList.remove(outClass);
-        if (nextSlide) nextSlide.classList.remove(inClass);
-      }, 950);
+      dots.forEach((dot, dIdx) => {
+        if (dIdx === imageIndex) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
     }
 
     function stepActiveCategory() {
       const currentCategoryIdx = (typeof window.getCurrentCubeIndex === 'function') 
         ? window.getCurrentCubeIndex() 
         : 0;
-      const currentBox = boxes[currentCategoryIdx];
-      if (!currentBox) return;
+      const currentItem = items[currentCategoryIdx];
+      if (!currentItem) return;
 
-      const slides = currentBox.querySelectorAll('.apple-vision-img');
+      const slides = currentItem.querySelectorAll('.apple-vision-img');
       const totalSlides = slides.length || 3;
 
       if (activeImageIndex < totalSlides - 1) {
-        // Step to next image in this category (e.g. 0 -> 1, or 1 -> 2)
-        const nextImageIndex = activeImageIndex + 1;
-        transitionBoxImage(currentCategoryIdx, activeImageIndex, nextImageIndex);
-        activeImageIndex = nextImageIndex;
+        // Next image in current category (0 -> 1, or 1 -> 2)
+        activeImageIndex++;
+        setBoxImage(currentItem, activeImageIndex);
       } else {
-        // Reached the 3rd (last) image!
-        // Reset image index for the next category and rotate the 3D cube
+        // Was on the 3rd (last) image! Rotate 3D cube to next category!
         activeImageIndex = 0;
         if (typeof window.rotateToNextCubeCategory === 'function') {
           window.rotateToNextCubeCategory();
@@ -489,9 +471,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startTimer() {
-      if (!slideTimer) {
-        slideTimer = setInterval(stepActiveCategory, IMAGE_DURATION);
-      }
+      stopTimer();
+      slideTimer = setInterval(stepActiveCategory, IMAGE_DURATION);
     }
 
     function stopTimer() {
@@ -501,13 +482,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Reset image index whenever category changes (e.g. via manual swipe)
     window.resetActiveImageIndex = function() {
       activeImageIndex = 0;
-      stopTimer();
+      const currentCategoryIdx = (typeof window.getCurrentCubeIndex === 'function') 
+        ? window.getCurrentCubeIndex() 
+        : 0;
+      const currentItem = items[currentCategoryIdx];
+      if (currentItem) {
+        setBoxImage(currentItem, 0);
+      }
       startTimer();
     };
 
+    // Ensure all items start at their 1st image
+    items.forEach((item) => setBoxImage(item, 0));
     startTimer();
 
     document.addEventListener('visibilitychange', () => {

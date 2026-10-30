@@ -662,7 +662,7 @@ img {
   pointer-events: none;
 }
 
-/* Base Image with Dedicated IN & OUT Transitions */
+/* Base Image with Smooth Crossfade & Cinematic Depth */
 .apple-vision-img {
   position: absolute;
   inset: 0;
@@ -676,18 +676,18 @@ img {
   opacity: 0;
   visibility: hidden;
   transform: scale(1.0);
-  pointer-events: none;
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), filter 0.85s ease;
   will-change: opacity, transform, filter;
+  z-index: 1;
 }
 
-/* Steady Active Slide: Slow romantic Ken Burns breathing drift */
+/* Steady Active Slide: Perfectly Visible with Gentle Ken Burns Breathing Drift */
 .apple-vision-img.active {
-  opacity: 1;
-  visibility: visible;
-  transform: scale(1);
+  opacity: 1 !important;
+  visibility: visible !important;
   filter: blur(0px) brightness(1.0);
   pointer-events: auto;
-  z-index: 2;
+  z-index: 3;
   animation: romanticKenBurns 7s ease-in-out infinite alternate;
 }
 
