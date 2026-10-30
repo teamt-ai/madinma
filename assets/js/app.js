@@ -180,88 +180,135 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
   // 3. APPLE VISION PRO CAROUSEL NAVIGATION
   // =========================================================================
+  // =========================================================================
+  // TRUE 3D SOLID CUBE CAROUSEL ENGINE (Interactive Touch, Drag & Gestures)
+  // Each card occupies a 3D box face with solid sides visible during rotation
+  // =========================================================================
   const carouselViewport = document.getElementById('carousel-viewport');
-  const prevBtn = document.getElementById('carousel-prev');
-  const nextBtn = document.getElementById('carousel-next');
+  const carouselTrack = document.getElementById('carousel-track');
 
-  function updateCarouselArrows() {
-    if (!carouselViewport) return;
-    if (prevBtn && nextBtn) {
-      const scrollLeft = carouselViewport.scrollLeft;
-      const maxScroll = carouselViewport.scrollWidth - carouselViewport.clientWidth;
-      prevBtn.disabled = scrollLeft <= 10;
-      nextBtn.disabled = scrollLeft >= maxScroll - 10;
-    }
-  }
+  if (carouselViewport && carouselTrack) {
+    const items = Array.from(carouselTrack.querySelectorAll('.apple-vision-item'));
+    const totalItems = items.length;
 
-  if (carouselViewport) {
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        const slide = carouselViewport.querySelector('.apple-vision-item');
-        const slideWidth = slide ? slide.offsetWidth + 28 : 600;
-        carouselViewport.scrollBy({ left: -slideWidth, behavior: 'smooth' });
-      });
-    }
+    let currentIndex = 0;
+    let currentAngle = 0; // Current Y rotation in degrees
+    let isDragging = false;
+    let startX = 0;
+    let startAngle = 0;
+    let dragDistance = 0;
 
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        const slide = carouselViewport.querySelector('.apple-vision-item');
-        const slideWidth = slide ? slide.offsetWidth + 28 : 600;
-        carouselViewport.scrollBy({ left: slideWidth, behavior: 'smooth' });
-      });
+    // Convert track to 3D cube scene
+    carouselViewport.classList.add('cube-viewport-3d');
+    carouselTrack.classList.add('cube-scene-3d');
+    carouselTrack.style.width = '100%';
+    carouselTrack.style.height = '100%';
+    carouselTrack.style.position = 'relative';
+
+    function getRadius() {
+      const width = carouselViewport.offsetWidth;
+      // Exact geometric apothem for a 4-sided cube: r = width / 2
+      return Math.round(width / 2);
     }
 
-    // High-impact 3D Rotating Box / Cylinder Carousel Effect
-    let ticking3D = false;
-    function update3DBoxRotation() {
-      const viewportRect = carouselViewport.getBoundingClientRect();
-      const viewportCenter = viewportRect.left + viewportRect.width / 2;
-      const items = carouselViewport.querySelectorAll('.apple-vision-item');
+    function updateCubeFaces(rotY) {
+      const r = getRadius();
+      // Apply world rotation to the cube scene
+      carouselTrack.style.transform = `translateZ(-${r}px) rotateY(${rotY}deg)`;
 
-      items.forEach((item) => {
-        const itemRect = item.getBoundingClientRect();
-        const itemCenter = itemRect.left + itemRect.width / 2;
-        // Normalized distance from center (-1 to 1 across viewport width)
-        const diff = (itemCenter - viewportCenter) / (viewportRect.width / 2);
-        const clampedDiff = Math.max(-1.4, Math.min(1.4, diff));
-
-        // 3D Box facet angle: prominent 3D cube rotation
-        const rotateY = clampedDiff * 38; // 38 degrees 3D box turn
-        const translateZ = -Math.abs(clampedDiff) * 160; // 160px deep 3D curve
-        const scale = 1 - Math.min(0.18, Math.abs(clampedDiff) * 0.12);
-        const opacity = 1 - Math.min(0.45, Math.abs(clampedDiff) * 0.35);
-
-        // Transform the inner .apple-vision-box so it doesn't fight native layout
-        const box = item.querySelector('.apple-vision-box');
-        if (box) {
-          box.style.transform = `rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`;
-          box.style.opacity = `${opacity}`;
+      // Map each of the 14 items to 3D cylinder/cube facets
+      const stepAngle = 90; // 90 degrees between faces creates a true 4-sided solid cube!
+      items.forEach((item, idx) => {
+        item.classList.add('cube-face-3d');
+        const faceAngle = idx * stepAngle;
+        
+        // Relative angle from current view
+        const relAngle = ((faceAngle + rotY) % 360 + 360) % 360;
+        // Only render the front, left, and right faces for maximum sharpness and 3D solidity
+        const isVisible = relAngle < 105 || relAngle > 255;
+        
+        if (isVisible) {
+          item.style.display = 'flex';
+          item.style.transform = `rotateY(${faceAngle}deg) translateZ(${r}px)`;
+          
+          // Side lighting shadow for solid 3D mass
+          const distFromFront = Math.min(relAngle, 360 - relAngle);
+          const shadowOpacity = Math.min(0.55, (distFromFront / 90) * 0.55);
+          const box = item.querySelector('.apple-vision-box');
+          if (box) {
+            box.style.filter = `brightness(${1 - shadowOpacity * 0.5})`;
+          }
+        } else {
+          item.style.display = 'none';
         }
       });
-
-      ticking3D = false;
     }
 
-    function onCarouselScroll() {
-      updateCarouselArrows();
-      if (!ticking3D) {
-        requestAnimationFrame(update3DBoxRotation);
-        ticking3D = true;
+    function snapToFace(targetIndex) {
+      currentIndex = ((targetIndex % totalItems) + totalItems) % totalItems;
+      carouselTrack.style.transition = 'transform 0.65s cubic-bezier(0.16, 1, 0.3, 1)';
+      currentAngle = -currentIndex * 90;
+      updateCubeFaces(currentAngle);
+      setTimeout(() => {
+        carouselTrack.style.transition = 'none';
+      }, 650);
+    }
+
+    // Touch & Pointer Gesture Listeners (Drag / Swipe to Rotate the Cube)
+    function onPointerDown(e) {
+      isDragging = true;
+      startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+      startAngle = currentAngle;
+      dragDistance = 0;
+      carouselTrack.style.transition = 'none';
+    }
+
+    function onPointerMove(e) {
+      if (!isDragging) return;
+      const currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+      dragDistance = currentX - startX;
+      // Convert pixel drag to 3D rotation angle
+      const angleDelta = (dragDistance / carouselViewport.offsetWidth) * 90;
+      updateCubeFaces(startAngle + angleDelta);
+      if (Math.abs(dragDistance) > 8 && e.cancelable) {
+        e.preventDefault();
       }
     }
 
-    carouselViewport.addEventListener('scroll', onCarouselScroll, { passive: true });
-    window.addEventListener('resize', () => {
-      updateCarouselArrows();
-      update3DBoxRotation();
-    });
+    function onPointerUp() {
+      if (!isDragging) return;
+      isDragging = false;
+      const threshold = carouselViewport.offsetWidth * 0.15;
+      if (dragDistance < -threshold) {
+        // Dragged left -> rotate to next face
+        snapToFace(currentIndex + 1);
+      } else if (dragDistance > threshold) {
+        // Dragged right -> rotate to prev face
+        snapToFace(currentIndex - 1);
+      } else {
+        // Snap back to current
+        snapToFace(currentIndex);
+      }
+    }
 
-    // Execute immediately and on multiple intervals to ensure DOM is ready
-    updateCarouselArrows();
-    update3DBoxRotation();
-    setTimeout(update3DBoxRotation, 80);
-    setTimeout(update3DBoxRotation, 300);
-    setTimeout(update3DBoxRotation, 800);
+    // Bind Touch events
+    carouselViewport.addEventListener('touchstart', onPointerDown, { passive: true });
+    window.addEventListener('touchmove', onPointerMove, { passive: false });
+    window.addEventListener('touchend', onPointerUp, { passive: true });
+
+    // Bind Mouse events
+    carouselViewport.addEventListener('mousedown', onPointerDown);
+    window.addEventListener('mousemove', onPointerMove);
+    window.addEventListener('mouseup', onPointerUp);
+
+    // Initial positioning
+    const cubePrevBtn = document.getElementById('cube-prev-btn');
+    const cubeNextBtn = document.getElementById('cube-next-btn');
+    if (cubePrevBtn) cubePrevBtn.addEventListener('click', () => snapToFace(currentIndex - 1));
+    if (cubeNextBtn) cubeNextBtn.addEventListener('click', () => snapToFace(currentIndex + 1));
+
+    window.addEventListener('resize', () => snapToFace(currentIndex));
+    snapToFace(0);
   }
 
   // =========================================================================
