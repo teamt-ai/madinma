@@ -254,6 +254,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 650);
     }
 
+    // Expose for active category progression
+    window.rotateToNextCubeCategory = function() {
+      if (!isDragging) {
+        snapToFace(currentIndex + 1);
+      }
+    };
+    window.getCurrentCubeIndex = function() {
+      return currentIndex;
+    };
+
     // Strictly Click-and-Hold (or Touch) Drag Listeners
     let wasClickPrevented = false;
 
@@ -367,6 +377,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const outClass = isSlideFromRight ? 'anim-slide-out-left' : 'anim-slide-out-right';
 
       function goToNextSlide() {
+        // Only cycle images if this box belongs to the currently active cube category
+        if (typeof window.getCurrentCubeIndex === 'function' && window.getCurrentCubeIndex() !== boxIdx) {
+          return;
+        }
+
         const prevSlide = slides[currentIdx];
         const prevDot = dots[currentIdx];
 
@@ -375,13 +390,25 @@ document.addEventListener('DOMContentLoaded', () => {
           s.classList.remove('anim-slide-in-right', 'anim-slide-out-left', 'anim-slide-in-left', 'anim-slide-out-right');
         });
 
+        // Check if we are on the LAST image (index === slides.length - 1)
+        const isLastImage = (currentIdx === slides.length - 1);
+
+        if (isLastImage) {
+          // When it reaches the last image, automatically rotate 3D cube to next category!
+          currentIdx = 0;
+          if (typeof window.rotateToNextCubeCategory === 'function') {
+            window.rotateToNextCubeCategory();
+          }
+          return;
+        }
+
         // Trigger OUT animation on previous slide
         prevSlide.classList.remove('active');
         prevSlide.classList.add(outClass);
         if (prevDot) prevDot.classList.remove('active');
 
         // Advance to next slide index
-        currentIdx = (currentIdx + 1) % slides.length;
+        currentIdx = currentIdx + 1;
 
         const nextSlide = slides[currentIdx];
         const nextDot = dots[currentIdx];
@@ -397,8 +424,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 950);
       }
 
-      // Synchronized 5-second display interval: all boxes slide together at the exact same time
-      const boxInterval = 5000;
+      // 4-second display interval per image: after 3 images (12s total), rotates to the next category!
+      const boxInterval = 4000;
       let timer = null;
 
       const startSlideshow = () => {
@@ -407,7 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       };
 
-      // Start synchronized slideshow immediately
+      // Start slideshow
       startSlideshow();
 
       // Pause when tab is hidden to save battery & CPU
