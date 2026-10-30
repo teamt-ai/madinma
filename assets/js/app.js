@@ -205,9 +205,51 @@ document.addEventListener('DOMContentLoaded', () => {
       carouselViewport.scrollBy({ left: slideWidth, behavior: 'smooth' });
     });
 
-    carouselViewport.addEventListener('scroll', updateCarouselArrows, { passive: true });
-    window.addEventListener('resize', updateCarouselArrows);
-    setTimeout(updateCarouselArrows, 150);
+    // 3D Box / Cube Rotation on Carousel Swipe
+    let ticking3D = false;
+    function update3DBoxRotation() {
+      if (!carouselViewport) return;
+      const viewportRect = carouselViewport.getBoundingClientRect();
+      const viewportCenter = viewportRect.left + viewportRect.width / 2;
+      const items = carouselViewport.querySelectorAll('.apple-vision-item');
+
+      items.forEach((item) => {
+        const itemRect = item.getBoundingClientRect();
+        const itemCenter = itemRect.left + itemRect.width / 2;
+        // Normalized distance from center (-1 to 1 across viewport width)
+        const diff = (itemCenter - viewportCenter) / (viewportRect.width / 2);
+        const clampedDiff = Math.max(-1.5, Math.min(1.5, diff));
+
+        // 3D rotation angle: like a 3D rotating box / cylinder
+        const rotateY = clampedDiff * 28; // Up to ~28 degrees rotation
+        const translateZ = -Math.abs(clampedDiff) * 120; // Pushes sides backward in 3D depth
+        const scale = 1 - Math.min(0.12, Math.abs(clampedDiff) * 0.08);
+        const opacity = 1 - Math.min(0.35, Math.abs(clampedDiff) * 0.25);
+
+        item.style.transform = `perspective(1200px) rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`;
+        item.style.opacity = `${opacity}`;
+      });
+
+      ticking3D = false;
+    }
+
+    function onCarouselScroll() {
+      updateCarouselArrows();
+      if (!ticking3D) {
+        requestAnimationFrame(update3DBoxRotation);
+        ticking3D = true;
+      }
+    }
+
+    carouselViewport.addEventListener('scroll', onCarouselScroll, { passive: true });
+    window.addEventListener('resize', () => {
+      updateCarouselArrows();
+      update3DBoxRotation();
+    });
+    setTimeout(() => {
+      updateCarouselArrows();
+      update3DBoxRotation();
+    }, 150);
   }
 
   // =========================================================================
