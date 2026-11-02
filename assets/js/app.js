@@ -1,5 +1,5 @@
 /**
- * MADINMA COLLECTIONS — APPLE VISION PRO PLATFORM
+ * MADINMA HAVEN — APPLE VISION PRO PLATFORM
  * Sticky localnav blur, smooth scroll navigation, and 360 specification modal.
  */
 

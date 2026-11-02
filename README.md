@@ -1,6 +1,6 @@
-# Madinma Collections
+# Madinma Haven
 
-Ultra-luxury, Apple Vision Pro–grade web storefront for **Madinma Collections** — stocking 100% authentic perfumes, concentrated oils, body mists, deodorants, skincare, luxury bags, jewelry, and shoes with doorstep delivery across all 36 Nigerian states.
+Ultra-luxury, Apple Vision Pro–grade web storefront for **Madinma Haven** — stocking 100% authentic perfumes, concentrated oils, body mists, deodorants, skincare, luxury bags, jewelry, and shoes with doorstep delivery across all 36 Nigerian states.
 
 ## WhatsApp Concierge
 - **Direct Order Desk:** [+234 903 240 7144](https://wa.me/2349032407144)
