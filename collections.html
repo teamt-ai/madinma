@@ -115,7 +115,7 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="assets/js/products.js?v=127"></script>
+  <script src="assets/js/products.js?v=129"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const searchInput = document.getElementById('catalog-search');
@@ -255,8 +255,13 @@
         renderProducts();
       });
 
-      // Listen for catalog updates from admin in other tabs
+      // Listen for catalog updates from admin or sync
       window.addEventListener('madinma-catalog-updated', () => {
+        renderCategoryPills();
+        renderProducts();
+      });
+
+      window.addEventListener('madinma-catalog-synced', () => {
         renderCategoryPills();
         renderProducts();
       });
@@ -268,9 +273,17 @@
         }
       });
 
-      // Initial Mount
+      // Initial Mount (Instant from cache)
       renderCategoryPills();
       renderProducts();
+
+      // Background Cloud Synchronization from Supabase
+      if (typeof MadinmaCatalog.syncFromCloud === 'function') {
+        MadinmaCatalog.syncFromCloud().then(() => {
+          renderCategoryPills();
+          renderProducts();
+        }).catch(err => console.warn('Supabase background sync warning:', err));
+      }
     });
   </script>
 </body>

@@ -414,11 +414,95 @@ const DEFAULT_PRODUCTS = [
 
 const STORAGE_KEY = "madinma_catalog_v1";
 
+const SUPABASE_CONFIG = {
+  url: "https://pseyowecodortdepdcgu.supabase.co",
+  key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzZXlvd2Vjb2RvcnRkZXBkY2d1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NDU1NTg5MSwiZXhwIjoyMTAwMTMxODkxfQ.BpD8G_z7Jo04cGER85kXqT0Qaj0y020krZ2rjR6Y-wA",
+  bucket: "madinma-images",
+  catalogFilename: "products.json"
+};
+
 /**
- * Global MadinmaCatalog API
+ * Global MadinmaCatalog API with Supabase Cloud Sync
  */
 window.MadinmaCatalog = {
-  // Get all products (from localStorage or initialize with defaults)
+  supabase: SUPABASE_CONFIG,
+
+  // Get public image URL from bucket
+  getPublicImageUrl(filename) {
+    return `${SUPABASE_CONFIG.url}/storage/v1/object/public/${SUPABASE_CONFIG.bucket}/${filename}`;
+  },
+
+  // Upload an image file or Blob directly to Supabase Storage
+  async uploadImage(fileOrBlob, customName = "") {
+    try {
+      const ext = fileOrBlob.type === "image/png" ? "png" : fileOrBlob.type === "image/webp" ? "webp" : "jpg";
+      const cleanName = customName || `prod_${Date.now()}_${Math.random().toString(36).substr(2, 6)}.${ext}`;
+      const uploadUrl = `${SUPABASE_CONFIG.url}/storage/v1/object/${SUPABASE_CONFIG.bucket}/${cleanName}`;
+
+      const response = await fetch(uploadUrl, {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_CONFIG.key,
+          "Authorization": `Bearer ${SUPABASE_CONFIG.key}`,
+          "Content-Type": fileOrBlob.type || "image/jpeg",
+          "x-upsert": "true"
+        },
+        body: fileOrBlob
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Upload failed (${response.status}): ${errText}`);
+      }
+
+      return this.getPublicImageUrl(cleanName);
+    } catch (err) {
+      console.error("Supabase Storage Upload Error:", err);
+      throw err;
+    }
+  },
+
+  // Sync catalog from Supabase Cloud
+  async syncFromCloud() {
+    try {
+      const cloudUrl = `${SUPABASE_CONFIG.url}/storage/v1/object/public/${SUPABASE_CONFIG.bucket}/${SUPABASE_CONFIG.catalogFilename}?t=${Date.now()}`;
+      const res = await fetch(cloudUrl, { cache: "no-store" });
+      if (res.ok) {
+        const cloudProducts = await res.json();
+        if (Array.isArray(cloudProducts) && cloudProducts.length > 0) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudProducts));
+          window.dispatchEvent(new CustomEvent("madinma-catalog-synced", { detail: cloudProducts }));
+          return cloudProducts;
+        }
+      }
+    } catch (e) {
+      console.warn("Supabase Cloud Sync warning (using local catalog):", e);
+    }
+    return this.getAll();
+  },
+
+  // Push catalog to Supabase Cloud
+  async pushToCloud(products) {
+    try {
+      const uploadUrl = `${SUPABASE_CONFIG.url}/storage/v1/object/${SUPABASE_CONFIG.bucket}/${SUPABASE_CONFIG.catalogFilename}`;
+      const res = await fetch(uploadUrl, {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_CONFIG.key,
+          "Authorization": `Bearer ${SUPABASE_CONFIG.key}`,
+          "Content-Type": "application/json",
+          "x-upsert": "true"
+        },
+        body: JSON.stringify(products, null, 2)
+      });
+      return res.ok;
+    } catch (e) {
+      console.error("Failed to push catalog to Supabase:", e);
+      return false;
+    }
+  },
+
+  // Get all products (instant read from localStorage or defaults)
   getAll() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -431,16 +515,17 @@ window.MadinmaCatalog = {
     } catch (e) {
       console.warn("Could not load from localStorage, using defaults", e);
     }
-    // Save defaults
     this.saveAll(DEFAULT_PRODUCTS);
     return DEFAULT_PRODUCTS;
   },
 
-  // Save all products to localStorage
+  // Save all products: updates localStorage and background syncs to Supabase Cloud
   saveAll(products) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
       window.dispatchEvent(new CustomEvent("madinma-catalog-updated", { detail: products }));
+      // Push to Supabase Cloud
+      this.pushToCloud(products).catch(err => console.warn("Background cloud push error:", err));
       return true;
     } catch (e) {
       console.error("Failed to save to localStorage", e);
@@ -449,7 +534,7 @@ window.MadinmaCatalog = {
   },
 
   // Add a new product
-  add(productData) {
+  async add(productData) {
     const products = this.getAll();
     const newProduct = {
       id: "prod-" + Date.now() + "-" + Math.random().toString(36).substr(2, 5),
@@ -457,38 +542,42 @@ window.MadinmaCatalog = {
       title: productData.title || "Untitled Product",
       price: Number(productData.price) || 0,
       description: productData.description || "",
-      image: productData.image || "assets/images/fragrances-1.jpg",
+      image: productData.image || "assets/images/fragrances-1.jpg?v=11",
       inStock: productData.inStock !== false,
       createdAt: new Date().toISOString()
     };
     products.unshift(newProduct);
     this.saveAll(products);
+    await this.pushToCloud(products);
     return newProduct;
   },
 
   // Update existing product
-  update(id, updatedFields) {
+  async update(id, updatedFields) {
     const products = this.getAll();
     const idx = products.findIndex((p) => p.id === id);
     if (idx !== -1) {
       products[idx] = { ...products[idx], ...updatedFields };
       this.saveAll(products);
+      await this.pushToCloud(products);
       return products[idx];
     }
     return null;
   },
 
   // Delete product
-  delete(id) {
+  async delete(id) {
     let products = this.getAll();
     products = products.filter((p) => p.id !== id);
     this.saveAll(products);
+    await this.pushToCloud(products);
     return true;
   },
 
   // Reset to default factory products
-  resetToDefaults() {
+  async resetToDefaults() {
     this.saveAll(DEFAULT_PRODUCTS);
+    await this.pushToCloud(DEFAULT_PRODUCTS);
     return DEFAULT_PRODUCTS;
   },
 
@@ -496,7 +585,6 @@ window.MadinmaCatalog = {
   getCategories() {
     const products = this.getAll();
     const cats = new Set();
-    // Keep 14 primary categories ordered
     const primary = [
       "Perfumes",
       "Body mist",
@@ -525,7 +613,7 @@ window.MadinmaCatalog = {
     return "₦" + Number(amount || 0).toLocaleString("en-NG");
   },
 
-  // Build direct WhatsApp order link
+  // Build direct WhatsApp order link to +234 903 240 7144
   getWhatsAppOrderLink(product) {
     const phone = "2349032407144";
     const text = `Hello Madinma Haven, I would like to order:\n\n*Product:* ${product.title}\n*Category:* ${product.category}\n*Price:* ${this.formatPrice(product.price)}\n\nPlease confirm availability and delivery to my location. Thank you!`;

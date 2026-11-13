@@ -82,6 +82,13 @@
         <div class="admin-stat-num" id="stat-total-instock">0</div>
         <div class="admin-stat-label">Active &bull; In Stock</div>
       </div>
+      <div class="admin-stat-card" style="border: 1px solid rgba(16,185,129,0.3); background: rgba(16,185,129,0.04);">
+        <div class="admin-stat-num" id="stat-cloud-status" style="font-size: 19px; color: #10b981;">● Connected</div>
+        <div class="admin-stat-label" style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <span>Supabase Storage</span>
+          <button type="button" id="admin-sync-cloud-btn" style="background: none; border: none; color: #0071e3; font-size: 11.5px; font-weight: 600; cursor: pointer; text-decoration: underline;">Sync Cloud</button>
+        </div>
+      </div>
     </section>
 
     <!-- Section 1: Add New Product -->
@@ -280,21 +287,30 @@
           </div>
 
           <div>
-            <label class="admin-label">Image URL / Path</label>
-            <input type="text" id="edit-prod-image" class="admin-input" required />
+            <label class="admin-label">Product Image</label>
+            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+              <label class="admin-file-upload-btn" style="flex: 1; text-align: center; cursor: pointer; padding: 8px 12px; font-size: 13px;">
+                📁 Upload New Photo File...
+                <input type="file" id="edit-prod-file" accept="image/*" style="display: none;" />
+              </label>
+            </div>
+            <input type="text" id="edit-prod-image" class="admin-input" placeholder="Image URL or Supabase Cloud Path" required />
+            <div id="edit-img-preview-wrap" style="margin-top: 10px; display: none;">
+              <img id="edit-img-preview-tag" src="" alt="Edit Preview" style="max-height: 90px; border-radius: 8px; object-fit: cover; border: 1px solid rgba(0,0,0,0.1);" />
+            </div>
           </div>
         </div>
 
         <div style="margin-top: 24px; display: flex; justify-content: flex-end; gap: 10px;">
           <button type="button" class="admin-icon-btn" id="edit-cancel-btn">Cancel</button>
-          <button type="submit" class="admin-submit-btn">Save Changes</button>
+          <button type="submit" class="admin-submit-btn" id="edit-submit-btn">Save Changes to Cloud</button>
         </div>
       </form>
     </div>
   </dialog>
 
   <!-- Scripts -->
-  <script src="assets/js/products.js?v=127"></script>
+  <script src="assets/js/products.js?v=129"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // 1. Passcode Authentication Gate
@@ -337,10 +353,13 @@
       const imgPreviewTag = document.getElementById('img-preview-tag');
       const imgRemoveBtn = document.getElementById('img-remove-btn');
       const addForm = document.getElementById('add-product-form');
+      const submitProductBtn = document.getElementById('submit-product-btn');
       
       const statTotalProds = document.getElementById('stat-total-products');
       const statTotalCats = document.getElementById('stat-total-categories');
       const statTotalStock = document.getElementById('stat-total-instock');
+      const statCloudStatus = document.getElementById('stat-cloud-status');
+      const syncCloudBtn = document.getElementById('admin-sync-cloud-btn');
 
       const adminTableBody = document.getElementById('admin-table-body');
       const adminTableCount = document.getElementById('admin-table-count');
@@ -351,9 +370,55 @@
       const editForm = document.getElementById('edit-product-form');
       const editCloseBtn = document.getElementById('edit-dialog-close');
       const editCancelBtn = document.getElementById('edit-cancel-btn');
+      const editSubmitBtn = document.getElementById('edit-submit-btn');
       const editCategorySelect = document.getElementById('edit-prod-category');
+      const editFileInput = document.getElementById('edit-prod-file');
+      const editImgUrlInput = document.getElementById('edit-prod-image');
+      const editImgPreviewWrap = document.getElementById('edit-img-preview-wrap');
+      const editImgPreviewTag = document.getElementById('edit-img-preview-tag');
 
-      let currentImageDataUrl = "";
+      let pendingAddBlob = null;
+      let pendingEditBlob = null;
+
+      // Image Compression & Processing Helper
+      function compressImageFile(file, maxDim = 1200, quality = 0.85) {
+        return new Promise((resolve, reject) => {
+          if (!file || !file.type.startsWith('image/')) {
+            return reject(new Error('Invalid image file'));
+          }
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              let width = img.width;
+              let height = img.height;
+
+              if (width > height && width > maxDim) {
+                height = Math.round((height * maxDim) / width);
+                width = maxDim;
+              } else if (height > maxDim) {
+                width = Math.round((width * maxDim) / height);
+                height = maxDim;
+              }
+
+              canvas.width = width;
+              canvas.height = height;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, width, height);
+
+              canvas.toBlob((blob) => {
+                const dataUrl = canvas.toDataURL('image/jpeg', quality);
+                resolve({ blob, dataUrl });
+              }, 'image/jpeg', quality);
+            };
+            img.onerror = () => reject(new Error('Failed to load image'));
+            img.src = e.target.result;
+          };
+          reader.onerror = () => reject(new Error('Failed to read file'));
+          reader.readAsDataURL(file);
+        });
+      }
 
       // Populate Categories in Selects
       function populateCategories() {
@@ -386,88 +451,100 @@
         }
       });
 
-      // Image Upload Compression (Max 800px width/height, WebP/JPEG)
-      function processImageFile(file) {
-        if (!file || !file.type.startsWith('image/')) return;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            const MAX_DIM = 800;
-            let width = img.width;
-            let height = img.height;
-
-            if (width > height && width > MAX_DIM) {
-              height = Math.round((height * MAX_DIM) / width);
-              width = MAX_DIM;
-            } else if (height > MAX_DIM) {
-              width = Math.round((width * MAX_DIM) / height);
-              height = MAX_DIM;
-            }
-
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-
-            currentImageDataUrl = canvas.toDataURL('image/jpeg', 0.82);
-            imgPreviewTag.src = currentImageDataUrl;
+      // Handle Add Form File Input
+      fileInput.addEventListener('change', async (e) => {
+        if (e.target.files && e.target.files[0]) {
+          try {
+            const result = await compressImageFile(e.target.files[0]);
+            pendingAddBlob = result.blob;
+            imgPreviewTag.src = result.dataUrl;
             imgPreviewWrap.style.display = 'block';
             imgUrlInput.value = '';
-          };
-          img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-
-      fileInput.addEventListener('change', (e) => {
-        if (e.target.files && e.target.files[0]) {
-          processImageFile(e.target.files[0]);
+          } catch (err) {
+            console.error('File compression error:', err);
+          }
         }
       });
 
       imgUrlInput.addEventListener('input', (e) => {
         if (e.target.value.trim()) {
-          currentImageDataUrl = e.target.value.trim();
-          imgPreviewTag.src = currentImageDataUrl;
+          pendingAddBlob = null;
+          fileInput.value = '';
+          imgPreviewTag.src = e.target.value.trim();
           imgPreviewWrap.style.display = 'block';
         }
       });
 
       imgRemoveBtn.addEventListener('click', () => {
-        currentImageDataUrl = "";
-        fileInput.value = "";
-        imgUrlInput.value = "";
+        pendingAddBlob = null;
+        fileInput.value = '';
+        imgUrlInput.value = '';
         imgPreviewWrap.style.display = 'none';
-        imgPreviewTag.src = "";
+        imgPreviewTag.src = '';
+      });
+
+      // Handle Edit Form File Input
+      editFileInput.addEventListener('change', async (e) => {
+        if (e.target.files && e.target.files[0]) {
+          try {
+            const result = await compressImageFile(e.target.files[0]);
+            pendingEditBlob = result.blob;
+            editImgPreviewTag.src = result.dataUrl;
+            editImgPreviewWrap.style.display = 'block';
+            editImgUrlInput.value = 'Will be uploaded to Supabase Storage on save';
+          } catch (err) {
+            console.error('Edit file compression error:', err);
+          }
+        }
       });
 
       // Submit Product
-      addForm.addEventListener('submit', (e) => {
+      addForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const title = document.getElementById('prod-title').value.trim();
-        const category = categorySelect.value;
-        const price = Number(document.getElementById('prod-price').value) || 0;
-        const inStock = document.getElementById('prod-instock').value === 'true';
-        const description = document.getElementById('prod-desc').value.trim();
+        const origBtnText = submitProductBtn.innerHTML;
 
-        const image = currentImageDataUrl || imgUrlInput.value.trim() || 'assets/images/fragrances-1.jpg?v=11';
+        try {
+          submitProductBtn.disabled = true;
+          submitProductBtn.innerHTML = `<span>⏳ Uploading to Supabase...</span>`;
 
-        MadinmaCatalog.add({
-          title,
-          category,
-          price,
-          description,
-          image,
-          inStock
-        });
+          const title = document.getElementById('prod-title').value.trim();
+          const category = categorySelect.value;
+          const price = Number(document.getElementById('prod-price').value) || 0;
+          const inStock = document.getElementById('prod-instock').value === 'true';
+          const description = document.getElementById('prod-desc').value.trim();
 
-        alert(`✅ Product "${title}" published successfully!`);
-        addForm.reset();
-        imgRemoveBtn.click();
-        populateCategories();
-        renderAdminDashboard();
+          let imageUrl = imgUrlInput.value.trim() || 'assets/images/fragrances-1.jpg?v=11';
+
+          if (pendingAddBlob) {
+            submitProductBtn.innerHTML = `<span>⏳ Uploading Image to Supabase Storage...</span>`;
+            const cleanSlug = title.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 24) || 'product';
+            const filename = `${cleanSlug}_${Date.now()}.jpg`;
+            imageUrl = await MadinmaCatalog.uploadImage(pendingAddBlob, filename);
+          }
+
+          submitProductBtn.innerHTML = `<span>⏳ Saving Catalog to Cloud...</span>`;
+          await MadinmaCatalog.add({
+            title,
+            category,
+            price,
+            description,
+            image: imageUrl,
+            inStock
+          });
+
+          alert(`✅ Product "${title}" published & saved to Supabase Cloud!`);
+          addForm.reset();
+          pendingAddBlob = null;
+          imgRemoveBtn.click();
+          populateCategories();
+          renderAdminDashboard();
+        } catch (err) {
+          console.error("Error adding product:", err);
+          alert("⚠️ Error uploading product to Supabase: " + (err.message || err));
+        } finally {
+          submitProductBtn.disabled = false;
+          submitProductBtn.innerHTML = origBtnText;
+        }
       });
 
       // Render Admin Table & Stats
@@ -539,22 +616,22 @@
 
         // Bind table actions
         adminTableBody.querySelectorAll('.toggle-stock-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
+          btn.addEventListener('click', async () => {
             const id = btn.getAttribute('data-id');
             const p = MadinmaCatalog.getAll().find(item => item.id === id);
             if (p) {
-              MadinmaCatalog.update(id, { inStock: !(p.inStock !== false) });
+              await MadinmaCatalog.update(id, { inStock: !(p.inStock !== false) });
               renderAdminDashboard();
             }
           });
         });
 
         adminTableBody.querySelectorAll('.delete-prod-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
+          btn.addEventListener('click', async () => {
             const id = btn.getAttribute('data-id');
             const p = MadinmaCatalog.getAll().find(item => item.id === id);
-            if (p && confirm(`Delete "${p.title}" from catalog?`)) {
-              MadinmaCatalog.delete(id);
+            if (p && confirm(`Delete "${p.title}" from catalog and Supabase Cloud?`)) {
+              await MadinmaCatalog.delete(id);
               renderAdminDashboard();
             }
           });
@@ -571,7 +648,11 @@
               document.getElementById('edit-prod-price').value = p.price;
               document.getElementById('edit-prod-instock').value = (p.inStock !== false) ? 'true' : 'false';
               document.getElementById('edit-prod-desc').value = p.description || '';
-              document.getElementById('edit-prod-image').value = p.image;
+              editImgUrlInput.value = p.image;
+              pendingEditBlob = null;
+              editFileInput.value = '';
+              editImgPreviewTag.src = p.image;
+              editImgPreviewWrap.style.display = 'block';
               editDialog.showModal();
             }
           });
@@ -582,31 +663,68 @@
       adminCatFilter.addEventListener('change', renderAdminDashboard);
 
       // Edit Form Submit
-      editForm.addEventListener('submit', (e) => {
+      editForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const id = document.getElementById('edit-prod-id').value;
-        const title = document.getElementById('edit-prod-title').value.trim();
-        const category = editCategorySelect.value;
-        const price = Number(document.getElementById('edit-prod-price').value) || 0;
-        const inStock = document.getElementById('edit-prod-instock').value === 'true';
-        const description = document.getElementById('edit-prod-desc').value.trim();
-        const image = document.getElementById('edit-prod-image').value.trim();
+        const origBtnText = editSubmitBtn.innerHTML;
 
-        MadinmaCatalog.update(id, {
-          title,
-          category,
-          price,
-          inStock,
-          description,
-          image
-        });
+        try {
+          editSubmitBtn.disabled = true;
+          editSubmitBtn.innerHTML = `<span>⏳ Saving to Supabase...</span>`;
 
-        editDialog.close();
-        renderAdminDashboard();
+          const id = document.getElementById('edit-prod-id').value;
+          const title = document.getElementById('edit-prod-title').value.trim();
+          const category = editCategorySelect.value;
+          const price = Number(document.getElementById('edit-prod-price').value) || 0;
+          const inStock = document.getElementById('edit-prod-instock').value === 'true';
+          const description = document.getElementById('edit-prod-desc').value.trim();
+          let image = editImgUrlInput.value.trim();
+
+          if (pendingEditBlob) {
+            editSubmitBtn.innerHTML = `<span>⏳ Uploading Image...</span>`;
+            const cleanSlug = title.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 24) || 'product';
+            const filename = `${cleanSlug}_${Date.now()}.jpg`;
+            image = await MadinmaCatalog.uploadImage(pendingEditBlob, filename);
+          }
+
+          await MadinmaCatalog.update(id, {
+            title,
+            category,
+            price,
+            inStock,
+            description,
+            image
+          });
+
+          editDialog.close();
+          renderAdminDashboard();
+        } catch (err) {
+          console.error("Error editing product:", err);
+          alert("⚠️ Error saving product: " + (err.message || err));
+        } finally {
+          editSubmitBtn.disabled = false;
+          editSubmitBtn.innerHTML = origBtnText;
+        }
       });
 
       editCloseBtn.addEventListener('click', () => editDialog.close());
       editCancelBtn.addEventListener('click', () => editDialog.close());
+
+      // Cloud Sync Button
+      if (syncCloudBtn) {
+        syncCloudBtn.addEventListener('click', async () => {
+          syncCloudBtn.textContent = 'Syncing...';
+          try {
+            await MadinmaCatalog.syncFromCloud();
+            populateCategories();
+            renderAdminDashboard();
+            alert('✅ Catalog successfully synchronized with Supabase Cloud!');
+          } catch (e) {
+            alert('⚠️ Sync error: ' + e.message);
+          } finally {
+            syncCloudBtn.textContent = 'Sync Cloud';
+          }
+        });
+      }
 
       // Export JSON
       document.getElementById('export-json-btn').addEventListener('click', () => {
@@ -627,15 +745,16 @@
         const file = e.target.files && e.target.files[0];
         if (!file) return;
         const reader = new FileReader();
-        reader.onload = (evt) => {
+        reader.onload = async (evt) => {
           try {
             const imported = JSON.parse(evt.target.result);
             if (Array.isArray(imported)) {
-              if (confirm(`Import ${imported.length} products? This will update your store catalog.`)) {
+              if (confirm(`Import ${imported.length} products to Supabase Cloud? This will replace current catalog.`)) {
                 MadinmaCatalog.saveAll(imported);
+                await MadinmaCatalog.pushToCloud(imported);
                 populateCategories();
                 renderAdminDashboard();
-                alert(`✅ Successfully imported ${imported.length} products!`);
+                alert(`✅ Successfully imported ${imported.length} products to Supabase!`);
               }
             } else {
               alert("Invalid JSON format. Expected an array of products.");
@@ -648,18 +767,26 @@
       });
 
       // Reset to Factory
-      document.getElementById('reset-factory-btn').addEventListener('click', () => {
-        if (confirm("Reset catalog to the factory 42 authentic luxury products? Any custom additions will be cleared.")) {
-          MadinmaCatalog.resetToDefaults();
+      document.getElementById('reset-factory-btn').addEventListener('click', async () => {
+        if (confirm("Reset catalog to the factory 42 authentic luxury products on Supabase Cloud? Any custom additions will be cleared.")) {
+          await MadinmaCatalog.resetToDefaults();
           populateCategories();
           renderAdminDashboard();
-          alert("✅ Catalog reset to factory defaults!");
+          alert("✅ Catalog reset to factory defaults on Supabase!");
         }
       });
 
-      // Initial Load
+      // Initial Load & Background Cloud Sync
       populateCategories();
       renderAdminDashboard();
+
+      MadinmaCatalog.syncFromCloud().then(() => {
+        populateCategories();
+        renderAdminDashboard();
+        if (statCloudStatus) statCloudStatus.textContent = '● Connected';
+      }).catch(err => {
+        console.warn('Initial cloud sync error:', err);
+      });
     });
   </script>
 </body>
