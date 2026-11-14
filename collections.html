@@ -3,226 +3,1197 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>All Collections &amp; Prices &bull; Madinma Haven</title>
-  <meta name="description" content="Browse authentic designer perfumes, concentrated oils, body mists, deodorants, skincare, luxury bags, jewelry, and shoes with complete transparent prices. Delivered across all 36 Nigerian states." />
+  <title>Luxury Collections &bull; Madinma Haven</title>
+  <meta name="description" content="Explore genuine designer perfumes, concentrated oils, fine mists, roll-ons, skincare, and luxury accessories on illuminated boutique glass shelves with transparent pricing." />
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
   
   <!-- Apple Vision Pro Design System Stylesheet -->
-  <link rel="stylesheet" href="assets/css/style.css?v=130" />
+  <link rel="stylesheet" href="assets/css/style.css?v=132" />
+
+  <style>
+    /* =========================================================================
+       EXCLUSIVE BOUTIQUE GLASS SHELF SHOWROOM STYLES
+       ========================================================================= */
+    :root {
+      --shelf-glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.06) 40%, rgba(255, 255, 255, 0.02) 100%);
+      --shelf-glass-border: rgba(255, 255, 255, 0.75);
+      --shelf-glow: rgba(140, 210, 255, 0.28);
+    }
+
+    body.showroom-body {
+      background: #08090d;
+      background-image: 
+        radial-gradient(circle at 50% -20%, rgba(45, 65, 105, 0.45) 0%, transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(25, 35, 55, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 20% 70%, rgba(20, 25, 40, 0.4) 0%, transparent 60%);
+      background-attachment: fixed;
+      color: #f5f5f7;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Top Frosted Local Navigation */
+    .showroom-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 11, 16, 0.82);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 14px 24px;
+    }
+
+    .showroom-nav-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .showroom-brand {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .showroom-brand-tag {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 3px 9px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      color: #7dd3fc;
+    }
+
+    .showroom-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .showroom-nav-link {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .showroom-nav-link:hover,
+    .showroom-nav-link.active {
+      color: #ffffff;
+    }
+
+    .showroom-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 18px;
+      background: #25D366;
+      color: #ffffff;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .showroom-nav-btn:hover {
+      background: #1eb855;
+      transform: scale(1.04);
+      box-shadow: 0 6px 18px rgba(37, 211, 102, 0.45);
+    }
+
+    /* Showroom Stage Header */
+    .showroom-header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px 30px;
+      text-align: center;
+      position: relative;
+    }
+
+    .showroom-header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #e0f2fe;
+      margin-bottom: 20px;
+      backdrop-filter: blur(12px);
+    }
+
+    .showroom-header-title {
+      font-size: clamp(34px, 5.5vw, 54px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin: 0 0 16px;
+      background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.72) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .showroom-header-desc {
+      font-size: clamp(15px, 2vw, 17px);
+      color: rgba(255, 255, 255, 0.65);
+      max-width: 680px;
+      margin: 0 auto;
+      line-height: 1.55;
+    }
+
+    /* Glass Shelf Filter & Search Toolbar */
+    .showroom-toolbar {
+      position: sticky;
+      top: 59px;
+      z-index: 80;
+      background: rgba(8, 9, 13, 0.78);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 16px 24px;
+      margin-bottom: 40px;
+    }
+
+    .showroom-toolbar-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .showroom-search-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .showroom-search-box {
+      position: relative;
+      flex: 1;
+      min-width: 280px;
+      max-width: 460px;
+    }
+
+    .showroom-search-box svg {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.45);
+      pointer-events: none;
+    }
+
+    .showroom-search-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 16px 0 46px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 22px;
+      color: #ffffff;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.25s ease;
+      font-family: inherit;
+    }
+
+    .showroom-search-input:focus {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.2);
+    }
+
+    .showroom-count-badge {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.55);
+      font-weight: 500;
+    }
+
+    .showroom-cat-scroll {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .showroom-cat-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .showroom-cat-pill {
+      white-space: nowrap;
+      padding: 8px 18px;
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      font-family: inherit;
+    }
+
+    .showroom-cat-pill:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .showroom-cat-pill.active {
+      background: #ffffff;
+      color: #0b0c10;
+      font-weight: 600;
+      border-color: #ffffff;
+      box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
+    }
+
+    /* =========================================================================
+       ILLUMINATED BOUTIQUE GLASS SHELF SYSTEM
+       ========================================================================= */
+    .showroom-shelves-container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+    }
+
+    /* Shelf Unit */
+    .glass-shelf-tier {
+      position: relative;
+      margin-bottom: 70px;
+    }
+
+    /* Overhead Down-Light Glow */
+    .shelf-lighting-bar {
+      position: absolute;
+      top: -30px;
+      left: 10%;
+      right: 10%;
+      height: 40px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(200, 230, 255, 0.25) 0%, transparent 70%);
+      filter: blur(12px);
+      pointer-events: none;
+    }
+
+    /* Grid of products sitting on the glass shelf */
+    .shelf-products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 32px 28px;
+      position: relative;
+      z-index: 2;
+      padding-bottom: 24px;
+    }
+
+    /* Architectural Glass Plank Below Products */
+    .shelf-glass-plank {
+      position: relative;
+      width: 100%;
+      margin-top: -12px;
+      z-index: 1;
+    }
+
+    .shelf-glass-surface {
+      height: 18px;
+      background: var(--shelf-glass-bg);
+      border-top: 1.5px solid var(--shelf-glass-border);
+      border-radius: 12px 12px 4px 4px;
+      box-shadow: 
+        0 0 25px var(--shelf-glow),
+        0 1px 0 rgba(255, 255, 255, 0.95) inset;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .shelf-glass-edge {
+      height: 7px;
+      background: linear-gradient(90deg, 
+        rgba(140, 210, 255, 0.2) 0%, 
+        rgba(255, 255, 255, 0.9) 25%, 
+        rgba(180, 230, 255, 0.75) 50%, 
+        rgba(255, 255, 255, 0.9) 75%, 
+        rgba(140, 210, 255, 0.2) 100%
+      );
+      border-radius: 0 0 6px 6px;
+      box-shadow: 0 4px 18px rgba(56, 189, 248, 0.35);
+    }
+
+    .shelf-glass-shadow {
+      height: 24px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(0, 0, 0, 0.7) 0%, transparent 80%);
+      filter: blur(6px);
+    }
+
+    /* =========================================================================
+       INDIVIDUAL PRODUCT DISPLAY ON GLASS SHELF
+       ========================================================================= */
+    .glass-shelf-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      outline: none;
+      padding-top: 10px;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-shelf-item:hover {
+      transform: translateY(-10px);
+    }
+
+    /* Bottle Container */
+    .shelf-bottle-wrap {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+      background: radial-gradient(circle at 50% 60%, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+      transition: all 0.35s ease;
+    }
+
+    .glass-shelf-item:hover .shelf-bottle-wrap {
+      background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.15) 0%, transparent 75%);
+    }
+
+    /* Realistic Glass Mirror Reflection Beneath Bottle */
+    .shelf-bottle-img {
+      max-width: 82%;
+      max-height: 220px;
+      object-fit: contain;
+      filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.5));
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      -webkit-box-reflect: below 2px linear-gradient(transparent 55%, rgba(255, 255, 255, 0.28));
+    }
+
+    .glass-shelf-item:hover .shelf-bottle-img {
+      transform: scale(1.06);
+    }
+
+    /* Category Pill */
+    .shelf-item-badge {
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      padding: 3px 10px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.85);
+      letter-spacing: 0.02em;
+    }
+
+    /* Tap to Inspect Indicator */
+    .shelf-inspect-hint {
+      position: absolute;
+      bottom: 22px;
+      padding: 4px 12px;
+      background: rgba(255, 255, 255, 0.95);
+      color: #0b0c10;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .glass-shelf-item:hover .shelf-inspect-hint {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Engraved Crystal Plaque Under Each Item */
+    .shelf-item-plaque {
+      width: 100%;
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      transition: all 0.25s ease;
+    }
+
+    .glass-shelf-item:hover .shelf-item-plaque {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(56, 189, 248, 0.35);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .shelf-item-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+
+    .shelf-item-price {
+      font-size: 15px;
+      font-weight: 700;
+      color: #38bdf8;
+      letter-spacing: -0.01em;
+    }
+
+    /* =========================================================================
+       THE CINEMATIC SPATIAL STAGE (THE COMMAND EXECUTION)
+       - Image comes out of the shelf, moves to the right, and becomes bigger
+       - Price shows at the left
+       - After 3s, price is removed and description shows at left side
+       ========================================================================= */
+    .spatial-stage-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: rgba(5, 6, 9, 0.86);
+      backdrop-filter: blur(36px) saturate(190%);
+      -webkit-backdrop-filter: blur(36px) saturate(190%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s;
+    }
+
+    .spatial-stage-overlay.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* The Cinema Stage Unit */
+    .spatial-cinema-stage {
+      position: relative;
+      width: 100%;
+      max-width: 1140px;
+      min-height: 580px;
+      background: linear-gradient(135deg, rgba(20, 24, 35, 0.92) 0%, rgba(12, 14, 22, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 36px;
+      box-shadow: 
+        0 40px 100px rgba(0, 0, 0, 0.8),
+        0 1px 0 rgba(255, 255, 255, 0.3) inset,
+        0 0 60px rgba(56, 189, 248, 0.12);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      display: grid;
+      grid-template-columns: 1.05fr 1.15fr;
+      overflow: hidden;
+      transform: scale(0.92) translateY(24px);
+      transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .spatial-stage-overlay.active .spatial-cinema-stage {
+      transform: scale(1) translateY(0);
+    }
+
+    /* Close Button (Return to shelf) */
+    .stage-close-btn {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      z-index: 30;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .stage-close-btn:hover {
+      background: rgba(255, 255, 255, 0.22);
+      transform: scale(1.05);
+    }
+
+    /* Shelf Prev / Next Floating Arrows */
+    .stage-nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 25;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(16px);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .stage-nav-arrow:hover {
+      background: rgba(255, 255, 255, 0.28);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .stage-nav-arrow.prev {
+      left: -24px;
+    }
+
+    .stage-nav-arrow.next {
+      right: -24px;
+    }
+
+    /* =========================================================================
+       RIGHT SIDE: THE IMAGE COMES OUT OF THE SHELF, MOVES RIGHT, BECOMES BIGGER
+       ========================================================================= */
+    .stage-hero-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 40px;
+      background: radial-gradient(circle at 60% 45%, rgba(45, 60, 90, 0.35) 0%, rgba(15, 18, 28, 0.4) 60%, transparent 100%);
+      overflow: hidden;
+      order: 2;
+    }
+
+    /* Floating Circular Glass Pedestal */
+    .stage-pedestal-platform {
+      position: absolute;
+      bottom: 50px;
+      width: 70%;
+      height: 38px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(56, 189, 248, 0.12) 100%);
+      border: 1.5px solid rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.8),
+        0 0 35px rgba(56, 189, 248, 0.35);
+      transform: perspective(600px) rotateX(46deg);
+      pointer-events: none;
+    }
+
+    /* The Scaled Up Hero Image */
+    .stage-hero-img-wrap {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 440px;
+      height: 440px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stage-hero-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 30px 45px rgba(0, 0, 0, 0.7));
+      transform: scale(0.8) translate3d(40px, 30px, 0);
+      opacity: 0;
+      transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+      -webkit-box-reflect: below 2px linear-gradient(transparent 65%, rgba(255, 255, 255, 0.25));
+    }
+
+    .spatial-stage-overlay.active .stage-hero-img {
+      transform: scale(1.18) translate3d(0, 0, 0);
+      opacity: 1;
+    }
+
+    /* =========================================================================
+       LEFT SIDE: PRICE REVEAL (0-3s) -> TRANSITIONS TO DESCRIPTION (AFTER 3s)
+       ========================================================================= */
+    .stage-theater-left {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 50px 48px;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      order: 1;
+    }
+
+    .stage-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .stage-cat-chip {
+      padding: 5px 14px;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #7dd3fc;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .stage-stock-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: rgba(16, 185, 129, 0.16);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .stage-stock-glow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+    }
+
+    .stage-title {
+      font-size: clamp(26px, 3.2vw, 36px);
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin: 0 0 22px;
+    }
+
+    /* Mode Pill Switcher */
+    .stage-mode-switcher {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      padding: 4px;
+      margin-bottom: 24px;
+      width: fit-content;
+    }
+
+    .stage-mode-btn {
+      padding: 7px 18px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      font-family: inherit;
+    }
+
+    .stage-mode-btn.active {
+      background: #ffffff;
+      color: #0b0c10;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Dynamic Left Side Stage */
+    .stage-dynamic-content {
+      position: relative;
+      min-height: 210px;
+    }
+
+    /* PHASE 1: PRICE VIEW (INITIAL 3 SECONDS) */
+    .stage-view-price {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: auto;
+    }
+
+    .spatial-cinema-stage[data-active-view="desc"] .stage-view-price {
+      opacity: 0;
+      transform: translateY(-20px);
+      pointer-events: none;
+    }
+
+    .stage-price-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .stage-huge-price {
+      font-size: clamp(48px, 6vw, 68px);
+      font-weight: 900;
+      color: #38bdf8;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 24px;
+      text-shadow: 0 0 35px rgba(56, 189, 248, 0.45);
+    }
+
+    /* 3-Second Transition Progress Indicator */
+    .stage-timer-wrap {
+      width: 100%;
+      max-width: 340px;
+      margin-bottom: 24px;
+    }
+
+    .stage-timer-track {
+      width: 100%;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .stage-timer-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #38bdf8 0%, #34d399 100%);
+      border-radius: 3px;
+      box-shadow: 0 0 10px #38bdf8;
+      transition: width 3s linear;
+    }
+
+    .spatial-cinema-stage.animating-timer .stage-timer-bar {
+      width: 100%;
+    }
+
+    .stage-timer-caption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.55);
+      margin-top: 8px;
+    }
+
+    /* PHASE 2: DESCRIPTION VIEW (AFTER 3 SECONDS) */
+    .stage-view-desc {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .spatial-cinema-stage[data-active-view="desc"] .stage-view-desc {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .stage-desc-price-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 16px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 800;
+      color: #38bdf8;
+      margin-bottom: 14px;
+      width: fit-content;
+    }
+
+    .stage-desc-body {
+      font-size: 15.5px;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 20px;
+      max-height: 140px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .stage-desc-body::-webkit-scrollbar {
+      width: 4px;
+    }
+    .stage-desc-body::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+    }
+
+    .stage-perks-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .stage-perk-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Actions */
+    .stage-actions-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 14px;
+    }
+
+    .stage-wa-order-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 30px;
+      background: #25D366;
+      color: #ffffff;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .stage-wa-order-btn:hover {
+      background: #1eb855;
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5);
+    }
+
+    .stage-view-switch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 13px 22px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .stage-view-switch-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .spatial-cinema-stage {
+        grid-template-columns: 1fr;
+        max-height: 90vh;
+        overflow-y: auto;
+        border-radius: 28px;
+      }
+
+      .stage-hero-right {
+        order: 1;
+        padding: 30px 20px 20px;
+        min-height: 280px;
+      }
+
+      .stage-hero-img-wrap {
+        height: 260px;
+      }
+
+      .spatial-stage-overlay.active .stage-hero-img {
+        transform: scale(1.05) translate3d(0, 0, 0);
+      }
+
+      .stage-theater-left {
+        order: 2;
+        padding: 24px 22px 36px;
+        border-right: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .stage-huge-price {
+        font-size: 44px;
+      }
+
+      .stage-nav-arrow.prev {
+        left: 10px;
+      }
+
+      .stage-nav-arrow.next {
+        right: 10px;
+      }
+    }
+  </style>
 </head>
-<body class="apple-vision-body">
+<body class="showroom-body">
 
   <!-- =======================================================================
-       STICKY LOCAL NAVIGATION
+       1. BOUTIQUE LOCAL NAVIGATION
        ======================================================================= -->
-  <nav class="apple-localnav" id="localnav">
-    <div class="localnav-inner">
-      <div class="localnav-title">
-        <a href="index.html">Madinma Haven</a>
+  <nav class="showroom-nav">
+    <div class="showroom-nav-inner">
+      <a href="index.html" class="showroom-brand">
+        <span>Madinma Haven</span>
+        <span class="showroom-brand-tag">Boutique</span>
+      </a>
+
+      <div class="showroom-nav-links">
+        <a href="index.html#overview" class="showroom-nav-link">Overview</a>
+        <a href="collections.html" class="showroom-nav-link active">Collections</a>
+        <a href="order.html" class="showroom-nav-link">Order Desk</a>
+        <a href="admin.html" class="showroom-nav-link" style="opacity: 0.65;">Admin Portal</a>
       </div>
 
-      <div class="localnav-menu">
-        <a href="index.html#overview" class="localnav-link">Overview</a>
-        <a href="collections.html" class="localnav-link current" aria-current="page">Collections</a>
-        <a href="order.html" class="localnav-link">Order Desk</a>
-        <a href="admin.html" class="localnav-link" style="opacity: 0.65;" title="Store Admin Portal">Admin</a>
-      </div>
-
-      <div class="localnav-actions">
-        <a href="order.html" class="apple-btn apple-btn-primary">Order Now</a>
-      </div>
+      <a href="order.html" class="showroom-nav-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+        WhatsApp Order
+      </a>
     </div>
   </nav>
 
   <!-- =======================================================================
-       COLLECTIONS HERO HEADER
+       2. BOUTIQUE SHOWROOM HEADER
        ======================================================================= -->
-  <header class="collections-hero">
-    <div class="collections-hero-pill">
-      <span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:#10b981;"></span>
-      100% Authentic Guaranteed &bull; Delivery Across All 36 States
+  <header class="showroom-header">
+    <div class="showroom-header-badge">
+      <span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:#38bdf8; box-shadow:0 0 8px #38bdf8;"></span>
+      100% Authentic Luxury Guarantee &bull; Nationwide Doorstep Delivery
     </div>
-    <h1 class="collections-hero-title">The Complete Collections</h1>
-    <p class="collections-hero-desc">
-      Explore genuine designer perfumes, concentrated oils, fine mists, roll-ons, skincare, and luxury accessories with transparent pricing and direct WhatsApp order desk.
+    <h1 class="showroom-header-title">The Glass Shelf Collections</h1>
+    <p class="showroom-header-desc">
+      Explore our curated designer perfumes, concentrated oils, body mists, deodorants, skincare, and luxury accessories. Tap any product on the glass shelf to inspect its price and details.
     </p>
   </header>
 
   <!-- =======================================================================
-       STICKY FILTER & SEARCH CONTROLS
+       3. STICKY GLASS TOOLBAR (Search & Category Filters)
        ======================================================================= -->
-  <section class="catalog-controls" id="catalog-controls">
-    <div class="catalog-controls-inner">
-      <div class="catalog-search-row">
-        <div class="catalog-search-box">
+  <section class="showroom-toolbar">
+    <div class="showroom-toolbar-inner">
+      <div class="showroom-search-row">
+        <div class="showroom-search-box">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
           <input 
             type="search" 
-            id="catalog-search" 
-            class="catalog-search-input" 
-            placeholder="Search perfumes, mists, bags, shoes, prices..." 
+            id="showroom-search" 
+            class="showroom-search-input" 
+            placeholder="Search perfumes, mists, bags, prices..." 
             autocomplete="off"
           />
         </div>
-        <div class="catalog-count-badge" id="catalog-count-badge">
-          Showing 42 products
+
+        <div class="showroom-count-badge" id="showroom-count-badge">
+          Showing 42 products on shelves
         </div>
       </div>
 
-      <div class="catalog-category-scroll" id="catalog-categories-bar" role="tablist">
+      <div class="showroom-cat-scroll" id="showroom-cat-scroll" role="tablist">
         <!-- Dynamically injected category pills -->
       </div>
     </div>
   </section>
 
   <!-- =======================================================================
-       GLASS SHELF SHOWCASE DISPLAY
-       All authentic products presented on illuminated luxury glass shelving
+       4. ILLUMINATED MULTI-TIER GLASS SHELVES
        ======================================================================= -->
-  <main class="catalog-grid-container">
-    <div class="glass-shelf-display">
-      <div class="glass-shelf-row">
-        <div class="catalog-grid" id="catalog-products-grid">
-          <!-- Dynamically rendered products on glass shelves -->
-        </div>
-        <div class="glass-shelf-lip" aria-hidden="true"></div>
-      </div>
+  <main class="showroom-shelves-container">
+    <div id="showroom-shelves-mount">
+      <!-- Injected dynamically with realistic glass shelves -->
     </div>
   </main>
 
   <!-- =======================================================================
-       THE SPATIAL CINEMA SHOWCASE (INSPECTION STAGE)
-       Tapping any product on the glass shelf brings it to this luxury stage:
-       - Image moves to the right and becomes bigger
+       5. THE CINEMATIC SPATIAL STAGE (MODAL)
+       - Image comes out of the shelf, moves to the right, becomes bigger
        - Price shows at the left
-       - After 3s, price transitions and description reveals on the left
+       - After 3s, price is removed and description shows at left side
        ======================================================================= -->
-  <div class="spatial-showcase-backdrop" id="showcase-backdrop" aria-hidden="true">
+  <div class="spatial-stage-overlay" id="spatial-stage-overlay" aria-hidden="true">
     
-    <!-- Prev / Next Navigation Arrows -->
-    <button type="button" class="spatial-showcase-nav-btn prev" id="showcase-prev-btn" aria-label="Previous Product">
+    <!-- Prev / Next Floating Arrows -->
+    <button type="button" class="stage-nav-arrow prev" id="stage-prev-btn" aria-label="Previous Product">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="15 18 9 12 15 6"></polyline>
       </svg>
     </button>
 
-    <button type="button" class="spatial-showcase-nav-btn next" id="showcase-next-btn" aria-label="Next Product">
+    <button type="button" class="stage-nav-arrow next" id="stage-next-btn" aria-label="Next Product">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="9 18 15 12 9 6"></polyline>
       </svg>
     </button>
 
-    <div class="spatial-showcase-stage" id="showcase-stage" data-active-view="price">
-      <!-- Close Button -->
-      <button type="button" class="spatial-showcase-close" id="showcase-close-btn" aria-label="Close Inspection">
-        &times;
+    <div class="spatial-cinema-stage" id="spatial-cinema-stage" data-active-view="price">
+      <!-- Return to Shelf Close Button -->
+      <button type="button" class="stage-close-btn" id="stage-close-btn" aria-label="Return to Shelf">
+        &times; Return to Shelf
       </button>
 
-      <!-- LEFT SIDE: The Information Theater (Price -> 3s -> Description) -->
-      <div class="spatial-showcase-left">
-        <div class="showcase-header-meta">
-          <span class="showcase-cat-pill" id="showcase-cat-pill">Perfumes</span>
-          <span class="showcase-stock-pill" id="showcase-stock-pill">
-            <span class="showcase-stock-dot"></span>
-            <span id="showcase-stock-text">In Stock &bull; Authentic</span>
+      <!-- LEFT SIDE: Information Theater (Price for 3s -> Slides to Description) -->
+      <div class="stage-theater-left">
+        <div class="stage-meta-row">
+          <span class="stage-cat-chip" id="stage-cat-chip">Perfumes</span>
+          <span class="stage-stock-chip" id="stage-stock-chip">
+            <span class="stage-stock-glow-dot"></span>
+            <span id="stage-stock-text">In Stock &bull; Authentic</span>
           </span>
         </div>
 
-        <h2 class="showcase-title" id="showcase-title">Product Title</h2>
+        <h2 class="stage-title" id="stage-title">Product Title</h2>
 
-        <!-- Mode Toggle Tabs (Allows user to toggle between Price & Description anytime) -->
-        <div class="showcase-mode-tabs" role="tablist">
-          <button type="button" class="showcase-mode-btn active" id="tab-price-btn" role="tab">₦ Price Spotlight</button>
-          <button type="button" class="showcase-mode-btn" id="tab-desc-btn" role="tab">Story &amp; Notes</button>
+        <!-- Interactive Switcher (Allows user to toggle between Price & Description anytime) -->
+        <div class="stage-mode-switcher" role="tablist">
+          <button type="button" class="stage-mode-btn active" id="mode-price-btn" role="tab">₦ Price Spotlight</button>
+          <button type="button" class="stage-mode-btn" id="mode-desc-btn" role="tab">Story &amp; Notes</button>
         </div>
 
-        <!-- Dynamic Body Area -->
-        <div class="showcase-dynamic-body">
+        <!-- Dynamic Content Body -->
+        <div class="stage-dynamic-content">
           
-          <!-- VIEW 1: PRICE (Seconds 0 to 3) -->
-          <div class="showcase-view-price" id="view-price">
-            <div class="showcase-price-caption">Official Luxury Retail Price</div>
-            <div class="showcase-giant-price" id="showcase-price-display">₦45,000</div>
+          <!-- PHASE 1: PRICE (0 to 3s) -->
+          <div class="stage-view-price" id="stage-view-price">
+            <div class="stage-price-label">Official Boutique Price</div>
+            <div class="stage-huge-price" id="stage-huge-price">₦45,000</div>
             
-            <!-- 3s Timer countdown bar -->
-            <div class="showcase-timer-bar-wrap" id="showcase-timer-wrap">
-              <div class="showcase-timer-bar">
-                <div class="showcase-timer-fill" id="showcase-timer-fill"></div>
+            <div class="stage-timer-wrap">
+              <div class="stage-timer-track">
+                <div class="stage-timer-bar" id="stage-timer-bar"></div>
               </div>
-              <div class="showcase-timer-label">
-                <span>Direct Boutique Price</span>
-                <span id="showcase-timer-counter">Revealing details in 3s...</span>
+              <div class="stage-timer-caption">
+                <span>Verified Transparent Pricing</span>
+                <span id="stage-timer-caption-text">Revealing fragrance story in 3s...</span>
               </div>
             </div>
           </div>
 
-          <!-- VIEW 2: DESCRIPTION (After 3s) -->
-          <div class="showcase-view-desc" id="view-desc">
-            <div class="showcase-desc-price-chip" id="showcase-desc-price-chip">
-              <span id="showcase-desc-price">₦45,000</span>
-              <span style="font-size: 11.5px; font-weight: 500; opacity: 0.75;">&bull; In Stock &bull; Doorstep Delivery</span>
+          <!-- PHASE 2: DESCRIPTION (After 3s) -->
+          <div class="stage-view-desc" id="stage-view-desc">
+            <div class="stage-desc-price-tag">
+              <span id="stage-desc-price">₦45,000</span>
+              <span style="font-size: 11px; font-weight: 500; opacity: 0.8;">&bull; Doorstep Delivery Across 36 States</span>
             </div>
 
-            <p class="showcase-desc-text" id="showcase-desc-text">
+            <div class="stage-desc-body" id="stage-desc-body">
               Product description goes here...
-            </p>
+            </div>
 
-            <div class="showcase-perks-list">
-              <div class="showcase-perk-item">
+            <div class="stage-perks-row">
+              <div class="stage-perk-item">
                 <span>🛡️</span>
-                <span>100% Authentic Guarantee</span>
+                <span>100% Original Batch</span>
               </div>
-              <div class="showcase-perk-item">
+              <div class="stage-perk-item">
                 <span>🚚</span>
-                <span>All 36 Nigerian States</span>
+                <span>Doorstep Nationwide Delivery</span>
               </div>
-              <div class="showcase-perk-item">
+              <div class="stage-perk-item">
                 <span>📦</span>
-                <span>Pristine Gift Packaging</span>
+                <span>Luxury Gift Box</span>
               </div>
-              <div class="showcase-perk-item">
+              <div class="stage-perk-item">
                 <span>💬</span>
-                <span>Fast WhatsApp Desk</span>
+                <span>Instant WhatsApp Concierge</span>
               </div>
             </div>
           </div>
 
         </div>
 
-        <!-- Action Buttons -->
-        <div class="showcase-actions">
-          <a href="#" target="_blank" rel="noopener noreferrer" class="showcase-wa-btn" id="showcase-order-btn">
+        <!-- Action Row -->
+        <div class="stage-actions-row">
+          <a href="#" target="_blank" rel="noopener noreferrer" class="stage-wa-order-btn" id="stage-wa-order-btn">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
             </svg>
             Order on WhatsApp
           </a>
 
-          <button type="button" class="showcase-secondary-btn" id="showcase-toggle-view-btn">
-            Switch to Details &rsaquo;
+          <button type="button" class="stage-view-switch-btn" id="stage-toggle-view-btn">
+            Switch View &rsaquo;
           </button>
         </div>
       </div>
 
-      <!-- RIGHT SIDE: The Product Comes Out of the Shelf, Moves to the Right and Scales Up! -->
-      <div class="spatial-showcase-right">
-        <div class="showcase-pedestal"></div>
-        <div class="showcase-hero-img-wrap">
-          <img src="" alt="" class="showcase-hero-img" id="showcase-hero-img" />
+      <!-- RIGHT SIDE: The Product Comes Out of the Shelf, Moves Right, and Becomes Bigger! -->
+      <div class="stage-hero-right">
+        <div class="stage-pedestal-platform"></div>
+        <div class="stage-hero-img-wrap">
+          <img src="" alt="" class="stage-hero-img" id="stage-hero-img" />
         </div>
       </div>
 
     </div>
   </div>
 
-  <!-- =======================================================================
-       FLOATING WHATSAPP BUTTON
-       ======================================================================= -->
+  <!-- Floating WhatsApp Quick Button -->
   <a href="https://wa.me/2349032407144" class="apple-floating-wa" target="_blank" rel="noopener noreferrer" aria-label="Direct WhatsApp Concierge">
     <span class="wa-badge">Desk Active</span>
     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -230,65 +1201,61 @@
     </svg>
   </a>
 
-  <!-- =======================================================================
-       FOOTER
-       ======================================================================= -->
-  <footer class="apple-vision-footer">
-    <div class="apple-container">
-      <div class="footer-essential-nav">
-        <a href="index.html" class="footer-nav-link">Madinma Haven</a>
-        <a href="collections.html" class="footer-nav-link">All 14 Collections</a>
-        <a href="order.html" class="footer-nav-link">WhatsApp Order Desk (+234 903 240 7144)</a>
-        <a href="admin.html" class="footer-nav-link" style="opacity: 0.5;">Admin Portal</a>
-        <span class="footer-nav-static">Nationwide Doorstep Delivery Across 36 States</span>
-      </div>
+  <!-- Minimal Footer -->
+  <footer style="border-top: 1px solid rgba(255,255,255,0.08); padding: 40px 24px; text-align: center; color: rgba(255,255,255,0.5); font-size: 13px;">
+    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 12px;">
+      <a href="index.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">Madinma Haven</a>
+      <a href="collections.html" style="color: #ffffff; text-decoration: none;">All Collections</a>
+      <a href="order.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">WhatsApp Order Desk (+234 903 240 7144)</a>
+      <a href="admin.html" style="color: rgba(255,255,255,0.4); text-decoration: none;">Admin Portal</a>
     </div>
+    <div>Nationwide Doorstep Delivery across all 36 Nigerian states &bull; 100% Authentic Luxury Guarantee</div>
   </footer>
 
   <!-- Scripts -->
-  <script src="assets/js/products.js?v=130"></script>
+  <script src="assets/js/products.js?v=132"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const searchInput = document.getElementById('catalog-search');
-      const categoriesBar = document.getElementById('catalog-categories-bar');
-      const productsGrid = document.getElementById('catalog-products-grid');
-      const countBadge = document.getElementById('catalog-count-badge');
+      const searchInput = document.getElementById('showroom-search');
+      const catScroll = document.getElementById('showroom-cat-scroll');
+      const countBadge = document.getElementById('showroom-count-badge');
+      const shelvesMount = document.getElementById('showroom-shelves-mount');
 
-      // Showcase elements
-      const showcaseBackdrop = document.getElementById('showcase-backdrop');
-      const showcaseStage = document.getElementById('showcase-stage');
-      const showcaseCloseBtn = document.getElementById('showcase-close-btn');
-      const showcasePrevBtn = document.getElementById('showcase-prev-btn');
-      const showcaseNextBtn = document.getElementById('showcase-next-btn');
+      // Stage Overlay Elements
+      const stageOverlay = document.getElementById('spatial-stage-overlay');
+      const cinemaStage = document.getElementById('spatial-cinema-stage');
+      const stageCloseBtn = document.getElementById('stage-close-btn');
+      const stagePrevBtn = document.getElementById('stage-prev-btn');
+      const stageNextBtn = document.getElementById('stage-next-btn');
 
-      const showcaseHeroImg = document.getElementById('showcase-hero-img');
-      const showcaseTitle = document.getElementById('showcase-title');
-      const showcaseCatPill = document.getElementById('showcase-cat-pill');
-      const showcaseStockText = document.getElementById('showcase-stock-text');
-      const showcasePriceDisplay = document.getElementById('showcase-price-display');
-      const showcaseDescPrice = document.getElementById('showcase-desc-price');
-      const showcaseDescText = document.getElementById('showcase-desc-text');
-      const showcaseOrderBtn = document.getElementById('showcase-order-btn');
-      const showcaseTimerFill = document.getElementById('showcase-timer-fill');
-      const showcaseTimerCounter = document.getElementById('showcase-timer-counter');
-      const tabPriceBtn = document.getElementById('tab-price-btn');
-      const tabDescBtn = document.getElementById('tab-desc-btn');
-      const toggleViewBtn = document.getElementById('showcase-toggle-view-btn');
+      const stageHeroImg = document.getElementById('stage-hero-img');
+      const stageTitle = document.getElementById('stage-title');
+      const stageCatChip = document.getElementById('stage-cat-chip');
+      const stageStockText = document.getElementById('stage-stock-text');
+      const stageHugePrice = document.getElementById('stage-huge-price');
+      const stageDescPrice = document.getElementById('stage-desc-price');
+      const stageDescBody = document.getElementById('stage-desc-body');
+      const stageWaOrderBtn = document.getElementById('stage-wa-order-btn');
+      const stageTimerBar = document.getElementById('stage-timer-bar');
+      const stageTimerCaptionText = document.getElementById('stage-timer-caption-text');
+      const modePriceBtn = document.getElementById('mode-price-btn');
+      const modeDescBtn = document.getElementById('mode-desc-btn');
+      const toggleViewBtn = document.getElementById('stage-toggle-view-btn');
 
       let currentCategory = 'All';
       let currentQuery = '';
       let currentFilteredProducts = [];
-      let currentShowcaseIndex = -1;
+      let currentStageIndex = -1;
       let phaseTimer = null;
       let countdownInterval = null;
 
-      // Initialize Categories
+      // 1. Render Category Pills
       function renderCategoryPills() {
         const categories = ['All', ...MadinmaCatalog.getCategories()];
-        categoriesBar.innerHTML = categories.map((cat) => `
+        catScroll.innerHTML = categories.map((cat) => `
           <button 
             type="button" 
-            class="cat-pill-btn ${cat === currentCategory ? 'active' : ''}" 
+            class="showroom-cat-pill ${cat === currentCategory ? 'active' : ''}" 
             data-category="${encodeURIComponent(cat)}"
             role="tab"
             aria-selected="${cat === currentCategory ? 'true' : 'false'}"
@@ -297,25 +1264,25 @@
           </button>
         `).join('');
 
-        categoriesBar.querySelectorAll('.cat-pill-btn').forEach((btn) => {
+        catScroll.querySelectorAll('.showroom-cat-pill').forEach((btn) => {
           btn.addEventListener('click', () => {
             currentCategory = decodeURIComponent(btn.getAttribute('data-category'));
-            categoriesBar.querySelectorAll('.cat-pill-btn').forEach((b) => b.classList.remove('active'));
+            catScroll.querySelectorAll('.showroom-cat-pill').forEach((b) => b.classList.remove('active'));
             btn.classList.add('active');
-            renderProducts();
+            renderGlassShelves();
           });
         });
       }
 
-      // Check URL query parameters (e.g. ?category=Perfumes)
+      // Check URL params (?category=Perfumes)
       const urlParams = new URLSearchParams(window.location.search);
-      const categoryParam = urlParams.get('category');
-      if (categoryParam) {
-        currentCategory = categoryParam;
+      const catParam = urlParams.get('category');
+      if (catParam) {
+        currentCategory = catParam;
       }
 
-      // Render Products on the Glass Shelf
-      function renderProducts() {
+      // 2. Render Products onto Illuminated Glass Shelves
+      function renderGlassShelves() {
         const allProducts = MadinmaCatalog.getAll();
         currentFilteredProducts = allProducts.filter((product) => {
           const matchCat = (currentCategory === 'All') || (product.category.toLowerCase() === currentCategory.toLowerCase());
@@ -329,298 +1296,305 @@
           return matchCat && matchQuery;
         });
 
-        countBadge.textContent = `Showing ${currentFilteredProducts.length} product${currentFilteredProducts.length === 1 ? '' : 's'}`;
+        countBadge.textContent = `Showing ${currentFilteredProducts.length} product${currentFilteredProducts.length === 1 ? '' : 's'} on shelves`;
 
         if (!currentFilteredProducts.length) {
-          productsGrid.innerHTML = `
-            <div class="catalog-empty-state">
-              <h3 class="catalog-empty-title">No products found</h3>
-              <p class="catalog-empty-desc">We couldn't find any items matching "${currentQuery}" in ${currentCategory}.</p>
-              <button type="button" class="apple-btn apple-btn-secondary" id="reset-filter-btn">
-                Clear Filters
+          shelvesMount.innerHTML = `
+            <div style="text-align: center; padding: 90px 20px; background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.15); border-radius: 24px;">
+              <h3 style="font-size: 22px; font-weight: 700; color: #ffffff; margin-bottom: 8px;">No products found on shelves</h3>
+              <p style="font-size: 15px; color: rgba(255,255,255,0.6); margin-bottom: 24px;">We couldn't find items matching "${currentQuery}" in ${currentCategory}.</p>
+              <button type="button" class="showroom-cat-pill active" id="reset-shelves-filter-btn" style="padding: 10px 24px; font-size: 14px;">
+                Reset Showroom Filters
               </button>
             </div>
           `;
-          const resetBtn = document.getElementById('reset-filter-btn');
+          const resetBtn = document.getElementById('reset-shelves-filter-btn');
           if (resetBtn) {
             resetBtn.addEventListener('click', () => {
               currentCategory = 'All';
               currentQuery = '';
               searchInput.value = '';
               renderCategoryPills();
-              renderProducts();
+              renderGlassShelves();
             });
           }
           return;
         }
 
-        productsGrid.innerHTML = currentFilteredProducts.map((product, idx) => {
-          const waLink = MadinmaCatalog.getWhatsAppOrderLink(product);
-          const formattedPrice = MadinmaCatalog.formatPrice(product.price);
-          const inStock = product.inStock !== false;
+        // Group into tiers of 4 products per glass shelf
+        const ITEMS_PER_TIER = 4;
+        let shelvesHtml = '';
 
-          return `
-            <article class="product-card glass-item" data-index="${idx}" tabindex="0" role="button" aria-label="Inspect ${product.title}">
-              <div class="product-card-img-wrap">
-                <img 
-                  src="${product.image}" 
-                  alt="${product.title}" 
-                  class="product-card-img" 
-                  loading="lazy"
-                  onerror="this.onerror=null; this.src='assets/images/fragrances-1.jpg?v=11';"
-                />
-                <div class="glass-item-reflection"></div>
-                <span class="product-card-cat-badge">${product.category}</span>
-                <span class="product-card-stock-badge ${inStock ? '' : 'out-of-stock'}">
-                  <span class="product-card-stock-dot"></span>
-                  ${inStock ? 'In Stock' : 'Out of Stock'}
-                </span>
-                
-                <div class="glass-item-inspect-hint">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                  Tap to Inspect
-                </div>
+        for (let i = 0; i < currentFilteredProducts.length; i += ITEMS_PER_TIER) {
+          const tierProducts = currentFilteredProducts.slice(i, i + ITEMS_PER_TIER);
+
+          shelvesHtml += `
+            <section class="glass-shelf-tier">
+              <div class="shelf-lighting-bar" aria-hidden="true"></div>
+              
+              <!-- Products upright on glass -->
+              <div class="shelf-products-grid">
+                ${tierProducts.map((product, tierSubIdx) => {
+                  const globalIdx = i + tierSubIdx;
+                  const formattedPrice = MadinmaCatalog.formatPrice(product.price);
+                  const inStock = product.inStock !== false;
+
+                  return `
+                    <article class="glass-shelf-item" data-index="${globalIdx}" tabindex="0" role="button" aria-label="Inspect ${product.title}">
+                      <div class="shelf-bottle-wrap">
+                        <img 
+                          src="${product.image}" 
+                          alt="${product.title}" 
+                          class="shelf-bottle-img" 
+                          loading="lazy"
+                          onerror="this.onerror=null; this.src='assets/images/fragrances-1.jpg?v=11';"
+                        />
+                        <span class="shelf-item-badge">${product.category}</span>
+                        <div class="shelf-inspect-hint">
+                          <span>✨ Tap to Inspect</span>
+                        </div>
+                      </div>
+
+                      <div class="shelf-item-plaque">
+                        <div class="shelf-item-title">${product.title}</div>
+                        <div class="shelf-item-price">${formattedPrice}</div>
+                      </div>
+                    </article>
+                  `;
+                }).join('')}
               </div>
 
-              <div class="product-card-body">
-                <h3 class="product-card-title">${product.title}</h3>
-                <p class="product-card-desc">${product.description || 'Authentic luxury item. Nationwide delivery across all 36 states.'}</p>
-
-                <div class="product-card-footer">
-                  <div class="product-card-price-wrap">
-                    <span class="product-card-price-label">Price</span>
-                    <span class="product-card-price">${formattedPrice}</span>
-                  </div>
-
-                  <a 
-                    href="${waLink}" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    class="product-card-wa-btn"
-                    title="Order on WhatsApp"
-                    onclick="event.stopPropagation();"
-                  >
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                    </svg>
-                    Order
-                  </a>
-                </div>
+              <!-- Thick architectural glass shelf plank -->
+              <div class="shelf-glass-plank" aria-hidden="true">
+                <div class="shelf-glass-surface"></div>
+                <div class="shelf-glass-edge"></div>
+                <div class="shelf-glass-shadow"></div>
               </div>
-            </article>
+            </section>
           `;
-        }).join('');
+        }
+
+        shelvesMount.innerHTML = shelvesHtml;
 
         // Bind Tap to inspect on all glass shelf items
-        productsGrid.querySelectorAll('.product-card.glass-item').forEach((card) => {
-          card.addEventListener('click', () => {
-            const index = Number(card.getAttribute('data-index'));
-            openShowcase(index);
+        shelvesMount.querySelectorAll('.glass-shelf-item').forEach((item) => {
+          item.addEventListener('click', () => {
+            const index = Number(item.getAttribute('data-index'));
+            openSpatialStage(index);
           });
 
-          card.addEventListener('keydown', (e) => {
+          item.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
-              const index = Number(card.getAttribute('data-index'));
-              openShowcase(index);
+              const index = Number(item.getAttribute('data-index'));
+              openSpatialStage(index);
             }
           });
         });
       }
 
       // =======================================================================
-      // SPATIAL CINEMA SHOWCASE LOGIC
-      // 1. Tapping item: image moves right & becomes bigger
-      // 2. Price shows at left
+      // THE CINEMATIC SPATIAL STAGE (THE COMMAND EXECUTION)
+      // 1. Tapping item: image comes out of the shelf, moves right & becomes bigger
+      // 2. Price shows at the left
       // 3. After 3s: price is removed, description shows at left side
       // =======================================================================
 
-      function openShowcase(index) {
+      function openSpatialStage(index) {
         if (index < 0 || index >= currentFilteredProducts.length) return;
-        currentShowcaseIndex = index;
+        currentStageIndex = index;
         const product = currentFilteredProducts[index];
 
-        // Populate Stage Elements
-        showcaseHeroImg.src = product.image;
-        showcaseHeroImg.alt = product.title;
-        showcaseTitle.textContent = product.title;
-        showcaseCatPill.textContent = product.category;
+        // Populate Stage
+        stageHeroImg.src = product.image;
+        stageHeroImg.alt = product.title;
+        stageTitle.textContent = product.title;
+        stageCatChip.textContent = product.category;
         
         const inStock = product.inStock !== false;
-        showcaseStockText.textContent = inStock ? 'In Stock • Authentic' : 'Currently Out of Stock';
+        stageStockText.textContent = inStock ? 'In Stock • Authentic' : 'Currently Out of Stock';
         
         const formattedPrice = MadinmaCatalog.formatPrice(product.price);
-        showcasePriceDisplay.textContent = formattedPrice;
-        showcaseDescPrice.textContent = formattedPrice;
-        showcaseDescText.textContent = product.description || '100% authentic luxury edition with rich concentration and bespoke sillage. Sealed and delivered directly to your doorstep anywhere in Nigeria.';
-        showcaseOrderBtn.href = MadinmaCatalog.getWhatsAppOrderLink(product);
+        stageHugePrice.textContent = formattedPrice;
+        stageDescPrice.textContent = formattedPrice;
+        stageDescBody.textContent = product.description || '100% authentic luxury formulation with radiant sillage and bespoke notes. Hand-selected for the discerning connoisseur with doorstep delivery across Nigeria.';
+        stageWaOrderBtn.href = MadinmaCatalog.getWhatsAppOrderLink(product);
 
-        // Open Modal Backdrop
-        showcaseBackdrop.classList.add('active');
-        showcaseBackdrop.setAttribute('aria-hidden', 'false');
+        // Open Overlay (Product image moves to the right and expands to hero scale)
+        stageOverlay.classList.add('active');
+        stageOverlay.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
 
-        // Phase 1: Start on Price View
-        switchShowcaseView('price');
+        // Phase 1: Price displays on the left side
+        switchStageView('price');
 
         // Start 3-Second Automatic Transition to Description
         startThreeSecondTimer();
       }
 
-      function switchShowcaseView(view) {
-        showcaseStage.setAttribute('data-active-view', view);
+      function switchStageView(view) {
+        cinemaStage.setAttribute('data-active-view', view);
         if (view === 'price') {
-          tabPriceBtn.classList.add('active');
-          tabDescBtn.classList.remove('active');
-          toggleViewBtn.textContent = 'Switch to Details ›';
+          modePriceBtn.classList.add('active');
+          modeDescBtn.classList.remove('active');
+          toggleViewBtn.textContent = 'Switch to Description ›';
         } else {
-          tabPriceBtn.classList.remove('active');
-          tabDescBtn.classList.add('active');
+          modePriceBtn.classList.remove('active');
+          modeDescBtn.classList.add('active');
           toggleViewBtn.textContent = '‹ View Price Focus';
         }
       }
 
       function startThreeSecondTimer() {
-        // Clear any previous timers
         if (phaseTimer) clearTimeout(phaseTimer);
         if (countdownInterval) clearInterval(countdownInterval);
 
         // Reset progress bar animation
-        showcaseStage.classList.remove('timer-running');
-        showcaseTimerFill.style.transition = 'none';
-        showcaseTimerFill.style.width = '0%';
+        cinemaStage.classList.remove('animating-timer');
+        stageTimerBar.style.transition = 'none';
+        stageTimerBar.style.width = '0%';
 
         // Force reflow
-        void showcaseTimerFill.offsetWidth;
+        void stageTimerBar.offsetWidth;
 
-        // Start animation over 3s
-        showcaseTimerFill.style.transition = 'width 3s linear';
-        showcaseStage.classList.add('timer-running');
+        // Run linear progress over exactly 3 seconds
+        stageTimerBar.style.transition = 'width 3s linear';
+        cinemaStage.classList.add('animating-timer');
 
-        let remainingSec = 3;
-        showcaseTimerCounter.textContent = `Revealing details in ${remainingSec}s...`;
+        let remaining = 3;
+        stageTimerCaptionText.textContent = `Revealing fragrance story in ${remaining}s...`;
 
         countdownInterval = setInterval(() => {
-          remainingSec -= 1;
-          if (remainingSec > 0) {
-            showcaseTimerCounter.textContent = `Revealing details in ${remainingSec}s...`;
+          remaining -= 1;
+          if (remaining > 0) {
+            stageTimerCaptionText.textContent = `Revealing fragrance story in ${remaining}s...`;
           } else {
-            showcaseTimerCounter.textContent = `Story & details revealed`;
+            stageTimerCaptionText.textContent = `Story & notes revealed`;
             clearInterval(countdownInterval);
           }
         }, 1000);
 
-        // After 3 seconds, remove price and show description on the left side!
+        // AT 3 SECONDS: Price is removed, description shows at the left side!
         phaseTimer = setTimeout(() => {
-          switchShowcaseView('desc');
+          switchStageView('desc');
         }, 3000);
       }
 
-      function closeShowcase() {
+      function closeSpatialStage() {
         if (phaseTimer) clearTimeout(phaseTimer);
         if (countdownInterval) clearInterval(countdownInterval);
-        showcaseBackdrop.classList.remove('active');
-        showcaseBackdrop.setAttribute('aria-hidden', 'true');
+        stageOverlay.classList.remove('active');
+        stageOverlay.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
       }
 
       // Close handlers
-      showcaseCloseBtn.addEventListener('click', closeShowcase);
-      showcaseBackdrop.addEventListener('click', (e) => {
-        if (e.target === showcaseBackdrop) {
-          closeShowcase();
+      stageCloseBtn.addEventListener('click', closeSpatialStage);
+      stageOverlay.addEventListener('click', (e) => {
+        if (e.target === stageOverlay) {
+          closeSpatialStage();
         }
       });
 
       // Keyboard navigation
       document.addEventListener('keydown', (e) => {
-        if (!showcaseBackdrop.classList.contains('active')) return;
+        if (!stageOverlay.classList.contains('active')) return;
         if (e.key === 'Escape') {
-          closeShowcase();
+          closeSpatialStage();
         } else if (e.key === 'ArrowLeft') {
-          if (currentShowcaseIndex > 0) {
-            openShowcase(currentShowcaseIndex - 1);
+          if (currentStageIndex > 0) {
+            openSpatialStage(currentStageIndex - 1);
           }
         } else if (e.key === 'ArrowRight') {
-          if (currentShowcaseIndex < currentFilteredProducts.length - 1) {
-            openShowcase(currentShowcaseIndex + 1);
+          if (currentStageIndex < currentFilteredProducts.length - 1) {
+            openSpatialStage(currentStageIndex + 1);
           }
         }
       });
 
-      // Next / Previous buttons
-      showcasePrevBtn.addEventListener('click', (e) => {
+      // Prev / Next Arrows
+      stagePrevBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (currentShowcaseIndex > 0) {
-          openShowcase(currentShowcaseIndex - 1);
+        if (currentStageIndex > 0) {
+          openSpatialStage(currentStageIndex - 1);
         } else {
-          openShowcase(currentFilteredProducts.length - 1);
+          openSpatialStage(currentFilteredProducts.length - 1);
         }
       });
 
-      showcaseNextBtn.addEventListener('click', (e) => {
+      stageNextBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (currentShowcaseIndex < currentFilteredProducts.length - 1) {
-          openShowcase(currentShowcaseIndex + 1);
+        if (currentStageIndex < currentFilteredProducts.length - 1) {
+          openSpatialStage(currentStageIndex + 1);
         } else {
-          openShowcase(0);
+          openSpatialStage(0);
         }
       });
 
-      // Manual Tab Toggles (If user clicks tabs, cancel timer and switch immediately)
-      tabPriceBtn.addEventListener('click', () => {
+      // Manual Switchers
+      modePriceBtn.addEventListener('click', () => {
         if (phaseTimer) clearTimeout(phaseTimer);
         if (countdownInterval) clearInterval(countdownInterval);
-        switchShowcaseView('price');
+        switchStageView('price');
       });
 
-      tabDescBtn.addEventListener('click', () => {
+      modeDescBtn.addEventListener('click', () => {
         if (phaseTimer) clearTimeout(phaseTimer);
         if (countdownInterval) clearInterval(countdownInterval);
-        switchShowcaseView('desc');
+        switchStageView('desc');
       });
 
       toggleViewBtn.addEventListener('click', () => {
         if (phaseTimer) clearTimeout(phaseTimer);
         if (countdownInterval) clearInterval(countdownInterval);
-        const cur = showcaseStage.getAttribute('data-active-view');
-        switchShowcaseView(cur === 'price' ? 'desc' : 'price');
+        const cur = cinemaStage.getAttribute('data-active-view');
+        switchStageView(cur === 'price' ? 'desc' : 'price');
       });
 
       // Search event
       searchInput.addEventListener('input', (e) => {
         currentQuery = e.target.value;
-        renderProducts();
+        renderGlassShelves();
       });
 
-      // Listen for catalog updates from admin or sync
+      // Synchronize with admin in other tabs
       window.addEventListener('madinma-catalog-updated', () => {
         renderCategoryPills();
-        renderProducts();
+        renderGlassShelves();
       });
 
       window.addEventListener('madinma-catalog-synced', () => {
         renderCategoryPills();
-        renderProducts();
+        renderGlassShelves();
       });
 
       window.addEventListener('storage', (e) => {
         if (e.key === 'madinma_catalog_v1') {
           renderCategoryPills();
-          renderProducts();
+          renderGlassShelves();
         }
       });
 
       // Initial Mount (Instant from cache)
       renderCategoryPills();
-      renderProducts();
+      renderGlassShelves();
 
-      // Background Cloud Synchronization from Supabase
+      // Cloud Synchronization from Supabase
       if (typeof MadinmaCatalog.syncFromCloud === 'function') {
         MadinmaCatalog.syncFromCloud().then(() => {
           renderCategoryPills();
-          renderProducts();
-        }).catch(err => console.warn('Supabase background sync warning:', err));
+          renderGlassShelves();
+        }).catch(err => console.warn('Supabase cloud sync background warning:', err));
+      }
+
+      // Test helper for visual inspection
+      if (urlParams.get('test_open')) {
+        setTimeout(() => {
+          openSpatialStage(Number(urlParams.get('test_open')) || 1);
+          if (urlParams.get('test_view') === 'desc') {
+            switchStageView('desc');
+          }
+        }, 100);
       }
     });
   </script>
