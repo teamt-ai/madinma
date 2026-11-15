@@ -1190,10 +1190,6 @@
             autocomplete="off"
           />
         </div>
-
-        <div class="showroom-count-badge" id="showroom-count-badge">
-          Showing 42 products on shelves
-        </div>
       </div>
     </div>
   </section>
@@ -1483,7 +1479,9 @@
           return matchCat && matchQuery;
         });
 
-        countBadge.textContent = `Showing ${currentFilteredProducts.length} product${currentFilteredProducts.length === 1 ? '' : 's'} on shelves`;
+        if (countBadge) {
+          countBadge.textContent = `Showing ${currentFilteredProducts.length} product${currentFilteredProducts.length === 1 ? '' : 's'} on shelves`;
+        }
 
         if (!currentFilteredProducts.length) {
           shelvesMount.innerHTML = `
