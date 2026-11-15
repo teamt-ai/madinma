@@ -63,6 +63,56 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 16px;
+    }
+
+    .showroom-nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* TOP LEFT CATEGORY SIDEBAR TRIGGER */
+    .showroom-sidebar-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 999px;
+      color: #1d1d1f;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      font-family: inherit;
+    }
+
+    .showroom-sidebar-trigger:hover {
+      background: #f5f5f7;
+      border-color: rgba(0, 113, 227, 0.35);
+      color: #0071e3;
+      transform: scale(1.02);
+    }
+
+    .showroom-sidebar-trigger svg {
+      color: #1d1d1f;
+      transition: color 0.2s ease;
+    }
+
+    .showroom-sidebar-trigger:hover svg {
+      color: #0071e3;
+    }
+
+    .sidebar-trigger-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(0, 113, 227, 0.08);
+      color: #0071e3;
     }
 
     .showroom-brand {
@@ -138,8 +188,8 @@
       backdrop-filter: blur(24px) saturate(180%);
       -webkit-backdrop-filter: blur(24px) saturate(180%);
       border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-      padding: 20px 24px 16px;
-      margin-bottom: 32px;
+      padding: 16px 24px;
+      margin-bottom: 30px;
     }
 
     .showroom-toolbar-inner {
@@ -147,22 +197,50 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
     }
 
     .showroom-search-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
+    }
+
+    .showroom-filter-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 22px;
+      color: #1d1d1f;
+      font-size: 13.5px;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      transition: all 0.2s ease;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .showroom-filter-pill-btn:hover {
+      background: #f5f5f7;
+      border-color: rgba(0, 113, 227, 0.3);
+      color: #0071e3;
+    }
+
+    .showroom-filter-pill-btn strong {
+      font-weight: 700;
+      color: #0071e3;
     }
 
     .showroom-search-box {
       position: relative;
       flex: 1;
-      min-width: 280px;
-      max-width: 460px;
+      min-width: 260px;
+      max-width: 440px;
     }
 
     .showroom-search-box svg {
@@ -201,47 +279,215 @@
       font-weight: 500;
     }
 
-    .showroom-cat-scroll {
+    /* =========================================================================
+       LUXURY CATEGORIES SIDEBAR DRAWER (APPLE LIGHT LUXURY)
+       ========================================================================= */
+    .showroom-sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(15, 20, 30, 0.42);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+    }
+
+    .showroom-sidebar-backdrop.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .showroom-sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 340px;
+      max-width: 86vw;
+      z-index: 10001;
+      background: #ffffff;
+      box-shadow: 16px 0 50px rgba(0, 0, 0, 0.16);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      border-right: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .showroom-sidebar.active {
+      transform: translateX(0);
+    }
+
+    .showroom-sidebar-header {
+      padding: 24px 22px 18px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     }
 
-    .showroom-cat-scroll::-webkit-scrollbar {
-      display: none;
+    .showroom-sidebar-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #0071e3;
+      display: block;
+      margin-bottom: 2px;
     }
 
-    .showroom-cat-pill {
-      white-space: nowrap;
-      padding: 8px 18px;
-      background: #ffffff;
+    .showroom-sidebar-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
       color: #1d1d1f;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 999px;
+      margin: 0;
+    }
+
+    .showroom-sidebar-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: #f5f5f7;
+      color: #1d1d1f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .showroom-sidebar-close:hover {
+      background: #e8e8ed;
+      transform: scale(1.06);
+    }
+
+    .showroom-sidebar-search {
+      position: relative;
+      padding: 14px 18px 8px;
+    }
+
+    .showroom-sidebar-search svg {
+      position: absolute;
+      left: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #86868b;
+      pointer-events: none;
+    }
+
+    .showroom-sidebar-search input {
+      width: 100%;
+      height: 38px;
+      padding: 0 14px 0 36px;
+      background: #f5f5f7;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 12px;
       font-size: 13px;
+      color: #1d1d1f;
+      outline: none;
+      font-family: inherit;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+    }
+
+    .showroom-sidebar-search input:focus {
+      background: #ffffff;
+      border-color: #0071e3;
+      box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.12);
+    }
+
+    .showroom-sidebar-menu {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .sidebar-cat-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 12px 16px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      color: #1d1d1f;
+      font-size: 14.5px;
       font-weight: 500;
       cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      text-align: left;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       font-family: inherit;
     }
 
-    .showroom-cat-pill:hover {
+    .sidebar-cat-btn:hover {
       background: #f5f5f7;
       color: #0071e3;
-      transform: translateY(-1px);
+      transform: translateX(3px);
     }
 
-    .showroom-cat-pill.active {
+    .sidebar-cat-btn.active {
       background: #1d1d1f;
       color: #ffffff;
       font-weight: 600;
-      border-color: #1d1d1f;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+    }
+
+    .sidebar-cat-count {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #f0f0f4;
+      color: #6e6e73;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-cat-btn.active .sidebar-cat-count {
+      background: rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+    }
+
+    .showroom-sidebar-footer {
+      padding: 18px 20px 22px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      background: #fafafc;
+    }
+
+    .sidebar-footer-guarantee {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11.5px;
+      color: #6e6e73;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .sidebar-wa-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: #25D366;
+      color: #ffffff;
+      border-radius: 12px;
+      font-size: 13px;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-wa-link:hover {
+      background: #1eb855;
+      transform: scale(1.02);
     }
 
     /* =========================================================================
@@ -959,14 +1205,72 @@
 <body class="showroom-body">
 
   <!-- =======================================================================
+       LUXURY CATEGORIES SIDEBAR DRAWER (SLIDES FROM LEFT)
+       ======================================================================= -->
+  <div class="showroom-sidebar-backdrop" id="showroom-sidebar-backdrop" aria-hidden="true"></div>
+
+  <aside class="showroom-sidebar" id="showroom-sidebar" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Collections and Categories">
+    <div class="showroom-sidebar-header">
+      <div class="showroom-sidebar-brand-block">
+        <span class="showroom-sidebar-eyebrow">Madinma Haven</span>
+        <h3 class="showroom-sidebar-title">Categories</h3>
+      </div>
+      <button type="button" class="showroom-sidebar-close" id="showroom-sidebar-close" aria-label="Close Categories Sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Category filter search inside drawer -->
+    <div class="showroom-sidebar-search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="sidebar-cat-search" placeholder="Filter categories..." autocomplete="off" />
+    </div>
+
+    <!-- The categories list -->
+    <nav class="showroom-sidebar-menu" id="showroom-sidebar-cats" role="tablist">
+      <!-- Dynamically generated category buttons -->
+    </nav>
+
+    <div class="showroom-sidebar-footer">
+      <div class="sidebar-footer-guarantee">
+        <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#10b981;"></span>
+        100% Genuine Designer Fragrances
+      </div>
+      <a href="order.html" class="sidebar-wa-link">
+        <span>WhatsApp Concierge</span>
+        <span style="font-weight:700;">+234 903 240 7144 &rarr;</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- =======================================================================
        1. BOUTIQUE LOCAL NAVIGATION (LIGHT LUXURY)
        ======================================================================= -->
   <nav class="showroom-nav">
     <div class="showroom-nav-inner">
-      <a href="index.html" class="showroom-brand">
-        <span>Madinma Haven</span>
-        <span class="showroom-brand-tag">Boutique</span>
-      </a>
+      <div class="showroom-nav-left">
+        <!-- TOP LEFT CATEGORY SIDEBAR TRIGGER -->
+        <button type="button" class="showroom-sidebar-trigger" id="showroom-sidebar-trigger" aria-label="Open Categories Sidebar" title="Browse Collections & Categories">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="16" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+          <span class="sidebar-trigger-text">Categories</span>
+          <span class="sidebar-trigger-badge" id="nav-cat-count">11</span>
+        </button>
+
+        <a href="index.html" class="showroom-brand">
+          <span>Madinma Haven</span>
+          <span class="showroom-brand-tag">Boutique</span>
+        </a>
+      </div>
 
       <div class="showroom-nav-links">
         <a href="index.html#overview" class="showroom-nav-link">Overview</a>
@@ -986,11 +1290,29 @@
 
 
   <!-- =======================================================================
-       3. STICKY GLASS TOOLBAR (Search & Category Filters)
+       3. STICKY GLASS TOOLBAR (Search & Active Category Badge)
        ======================================================================= -->
   <section class="showroom-toolbar">
     <div class="showroom-toolbar-inner">
       <div class="showroom-search-row">
+        <!-- Filter pill button that also triggers the categories sidebar -->
+        <button type="button" class="showroom-filter-pill-btn" id="toolbar-cat-filter-btn" title="Click to view categories sidebar">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="21" x2="4" y2="14"></line>
+            <line x1="4" y1="10" x2="4" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12" y2="3"></line>
+            <line x1="20" y1="21" x2="20" y2="16"></line>
+            <line x1="20" y1="12" x2="20" y2="3"></line>
+            <line x1="1" y1="14" x2="7" y2="14"></line>
+            <line x1="9" y1="8" x2="15" y2="8"></line>
+            <line x1="17" y1="16" x2="23" y2="16"></line>
+          </svg>
+          <span style="color:#6e6e73;">Category:</span>
+          <strong id="active-category-label">All Collections</strong>
+          <span style="font-size: 15px; color: #86868b; margin-left: 2px;">&rsaquo;</span>
+        </button>
+
         <div class="showroom-search-box">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
@@ -1008,10 +1330,6 @@
         <div class="showroom-count-badge" id="showroom-count-badge">
           Showing 42 products on shelves
         </div>
-      </div>
-
-      <div class="showroom-cat-scroll" id="showroom-cat-scroll" role="tablist">
-        <!-- Dynamically injected category pills -->
       </div>
     </div>
   </section>
@@ -1172,9 +1490,19 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const searchInput = document.getElementById('showroom-search');
-      const catScroll = document.getElementById('showroom-cat-scroll');
       const countBadge = document.getElementById('showroom-count-badge');
       const shelvesMount = document.getElementById('showroom-shelves-mount');
+      const activeCatLabel = document.getElementById('active-category-label');
+      const navCatCount = document.getElementById('nav-cat-count');
+
+      // Sidebar Elements
+      const sidebarTrigger = document.getElementById('showroom-sidebar-trigger');
+      const toolbarCatFilterBtn = document.getElementById('toolbar-cat-filter-btn');
+      const sidebarBackdrop = document.getElementById('showroom-sidebar-backdrop');
+      const sidebarDrawer = document.getElementById('showroom-sidebar');
+      const sidebarClose = document.getElementById('showroom-sidebar-close');
+      const sidebarCatsMount = document.getElementById('showroom-sidebar-cats');
+      const sidebarCatSearch = document.getElementById('sidebar-cat-search');
 
       // Stage Overlay Elements
       const stageOverlay = document.getElementById('spatial-stage-overlay');
@@ -1204,29 +1532,95 @@
       let phaseTimer = null;
       let countdownInterval = null;
 
-      // 1. Render Category Pills
-      function renderCategoryPills() {
-        const categories = ['All', ...MadinmaCatalog.getCategories()];
-        catScroll.innerHTML = categories.map((cat) => `
-          <button 
-            type="button" 
-            class="showroom-cat-pill ${cat === currentCategory ? 'active' : ''}" 
-            data-category="${encodeURIComponent(cat)}"
-            role="tab"
-            aria-selected="${cat === currentCategory ? 'true' : 'false'}"
-          >
-            ${cat === 'All' ? 'All Collections' : cat}
-          </button>
-        `).join('');
+      // Sidebar Controls
+      function openSidebar() {
+        if (!sidebarDrawer) return;
+        sidebarBackdrop.classList.add('active');
+        sidebarDrawer.classList.add('active');
+        sidebarBackdrop.setAttribute('aria-hidden', 'false');
+        sidebarDrawer.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        if (sidebarCatSearch) {
+          sidebarCatSearch.value = '';
+          filterSidebarCatList('');
+          setTimeout(() => sidebarCatSearch.focus(), 150);
+        }
+      }
 
-        catScroll.querySelectorAll('.showroom-cat-pill').forEach((btn) => {
-          btn.addEventListener('click', () => {
-            currentCategory = decodeURIComponent(btn.getAttribute('data-category'));
-            catScroll.querySelectorAll('.showroom-cat-pill').forEach((b) => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderGlassShelves();
-          });
+      function closeSidebar() {
+        if (!sidebarDrawer) return;
+        sidebarBackdrop.classList.remove('active');
+        sidebarDrawer.classList.remove('active');
+        sidebarBackdrop.setAttribute('aria-hidden', 'true');
+        sidebarDrawer.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      if (sidebarTrigger) sidebarTrigger.addEventListener('click', openSidebar);
+      if (toolbarCatFilterBtn) toolbarCatFilterBtn.addEventListener('click', openSidebar);
+      if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
+      if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebar);
+
+      function filterSidebarCatList(query) {
+        if (!sidebarCatsMount) return;
+        const q = query.toLowerCase().trim();
+        sidebarCatsMount.querySelectorAll('.sidebar-cat-btn').forEach((btn) => {
+          const text = btn.getAttribute('data-searchable') || btn.textContent.toLowerCase();
+          btn.style.display = (!q || text.includes(q)) ? 'flex' : 'none';
         });
+      }
+
+      if (sidebarCatSearch) {
+        sidebarCatSearch.addEventListener('input', (e) => {
+          filterSidebarCatList(e.target.value);
+        });
+      }
+
+      // 1. Render Category Items inside Sidebar
+      function renderCategoryPills() {
+        const allProducts = MadinmaCatalog.getAll();
+        const rawCategories = MadinmaCatalog.getCategories();
+        const categories = ['All', ...rawCategories];
+
+        if (navCatCount) {
+          navCatCount.textContent = rawCategories.length;
+        }
+
+        if (activeCatLabel) {
+          activeCatLabel.textContent = currentCategory === 'All' ? 'All Collections' : currentCategory;
+        }
+
+        if (sidebarCatsMount) {
+          sidebarCatsMount.innerHTML = categories.map((cat) => {
+            const count = cat === 'All'
+              ? allProducts.length
+              : allProducts.filter(p => (p.category || '').toLowerCase() === cat.toLowerCase()).length;
+            const isActive = cat.toLowerCase() === currentCategory.toLowerCase();
+
+            return `
+              <button 
+                type="button" 
+                class="sidebar-cat-btn ${isActive ? 'active' : ''}" 
+                data-category="${encodeURIComponent(cat)}"
+                data-searchable="${cat.toLowerCase()}"
+                role="tab"
+                aria-selected="${isActive ? 'true' : 'false'}"
+              >
+                <span>${cat === 'All' ? '✨ All Collections' : cat}</span>
+                <span class="sidebar-cat-count">${count}</span>
+              </button>
+            `;
+          }).join('');
+
+          sidebarCatsMount.querySelectorAll('.sidebar-cat-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+              currentCategory = decodeURIComponent(btn.getAttribute('data-category'));
+              renderCategoryPills();
+              renderGlassShelves();
+              closeSidebar();
+            });
+          });
+        }
       }
 
       // Check URL params (?category=Perfumes)
@@ -1453,10 +1847,18 @@
 
       // Keyboard navigation
       document.addEventListener('keydown', (e) => {
-        if (!stageOverlay.classList.contains('active')) return;
         if (e.key === 'Escape') {
-          closeSpatialStage();
-        } else if (e.key === 'ArrowLeft') {
+          if (sidebarDrawer && sidebarDrawer.classList.contains('active')) {
+            closeSidebar();
+            return;
+          }
+          if (stageOverlay.classList.contains('active')) {
+            closeSpatialStage();
+            return;
+          }
+        }
+        if (!stageOverlay.classList.contains('active')) return;
+        if (e.key === 'ArrowLeft') {
           if (currentStageIndex > 0) {
             openSpatialStage(currentStageIndex - 1);
           }
@@ -1543,6 +1945,9 @@
       }
 
       // Test helper for visual inspection
+      if (urlParams.get('test_sidebar')) {
+        setTimeout(openSidebar, 100);
+      }
       if (urlParams.get('test_open')) {
         setTimeout(() => {
           openSpatialStage(Number(urlParams.get('test_open')) || 1);
