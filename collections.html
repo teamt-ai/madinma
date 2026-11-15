@@ -478,7 +478,8 @@
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .glass-shelf-item:hover {
+    .glass-shelf-item:hover,
+    .glass-shelf-item.simulate-hover {
       transform: translateY(-10px);
     }
 
@@ -495,7 +496,8 @@
       transition: all 0.35s ease;
     }
 
-    .glass-shelf-item:hover .shelf-bottle-wrap {
+    .glass-shelf-item:hover .shelf-bottle-wrap,
+    .glass-shelf-item.simulate-hover .shelf-bottle-wrap {
       background: radial-gradient(circle at 50% 50%, rgba(225, 240, 255, 0.9) 0%, rgba(215, 235, 255, 0.35) 70%, transparent 85%);
     }
 
@@ -509,72 +511,78 @@
       -webkit-box-reflect: below 2px linear-gradient(transparent 55%, rgba(0, 0, 0, 0.08));
     }
 
-    .glass-shelf-item:hover .shelf-bottle-img {
+    .glass-shelf-item:hover .shelf-bottle-img,
+    .glass-shelf-item.simulate-hover .shelf-bottle-img {
       transform: scale(1.06);
-    }
-
-    /* Tap to Inspect Indicator */
-    .shelf-inspect-hint {
-      position: absolute;
-      bottom: 22px;
-      padding: 5px 14px;
-      background: #1d1d1f;
-      color: #ffffff;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 700;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .glass-shelf-item:hover .shelf-inspect-hint {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     /* Engraved Crystal Plaque Under Each Item */
     .shelf-item-plaque {
+      position: relative;
       width: 100%;
+      height: 86px;
       margin-top: 14px;
-      padding: 12px 14px;
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.94);
       border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 14px;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       text-align: center;
-      transition: all 0.25s ease;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
       box-sizing: border-box;
+      overflow: hidden;
     }
 
-    .glass-shelf-item:hover .shelf-item-plaque {
+    .glass-shelf-item:hover .shelf-item-plaque,
+    .glass-shelf-item.simulate-hover .shelf-item-plaque {
       background: #ffffff;
       border-color: rgba(0, 113, 227, 0.35);
-      box-shadow: 0 8px 24px rgba(0, 113, 227, 0.1);
+      box-shadow: 0 8px 24px rgba(0, 113, 227, 0.12);
+      transform: translateY(-2px);
+    }
+
+    /* Plaque Default State (Category + Title + Price) */
+    .plaque-default-state {
+      position: absolute;
+      inset: 0;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: auto;
+    }
+
+    .glass-shelf-item:hover .plaque-default-state,
+    .glass-shelf-item.simulate-hover .plaque-default-state {
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
     }
 
     .shelf-item-category {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: #86868b;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
+      line-height: 1;
     }
 
     .shelf-item-title {
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 600;
       color: #1d1d1f;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      max-width: 100%;
       margin-bottom: 4px;
+      line-height: 1.2;
     }
 
     .shelf-item-price {
@@ -582,6 +590,53 @@
       font-weight: 700;
       color: #0071e3;
       letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    /* Plaque Hover State (Smooth Reveal of Description) */
+    .plaque-hover-state {
+      position: absolute;
+      inset: 0;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      background: #ffffff;
+    }
+
+    .glass-shelf-item:hover .plaque-hover-state,
+    .glass-shelf-item.simulate-hover .plaque-hover-state {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .plaque-desc-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #0071e3;
+      margin-bottom: 3px;
+      line-height: 1;
+    }
+
+    .plaque-desc-text {
+      font-size: 11.5px;
+      line-height: 1.35;
+      color: #3a3a3c;
+      font-weight: 500;
+      text-align: center;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* =========================================================================
@@ -1498,9 +1553,10 @@
                   const globalIdx = i + tierSubIdx;
                   const formattedPrice = MadinmaCatalog.formatPrice(product.price);
                   const inStock = product.inStock !== false;
+                  const isHoverSim = (urlParams.get('test_hover') !== null) && (Number(urlParams.get('test_hover')) === globalIdx);
 
                   return `
-                    <article class="glass-shelf-item" data-index="${globalIdx}" tabindex="0" role="button" aria-label="Inspect ${product.title}">
+                    <article class="glass-shelf-item ${isHoverSim ? 'simulate-hover' : ''}" data-index="${globalIdx}" tabindex="0" role="button" aria-label="Inspect ${product.title}">
                       <div class="shelf-bottle-wrap">
                         <img 
                           src="${product.image}" 
@@ -1509,15 +1565,18 @@
                           loading="lazy"
                           onerror="this.onerror=null; this.src='assets/images/fragrances-1.jpg?v=11';"
                         />
-                        <div class="shelf-inspect-hint">
-                          <span>✨ Tap to Inspect</span>
-                        </div>
                       </div>
 
                       <div class="shelf-item-plaque">
-                        <div class="shelf-item-category">${product.category}</div>
-                        <div class="shelf-item-title">${product.title}</div>
-                        <div class="shelf-item-price">${formattedPrice}</div>
+                        <div class="plaque-default-state">
+                          <div class="shelf-item-category">${product.category}</div>
+                          <div class="shelf-item-title">${product.title}</div>
+                          <div class="shelf-item-price">${formattedPrice}</div>
+                        </div>
+                        <div class="plaque-hover-state">
+                          <div class="plaque-desc-label">${product.category}</div>
+                          <div class="plaque-desc-text">${product.description || 'Authentic formulation guaranteed by Madinma Haven.'}</div>
+                        </div>
                       </div>
                     </article>
                   `;
