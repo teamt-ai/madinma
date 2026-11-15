@@ -355,9 +355,8 @@
     .sidebar-cat-item {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       width: 100%;
-      padding: 9px 12px;
+      padding: 10px 14px;
       background: transparent;
       border: none;
       border-radius: 10px;
@@ -366,7 +365,7 @@
       text-align: left;
       transition: all 0.18s ease;
       font-family: inherit;
-      font-size: 13.5px;
+      font-size: 14px;
       font-weight: 500;
       user-select: none;
     }
@@ -386,23 +385,6 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      padding-right: 8px;
-    }
-
-    .sidebar-cat-count {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 2px 7px;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.05);
-      color: #86868b;
-      flex-shrink: 0;
-      transition: all 0.18s ease;
-    }
-
-    .sidebar-cat-item.active .sidebar-cat-count {
-      background: rgba(255, 255, 255, 0.2);
-      color: #ffffff;
     }
 
     /* =========================================================================
@@ -1424,16 +1406,12 @@
 
       // 1. Render Categories inside Clean Sidebar
       function renderCategoryPills() {
-        const allProducts = MadinmaCatalog.getAll();
         const rawCategories = MadinmaCatalog.getCategories();
         const categories = ['All', ...rawCategories];
 
         if (sidebarCatsMount) {
           let html = '';
           categories.forEach((cat) => {
-            const count = cat === 'All'
-              ? allProducts.length
-              : allProducts.filter(p => (p.category || '').toLowerCase() === cat.toLowerCase()).length;
             const isActive = cat.toLowerCase() === currentCategory.toLowerCase();
             const displayName = cat === 'All' ? 'All Collections' : cat;
 
@@ -1446,7 +1424,6 @@
                 aria-selected="${isActive ? 'true' : 'false'}"
               >
                 <span class="sidebar-cat-name">${displayName}</span>
-                <span class="sidebar-cat-count">${count}</span>
               </button>
             `;
           });
