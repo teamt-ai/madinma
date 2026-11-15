@@ -243,18 +243,18 @@
     }
 
     /* =========================================================================
-       LUXURY CATEGORIES SIDEBAR DRAWER (APPLE LIGHT LUXURY)
+       LUXURY CATEGORIES SIDEBAR DRAWER (APPLE STORE FLAGSHIP EXPERIENCE)
        ========================================================================= */
     .showroom-sidebar-backdrop {
       position: fixed;
       inset: 0;
       z-index: 10000;
-      background: rgba(15, 20, 30, 0.42);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(15, 20, 30, 0.48);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
     }
 
     .showroom-sidebar-backdrop.active {
@@ -267,15 +267,17 @@
       top: 0;
       left: 0;
       bottom: 0;
-      width: 340px;
-      max-width: 86vw;
+      width: 440px;
+      max-width: 92vw;
       z-index: 10001;
-      background: #ffffff;
-      box-shadow: 16px 0 50px rgba(0, 0, 0, 0.16);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(40px) saturate(190%);
+      -webkit-backdrop-filter: blur(40px) saturate(190%);
+      box-shadow: 25px 0 80px rgba(0, 0, 0, 0.16);
       display: flex;
       flex-direction: column;
       transform: translateX(-100%);
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
       border-right: 1px solid rgba(0, 0, 0, 0.08);
     }
 
@@ -284,9 +286,9 @@
     }
 
     .showroom-sidebar-header {
-      padding: 24px 22px 18px;
+      padding: 26px 26px 18px;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     }
@@ -295,47 +297,64 @@
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #0071e3;
-      display: block;
-      margin-bottom: 2px;
+      letter-spacing: 0.14em;
+      color: #86868b;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .showroom-sidebar-eyebrow span.boutique-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #0071e3;
+      box-shadow: 0 0 6px rgba(0, 113, 227, 0.4);
     }
 
     .showroom-sidebar-title {
-      font-size: 22px;
+      font-size: 26px;
       font-weight: 800;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       color: #1d1d1f;
       margin: 0;
+      line-height: 1.15;
     }
 
     .showroom-sidebar-close {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       border: 1px solid rgba(0, 0, 0, 0.08);
-      background: #f5f5f7;
+      background: rgba(0, 0, 0, 0.04);
       color: #1d1d1f;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      flex-shrink: 0;
     }
 
     .showroom-sidebar-close:hover {
-      background: #e8e8ed;
-      transform: scale(1.06);
+      background: rgba(0, 0, 0, 0.08);
+      transform: scale(1.08);
+      color: #000000;
+    }
+
+    .showroom-sidebar-search-wrap {
+      padding: 16px 22px 10px;
     }
 
     .showroom-sidebar-search {
       position: relative;
-      padding: 14px 18px 8px;
+      width: 100%;
     }
 
     .showroom-sidebar-search svg {
       position: absolute;
-      left: 30px;
+      left: 14px;
       top: 50%;
       transform: translateY(-50%);
       color: #86868b;
@@ -344,82 +363,189 @@
 
     .showroom-sidebar-search input {
       width: 100%;
-      height: 38px;
-      padding: 0 14px 0 36px;
+      height: 42px;
+      padding: 0 16px 0 42px;
       background: #f5f5f7;
       border: 1px solid rgba(0, 0, 0, 0.06);
-      border-radius: 12px;
-      font-size: 13px;
+      border-radius: 14px;
+      font-size: 13.5px;
       color: #1d1d1f;
       outline: none;
       font-family: inherit;
       box-sizing: border-box;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
     }
 
     .showroom-sidebar-search input:focus {
       background: #ffffff;
       border-color: #0071e3;
-      box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.12);
+      box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.12);
     }
 
     .showroom-sidebar-menu {
       flex: 1;
       overflow-y: auto;
-      padding: 10px 14px 18px;
+      padding: 6px 18px 24px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 0, 0, 0.12) transparent;
     }
 
-    .sidebar-cat-btn {
+    .showroom-sidebar-menu::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .showroom-sidebar-menu::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.12);
+      border-radius: 999px;
+    }
+
+    /* Department Group Header */
+    .sidebar-department-header {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #86868b;
+      padding: 14px 10px 6px;
+      user-select: none;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .sidebar-department-header::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    /* Professional Category Card */
+    .sidebar-cat-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
       width: 100%;
-      padding: 12px 16px;
+      padding: 11px 14px;
       background: transparent;
       border: 1px solid transparent;
-      border-radius: 12px;
+      border-radius: 16px;
       color: #1d1d1f;
-      font-size: 14.5px;
-      font-weight: 500;
       cursor: pointer;
       text-align: left;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
       font-family: inherit;
+      user-select: none;
     }
 
-    .sidebar-cat-btn:hover {
+    .sidebar-cat-card:hover {
       background: #f5f5f7;
-      color: #0071e3;
-      transform: translateX(3px);
+      transform: translateX(4px);
     }
 
-    .sidebar-cat-btn.active {
+    .sidebar-cat-card:hover .sidebar-cat-arrow {
+      transform: translateX(3px);
+      color: #0071e3;
+    }
+
+    .sidebar-cat-card:hover .sidebar-cat-icon-box {
+      background: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .sidebar-cat-card.active {
       background: #1d1d1f;
       color: #ffffff;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+      transform: translateX(0);
+    }
+
+    .sidebar-cat-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #f0f0f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-cat-card.active .sidebar-cat-icon-box {
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .sidebar-cat-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .sidebar-cat-title {
+      font-size: 14.5px;
       font-weight: 600;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+      color: #1d1d1f;
+      line-height: 1.25;
+      margin-bottom: 2px;
+    }
+
+    .sidebar-cat-card.active .sidebar-cat-title {
+      color: #ffffff;
+    }
+
+    .sidebar-cat-subtitle {
+      font-size: 12px;
+      color: #86868b;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sidebar-cat-card.active .sidebar-cat-subtitle {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .sidebar-cat-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
     }
 
     .sidebar-cat-count {
-      font-size: 12px;
-      font-weight: 600;
-      padding: 2px 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 9px;
       border-radius: 999px;
-      background: #f0f0f4;
+      background: rgba(0, 0, 0, 0.05);
       color: #6e6e73;
       transition: all 0.2s ease;
     }
 
-    .sidebar-cat-btn.active .sidebar-cat-count {
+    .sidebar-cat-card.active .sidebar-cat-count {
       background: rgba(255, 255, 255, 0.22);
       color: #ffffff;
     }
 
+    .sidebar-cat-arrow {
+      font-size: 16px;
+      font-weight: 600;
+      color: #b0b0b8;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .sidebar-cat-card.active .sidebar-cat-arrow {
+      color: #ffffff;
+    }
+
+    /* Professional Drawer Footer */
     .showroom-sidebar-footer {
-      padding: 18px 20px 22px;
+      padding: 18px 22px 24px;
       border-top: 1px solid rgba(0, 0, 0, 0.06);
       background: #fafafc;
     }
@@ -427,7 +553,7 @@
     .sidebar-footer-guarantee {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       font-size: 11.5px;
       color: #6e6e73;
       margin-bottom: 12px;
@@ -438,19 +564,21 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 16px;
+      padding: 12px 18px;
       background: #25D366;
       color: #ffffff;
-      border-radius: 12px;
-      font-size: 13px;
+      border-radius: 14px;
+      font-size: 13.5px;
+      font-weight: 600;
       text-decoration: none;
-      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+      box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
       transition: all 0.2s ease;
     }
 
     .sidebar-wa-link:hover {
       background: #1eb855;
-      transform: scale(1.02);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
     }
 
     /* =========================================================================
@@ -1175,38 +1303,50 @@
   <aside class="showroom-sidebar" id="showroom-sidebar" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Collections and Categories">
     <div class="showroom-sidebar-header">
       <div class="showroom-sidebar-brand-block">
-        <span class="showroom-sidebar-eyebrow">Madinma Haven</span>
+        <span class="showroom-sidebar-eyebrow">
+          <span class="boutique-dot"></span>
+          Madinma Haven &bull; Haute Parfumerie
+        </span>
         <h3 class="showroom-sidebar-title">Categories</h3>
       </div>
       <button type="button" class="showroom-sidebar-close" id="showroom-sidebar-close" aria-label="Close Categories Sidebar">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
     </div>
 
-    <!-- Category filter search inside drawer -->
-    <div class="showroom-sidebar-search">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-      </svg>
-      <input type="text" id="sidebar-cat-search" placeholder="Filter categories..." autocomplete="off" />
+    <!-- Quick search within categories -->
+    <div class="showroom-sidebar-search-wrap">
+      <div class="showroom-sidebar-search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="sidebar-cat-search" placeholder="Search departments and categories..." autocomplete="off" />
+      </div>
     </div>
 
-    <!-- The categories list -->
+    <!-- The categories list with departments -->
     <nav class="showroom-sidebar-menu" id="showroom-sidebar-cats" role="tablist">
-      <!-- Dynamically generated category buttons -->
+      <!-- Dynamically generated department sections and cards -->
     </nav>
 
     <div class="showroom-sidebar-footer">
       <div class="sidebar-footer-guarantee">
-        <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#10b981;"></span>
-        100% Genuine Designer Fragrances
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <span>100% Authentic Original Batch &bull; Doorstep Delivery</span>
       </div>
       <a href="order.html" class="sidebar-wa-link">
-        <span>WhatsApp Concierge</span>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+          <span>WhatsApp VIP Desk</span>
+        </div>
         <span style="font-weight:700;">+234 903 240 7144 &rarr;</span>
       </a>
     </div>
@@ -1507,9 +1647,29 @@
       function filterSidebarCatList(query) {
         if (!sidebarCatsMount) return;
         const q = query.toLowerCase().trim();
-        sidebarCatsMount.querySelectorAll('.sidebar-cat-btn').forEach((btn) => {
-          const text = btn.getAttribute('data-searchable') || btn.textContent.toLowerCase();
-          btn.style.display = (!q || text.includes(q)) ? 'flex' : 'none';
+
+        sidebarCatsMount.querySelectorAll('.sidebar-cat-card').forEach((btn) => {
+          const text = btn.getAttribute('data-searchable') || '';
+          const match = !q || text.includes(q);
+          btn.style.display = match ? 'flex' : 'none';
+        });
+
+        // Hide department headers if no category cards inside are visible
+        sidebarCatsMount.querySelectorAll('.sidebar-department-header').forEach((hdr) => {
+          if (!q) {
+            hdr.style.display = 'flex';
+          } else {
+            let next = hdr.nextElementSibling;
+            let hasVisible = false;
+            while (next && !next.classList.contains('sidebar-department-header')) {
+              if (next.style.display !== 'none') {
+                hasVisible = true;
+                break;
+              }
+              next = next.nextElementSibling;
+            }
+            hdr.style.display = hasVisible ? 'flex' : 'none';
+          }
         });
       }
 
@@ -1519,43 +1679,80 @@
         });
       }
 
-      // 1. Render Category Items inside Sidebar
+      // 1. Render Luxury Departmental Category Cards inside Sidebar
       function renderCategoryPills() {
         const allProducts = MadinmaCatalog.getAll();
         const rawCategories = MadinmaCatalog.getCategories();
+
+        const categoryMetadata = {
+          'All': { icon: '✨', title: 'All Collections', subtitle: 'Explore Entire Curated Boutique', dept: 'FEATURED' },
+          'Perfumes': { icon: '💎', title: 'Designer Perfumes', subtitle: 'Eau de Parfum & Extraits', dept: 'HAUTE PARFUMERIE' },
+          'Body mist': { icon: '🌸', title: 'Body Mists & Splashes', subtitle: 'All-Day Radiant Scent Splashes', dept: 'HAUTE PARFUMERIE' },
+          'Deodorant': { icon: '🧴', title: 'Luxury Deodorants', subtitle: '24H Antiperspirant Sprays', dept: 'HAUTE PARFUMERIE' },
+          'Roll-ons': { icon: '🌿', title: 'Concentrated Fragrance Oils', subtitle: 'Pure Sillage Oil Roll-ons', dept: 'HAUTE PARFUMERIE' },
+          'Moisturizer': { icon: '💧', title: 'Moisturizers & Lotions', subtitle: 'Velvet Nourishment & Glow', dept: 'SKIN & BODY CARE' },
+          'Body scrubs & polishes': { icon: '✨', title: 'Scrubs & Polishes', subtitle: 'Exfoliation & Silky Skin', dept: 'SKIN & BODY CARE' },
+          'Soap': { icon: '🫧', title: 'Artisanal Bath Soaps', subtitle: 'Botanical Cleansing Bars', dept: 'SKIN & BODY CARE' },
+          'After shave': { icon: '🪒', title: 'After Shave Elixirs', subtitle: 'Soothing Post-Shave Care', dept: 'SKIN & BODY CARE' },
+          'Antiseptic': { icon: '🛡️', title: 'Antiseptic & Hygiene', subtitle: 'Purifying Skin Essentials', dept: 'SKIN & BODY CARE' },
+          'Lip care': { icon: '💄', title: 'Lip Care & Balms', subtitle: 'Deep Hydrating Treatment', dept: 'SKIN & BODY CARE' },
+          'Luxury bags': { icon: '👜', title: 'Designer Bags', subtitle: 'Signature Handbags & Clutches', dept: 'HAUTE ACCENTS' },
+          'Jewelry & Accessories': { icon: '👑', title: 'Jewelry & Gifts', subtitle: 'Bespoke Accents & Keepsakes', dept: 'HAUTE ACCENTS' },
+          'Luxury Shoes': { icon: '👠', title: 'Luxury Footwear', subtitle: 'Handcrafted Heels & Shoes', dept: 'HAUTE ACCENTS' },
+        };
+
+        const deptOrder = ['FEATURED', 'HAUTE PARFUMERIE', 'SKIN & BODY CARE', 'HAUTE ACCENTS', 'MORE COLLECTIONS'];
         const categories = ['All', ...rawCategories];
 
-        if (navCatCount) {
-          navCatCount.textContent = rawCategories.length;
-        }
-
-        if (activeCatLabel) {
-          activeCatLabel.textContent = currentCategory === 'All' ? 'All Collections' : currentCategory;
-        }
+        const depts = {};
+        categories.forEach((cat) => {
+          const meta = categoryMetadata[cat] || {
+            icon: '✨',
+            title: cat,
+            subtitle: 'Curated Boutique Selection',
+            dept: 'MORE COLLECTIONS'
+          };
+          if (!depts[meta.dept]) depts[meta.dept] = [];
+          depts[meta.dept].push({ cat, meta });
+        });
 
         if (sidebarCatsMount) {
-          sidebarCatsMount.innerHTML = categories.map((cat) => {
-            const count = cat === 'All'
-              ? allProducts.length
-              : allProducts.filter(p => (p.category || '').toLowerCase() === cat.toLowerCase()).length;
-            const isActive = cat.toLowerCase() === currentCategory.toLowerCase();
+          let html = '';
+          deptOrder.forEach((deptName) => {
+            if (!depts[deptName] || !depts[deptName].length) return;
+            html += `<div class="sidebar-department-header" data-dept="${deptName}">${deptName}</div>`;
+            depts[deptName].forEach(({ cat, meta }) => {
+              const count = cat === 'All'
+                ? allProducts.length
+                : allProducts.filter(p => (p.category || '').toLowerCase() === cat.toLowerCase()).length;
+              const isActive = cat.toLowerCase() === currentCategory.toLowerCase();
 
-            return `
-              <button 
-                type="button" 
-                class="sidebar-cat-btn ${isActive ? 'active' : ''}" 
-                data-category="${encodeURIComponent(cat)}"
-                data-searchable="${cat.toLowerCase()}"
-                role="tab"
-                aria-selected="${isActive ? 'true' : 'false'}"
-              >
-                <span>${cat === 'All' ? '✨ All Collections' : cat}</span>
-                <span class="sidebar-cat-count">${count}</span>
-              </button>
-            `;
-          }).join('');
+              html += `
+                <button 
+                  type="button" 
+                  class="sidebar-cat-card ${isActive ? 'active' : ''}" 
+                  data-category="${encodeURIComponent(cat)}"
+                  data-searchable="${cat.toLowerCase()} ${meta.title.toLowerCase()} ${meta.subtitle.toLowerCase()} ${deptName.toLowerCase()}"
+                  role="tab"
+                  aria-selected="${isActive ? 'true' : 'false'}"
+                >
+                  <div class="sidebar-cat-icon-box">${meta.icon}</div>
+                  <div class="sidebar-cat-text">
+                    <div class="sidebar-cat-title">${meta.title}</div>
+                    <div class="sidebar-cat-subtitle">${meta.subtitle}</div>
+                  </div>
+                  <div class="sidebar-cat-meta">
+                    <span class="sidebar-cat-count">${count}</span>
+                    <span class="sidebar-cat-arrow">&rsaquo;</span>
+                  </div>
+                </button>
+              `;
+            });
+          });
 
-          sidebarCatsMount.querySelectorAll('.sidebar-cat-btn').forEach((btn) => {
+          sidebarCatsMount.innerHTML = html;
+
+          sidebarCatsMount.querySelectorAll('.sidebar-cat-card').forEach((btn) => {
             btn.addEventListener('click', () => {
               currentCategory = decodeURIComponent(btn.getAttribute('data-category'));
               renderCategoryPills();
