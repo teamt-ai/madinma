@@ -268,21 +268,20 @@ img {
   transform: translateY(-1px);
 }
 
-/* Local Navigation Mobile Hamburger Menu Trigger - HIDDEN ON DESKTOP */
+/* Local Navigation Mobile Hamburger Menu Trigger - HIDDEN ON DESKTOP, NO CIRCLE */
 .localnav-trigger {
   display: none !important;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   padding: 0;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 50%;
+  background: transparent;
+  border: none;
   color: #1d1d1f;
   cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
   flex-shrink: 0;
 }
 
@@ -293,10 +292,9 @@ img {
 }
 
 .localnav-trigger:hover {
-  background: #f5f5f7;
-  border-color: rgba(0, 113, 227, 0.35);
+  background: transparent;
   color: #0071e3;
-  transform: scale(1.05);
+  opacity: 0.75;
 }
 
 .localnav-mobile-dropdown {

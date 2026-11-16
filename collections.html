@@ -10,7 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
   
   <!-- Apple Vision Pro Design System Stylesheet -->
-  <link rel="stylesheet" href="assets/css/style.css?v=136" />
+  <link rel="stylesheet" href="assets/css/style.css?v=137" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -84,29 +84,27 @@
       flex-shrink: 0;
     }
 
-    /* CATEGORY / MENU SIDEBAR TRIGGER BUTTONS */
+    /* CATEGORY / MENU SIDEBAR TRIGGER BUTTONS (NO CIRCLE, NATURAL FLOW) */
     .showroom-sidebar-trigger {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       padding: 0;
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.12);
-      border-radius: 50%;
+      background: transparent;
+      border: none;
       color: #1d1d1f;
       cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: none;
+      transition: color 0.2s ease, opacity 0.2s ease;
       flex-shrink: 0;
     }
 
     .showroom-sidebar-trigger:hover {
-      background: #f5f5f7;
-      border-color: rgba(0, 113, 227, 0.35);
+      background: transparent;
       color: #0071e3;
-      transform: scale(1.05);
+      opacity: 0.75;
     }
 
     .showroom-sidebar-trigger svg {
@@ -118,14 +116,11 @@
       color: #0071e3;
     }
 
-    /* Desktop Trigger: Positioned at the far left edge of the header */
+    /* Desktop Trigger: In-flow before brand, never overlaps */
     .showroom-trigger-desktop {
-      position: absolute !important;
-      left: 20px !important;
-      top: 50% !important;
-      transform: translateY(-50%) !important;
       display: inline-flex !important;
-      z-index: 10;
+      position: static !important;
+      transform: none !important;
     }
 
     /* Mobile Trigger: Hidden on Desktop */
