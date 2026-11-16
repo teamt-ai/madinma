@@ -118,9 +118,14 @@
       color: #0071e3;
     }
 
-    /* Desktop Trigger: Visible on Desktop on the Left next to Brand */
+    /* Desktop Trigger: Positioned at the far left edge of the header */
     .showroom-trigger-desktop {
+      position: absolute !important;
+      left: 20px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
       display: inline-flex !important;
+      z-index: 10;
     }
 
     /* Mobile Trigger: Hidden on Desktop */
