@@ -81,9 +81,9 @@
       flex-shrink: 0;
     }
 
-    /* TOP LEFT CATEGORY SIDEBAR TRIGGER (JUST THE ICON) */
+    /* TOP RIGHT CATEGORY/MENU SIDEBAR TRIGGER (HAMBURGER ON MOBILE) */
     .showroom-sidebar-trigger {
-      display: inline-flex;
+      display: none;
       align-items: center;
       justify-content: center;
       width: 32px;
@@ -277,21 +277,25 @@
       .showroom-brand {
         font-size: 1.15rem;
       }
-      .showroom-sidebar-trigger {
-        width: 32px;
-        height: 32px;
-      }
-      /* Hide top text links on mobile to prevent clipping/overlapping; access via sidebar & footer */
+      /* Hide top text links on mobile to prevent clipping/overlapping; access via sidebar drawer */
       .showroom-nav-links {
         display: none !important;
       }
       .showroom-nav-right {
         order: 2;
-        gap: 8px;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
       }
       .showroom-nav-btn {
         padding: 5px 12px;
         font-size: 0.74rem;
+      }
+      /* Hamburger menu at top right immediately after Order Now */
+      .showroom-sidebar-trigger {
+        display: inline-flex !important;
+        width: 32px;
+        height: 32px;
       }
       /* Full width search pill on mobile row 2 */
       .showroom-nav-center {
@@ -526,6 +530,47 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    /* Sidebar Mobile Quick Navigation Links */
+    .showroom-sidebar-nav-links {
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    }
+
+    .sidebar-page-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      color: #1d1d1f;
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: background 0.18s ease;
+    }
+
+    .sidebar-page-link:hover {
+      background: #f2f2f7;
+    }
+
+    .sidebar-page-link.active {
+      background: rgba(0, 113, 227, 0.08);
+      color: #0071e3;
+      font-weight: 600;
+    }
+
+    .showroom-sidebar-label {
+      padding: 14px 16px 4px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #86868b;
     }
 
     /* =========================================================================
@@ -791,7 +836,7 @@
 
   <aside class="showroom-sidebar" id="showroom-sidebar" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Collections and Categories">
     <div class="showroom-sidebar-header">
-      <h3 class="showroom-sidebar-title">Categories</h3>
+      <h3 class="showroom-sidebar-title">Menu & Categories</h3>
       <button type="button" class="showroom-sidebar-close" id="showroom-sidebar-close" aria-label="Close Categories Sidebar">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -799,6 +844,24 @@
         </svg>
       </button>
     </div>
+
+    <!-- Quick Page Navigation on Mobile -->
+    <div class="showroom-sidebar-nav-links">
+      <a href="index.html" class="sidebar-page-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Home</span>
+      </a>
+      <a href="collections.html" class="sidebar-page-link active">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+        <span>Collections</span>
+      </a>
+      <a href="order.html" class="sidebar-page-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        <span>WhatsApp Order Desk</span>
+      </a>
+    </div>
+
+    <div class="showroom-sidebar-label">Categories</div>
 
     <!-- Clean categories list -->
     <nav class="showroom-sidebar-menu" id="showroom-sidebar-cats" role="tablist">
@@ -812,15 +875,6 @@
   <nav class="showroom-nav">
     <div class="showroom-nav-inner">
       <div class="showroom-nav-left">
-        <!-- TOP LEFT CATEGORY SIDEBAR TRIGGER (JUST THE ICON) -->
-        <button type="button" class="showroom-sidebar-trigger" id="showroom-sidebar-trigger" aria-label="Open Categories Sidebar" title="Browse Collections & Categories">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
-
         <a href="index.html" class="showroom-brand">
           <span>Madinma Haven</span>
         </a>
@@ -843,7 +897,7 @@
         </div>
       </div>
 
-      <!-- RIGHT NAVIGATION LINKS & ORDER NOW BUTTON -->
+      <!-- RIGHT NAVIGATION LINKS, ORDER NOW BUTTON & HAMBURGER MENU -->
       <div class="showroom-nav-right">
         <div class="showroom-nav-links">
           <a href="index.html" class="showroom-nav-link">Home</a>
@@ -854,6 +908,15 @@
         <a href="order.html" class="showroom-nav-btn">
           Order Now
         </a>
+
+        <!-- HAMBURGER MENU: AT TOP RIGHT IMMEDIATELY AFTER ORDER NOW BUTTON -->
+        <button type="button" class="showroom-sidebar-trigger" id="showroom-sidebar-trigger" aria-label="Open Navigation & Categories" title="Menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
       </div>
     </div>
   </nav>
