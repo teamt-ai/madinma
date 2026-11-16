@@ -268,9 +268,9 @@ img {
   transform: translateY(-1px);
 }
 
-/* Local Navigation Mobile Hamburger Menu Trigger */
+/* Local Navigation Mobile Hamburger Menu Trigger - HIDDEN ON DESKTOP */
 .localnav-trigger {
-  display: inline-flex;
+  display: none !important;
   align-items: center;
   justify-content: center;
   width: 32px;
@@ -284,6 +284,12 @@ img {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   flex-shrink: 0;
+}
+
+@media (max-width: 860px) {
+  .localnav-trigger {
+    display: inline-flex !important;
+  }
 }
 
 .localnav-trigger:hover {
