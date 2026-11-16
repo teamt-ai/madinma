@@ -84,9 +84,9 @@
       flex-shrink: 0;
     }
 
-    /* TOP RIGHT CATEGORY/MENU SIDEBAR TRIGGER (HAMBURGER MENU - HIDDEN ON DESKTOP) */
+    /* CATEGORY / MENU SIDEBAR TRIGGER BUTTONS */
     .showroom-sidebar-trigger {
-      display: none !important;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       width: 32px;
@@ -116,6 +116,16 @@
 
     .showroom-sidebar-trigger:hover svg {
       color: #0071e3;
+    }
+
+    /* Desktop Trigger: Visible on Desktop on the Left next to Brand */
+    .showroom-trigger-desktop {
+      display: inline-flex !important;
+    }
+
+    /* Mobile Trigger: Hidden on Desktop */
+    .showroom-trigger-mobile {
+      display: none !important;
     }
 
     .showroom-brand {
@@ -294,8 +304,12 @@
         padding: 5px 12px;
         font-size: 0.74rem;
       }
-      /* Hamburger menu at top right immediately after Order Now */
-      .showroom-sidebar-trigger {
+      /* Desktop trigger on left is hidden on mobile */
+      .showroom-trigger-desktop {
+        display: none !important;
+      }
+      /* Hamburger menu at top right immediately after Order Now (mobile only) */
+      .showroom-trigger-mobile {
         display: inline-flex !important;
         width: 32px;
         height: 32px;
@@ -878,6 +892,15 @@
   <nav class="showroom-nav">
     <div class="showroom-nav-inner">
       <div class="showroom-nav-left">
+        <!-- TOP LEFT CATEGORY SIDEBAR TRIGGER (DESKTOP) -->
+        <button type="button" class="showroom-sidebar-trigger showroom-trigger-desktop" id="showroom-sidebar-trigger-desktop" aria-label="Open Categories Sidebar" title="Browse Collections & Categories">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
         <a href="index.html" class="showroom-brand">
           <span>Madinma Haven</span>
         </a>
@@ -912,8 +935,8 @@
           Order Now
         </a>
 
-        <!-- HAMBURGER MENU: AT TOP RIGHT IMMEDIATELY AFTER ORDER NOW BUTTON -->
-        <button type="button" class="showroom-sidebar-trigger" id="showroom-sidebar-trigger" aria-label="Open Navigation & Categories" title="Menu">
+        <!-- MOBILE HAMBURGER MENU: AT TOP RIGHT IMMEDIATELY AFTER ORDER NOW BUTTON -->
+        <button type="button" class="showroom-sidebar-trigger showroom-trigger-mobile" id="showroom-sidebar-trigger-mobile" aria-label="Open Navigation & Categories" title="Menu">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -984,7 +1007,9 @@
         document.body.style.overflow = '';
       }
 
-      if (sidebarTrigger) sidebarTrigger.addEventListener('click', openSidebar);
+      document.querySelectorAll('.showroom-sidebar-trigger').forEach(btn => {
+        btn.addEventListener('click', openSidebar);
+      });
       if (toolbarCatFilterBtn) toolbarCatFilterBtn.addEventListener('click', openSidebar);
       if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
       if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebar);
