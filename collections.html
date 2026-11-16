@@ -10,7 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
   
   <!-- Apple Vision Pro Design System Stylesheet -->
-  <link rel="stylesheet" href="assets/css/style.css?v=137" />
+  <link rel="stylesheet" href="assets/css/style.css?v=138" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -331,6 +331,19 @@
         font-size: 13px;
         padding: 0 14px 0 38px;
       }
+      /* On mobile, show quick page links in sidebar drawer */
+      .sidebar-title-desktop {
+        display: none !important;
+      }
+      .sidebar-title-mobile {
+        display: inline !important;
+      }
+      .showroom-sidebar-nav-links {
+        display: flex !important;
+      }
+      .showroom-sidebar-label {
+        display: block !important;
+      }
     }
 
     @media (min-width: 769px) and (max-width: 1024px) {
@@ -549,10 +562,16 @@
       text-overflow: ellipsis;
     }
 
-    /* Sidebar Mobile Quick Navigation Links */
+    /* Sidebar Mobile Quick Navigation Links - hidden on desktop since header links exist */
+    .sidebar-title-desktop {
+      display: inline;
+    }
+    .sidebar-title-mobile {
+      display: none;
+    }
     .showroom-sidebar-nav-links {
+      display: none;
       padding: 10px 14px;
-      display: flex;
       flex-direction: column;
       gap: 4px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.07);
@@ -582,6 +601,7 @@
     }
 
     .showroom-sidebar-label {
+      display: none;
       padding: 14px 16px 4px;
       font-size: 10.5px;
       font-weight: 700;
@@ -853,7 +873,10 @@
 
   <aside class="showroom-sidebar" id="showroom-sidebar" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Collections and Categories">
     <div class="showroom-sidebar-header">
-      <h3 class="showroom-sidebar-title">Menu & Categories</h3>
+      <h3 class="showroom-sidebar-title">
+        <span class="sidebar-title-desktop">Categories</span>
+        <span class="sidebar-title-mobile">Menu & Categories</span>
+      </h3>
       <button type="button" class="showroom-sidebar-close" id="showroom-sidebar-close" aria-label="Close Categories Sidebar">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
