@@ -258,26 +258,136 @@
       transform: translateY(-1px);
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 768px) {
       .showroom-nav {
-        height: auto;
-        padding: 8px 0;
+        height: auto !important;
+        min-height: 52px;
+        padding: 8px 0 10px !important;
       }
       .showroom-nav-inner {
         flex-wrap: wrap;
-        gap: 10px;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 0 16px;
       }
-      .showroom-nav-center {
-        order: 3;
-        max-width: 100%;
-        margin: 4px 0 0;
-        width: 100%;
+      .showroom-nav-left {
+        order: 1;
+        gap: 8px;
+      }
+      .showroom-brand {
+        font-size: 1.15rem;
+      }
+      .showroom-sidebar-trigger {
+        width: 32px;
+        height: 32px;
+      }
+      /* Hide top text links on mobile to prevent clipping/overlapping; access via sidebar & footer */
+      .showroom-nav-links {
+        display: none !important;
       }
       .showroom-nav-right {
+        order: 2;
+        gap: 8px;
+      }
+      .showroom-nav-btn {
+        padding: 5px 12px;
+        font-size: 0.74rem;
+      }
+      /* Full width search pill on mobile row 2 */
+      .showroom-nav-center {
+        order: 3;
+        flex: 0 0 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 6px 0 0 !important;
+      }
+      .showroom-search-box {
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+      .showroom-search-input {
+        height: 36px;
+        font-size: 13px;
+        padding: 0 14px 0 38px;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .showroom-nav-inner {
+        padding: 0 1.25rem;
         gap: 12px;
       }
+      .showroom-nav-center {
+        max-width: 300px;
+        margin: 0 10px;
+      }
+      .showroom-nav-right {
+        gap: 1rem;
+      }
       .showroom-nav-links {
-        gap: 12px;
+        gap: 1rem;
+      }
+      .shelf-products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 24px 20px;
+      }
+    }
+
+    /* Mobile Shelves & Product Cards Responsive (Clean 2-Column Grid) */
+    @media (max-width: 640px) {
+      .showroom-shelves-container {
+        padding: 16px 12px 60px;
+      }
+      .glass-shelf-tier {
+        margin-bottom: 40px;
+      }
+      .shelf-lighting-bar {
+        top: -12px;
+        height: 25px;
+      }
+      .shelf-products-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px 10px !important;
+        padding-bottom: 12px !important;
+      }
+      .shelf-bottle-wrap {
+        height: 160px;
+        border-radius: 14px;
+      }
+      .shelf-bottle-img {
+        max-height: 140px;
+        max-width: 86%;
+      }
+      .shelf-item-plaque {
+        padding: 8px 8px;
+        min-height: 56px;
+      }
+      .shelf-item-category,
+      .plaque-desc-label {
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        margin-bottom: 2px;
+      }
+      .shelf-item-title {
+        font-size: 11px;
+        margin-bottom: 2px;
+      }
+      .shelf-item-price {
+        font-size: 12.5px;
+      }
+      .plaque-desc-text {
+        font-size: 9.5px;
+        line-height: 1.25;
+        -webkit-line-clamp: 3;
+      }
+      .shelf-glass-surface {
+        height: 14px;
+      }
+      .shelf-glass-edge {
+        height: 6px;
+      }
+      .shelf-glass-shadow {
+        height: 18px;
       }
     }
 
@@ -899,8 +1009,8 @@
           return;
         }
 
-        // Group into tiers of 4 products per glass shelf
-        const ITEMS_PER_TIER = 4;
+        // Group into tiers (2 products per shelf on mobile, 4 on desktop)
+        const ITEMS_PER_TIER = window.innerWidth <= 640 ? 2 : 4;
         let shelvesHtml = '';
 
         for (let i = 0; i < currentFilteredProducts.length; i += ITEMS_PER_TIER) {
@@ -1003,6 +1113,19 @@
       // Initial Mount (Instant from cache)
       renderCategoryPills();
       renderGlassShelves();
+
+      // Responsive resize handler for orientation change
+      let resizeTimer = null;
+      let lastWidth = window.innerWidth;
+      window.addEventListener('resize', () => {
+        if (Math.abs(window.innerWidth - lastWidth) > 60) {
+          lastWidth = window.innerWidth;
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => {
+            renderGlassShelves();
+          }, 150);
+        }
+      });
 
       // Cloud Synchronization from Supabase
       if (typeof MadinmaCatalog.syncFromCloud === 'function') {
