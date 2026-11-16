@@ -10,7 +10,10 @@
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
   
   <!-- Apple Vision Pro Design System Stylesheet -->
-  <link rel="stylesheet" href="assets/css/style.css?v=133" />
+  <link rel="stylesheet" href="assets/css/style.css?v=136" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
 
   <style>
     /* =========================================================================
@@ -81,9 +84,9 @@
       flex-shrink: 0;
     }
 
-    /* TOP RIGHT CATEGORY/MENU SIDEBAR TRIGGER (HAMBURGER ON MOBILE) */
+    /* TOP RIGHT CATEGORY/MENU SIDEBAR TRIGGER (HAMBURGER MENU) */
     .showroom-sidebar-trigger {
-      display: none;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       width: 32px;
@@ -258,7 +261,7 @@
       transform: translateY(-1px);
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       .showroom-nav {
         height: auto !important;
         min-height: 52px;

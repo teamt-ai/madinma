@@ -10,14 +10,17 @@
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
 
   <!-- Apple Stylesheet -->
-  <link rel="stylesheet" href="assets/css/style.css?v=130" />
+  <link rel="stylesheet" href="assets/css/style.css?v=136" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
 </head>
 <body>
 
   <!-- =======================================================================
        2. APPLE VISION PRO STICKY LOCAL NAV
        ======================================================================= -->
-  <nav class="apple-localnav" id="localnav">
+  <nav class="apple-localnav" id="localnav" style="position: relative;">
     <div class="localnav-inner">
       <div class="localnav-title">
         <a href="#overview">Madinma Haven</a>
@@ -33,7 +36,23 @@
         <a href="order.html" class="localnav-btn-buy">
           Order Now
         </a>
+
+        <!-- Hamburger Menu: At top right immediately after Order Now button -->
+        <button type="button" class="localnav-trigger" id="localnav-trigger" aria-label="Open Navigation Menu" title="Menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
       </div>
+    </div>
+
+    <!-- Mobile Navigation Dropdown -->
+    <div class="localnav-mobile-dropdown" id="localnav-mobile-dropdown">
+      <a href="#overview" class="localnav-mobile-item active">Home</a>
+      <a href="collections.html" class="localnav-mobile-item">Collections</a>
+      <a href="order.html" class="localnav-mobile-item">WhatsApp Order Desk</a>
     </div>
   </nav>
 
@@ -699,6 +718,19 @@
   </dialog>
 
   <!-- Main JavaScript File -->
-  <script src="assets/js/app.js?v=128"></script>
+  <script src="assets/js/app.js?v=136"></script>
+  <script>
+    const navTrigger = document.getElementById('localnav-trigger');
+    const navDropdown = document.getElementById('localnav-mobile-dropdown');
+    if (navTrigger && navDropdown) {
+      navTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navDropdown.classList.toggle('active');
+      });
+      document.addEventListener('click', () => {
+        navDropdown.classList.remove('active');
+      });
+    }
+  </script>
 </body>
 </html>
