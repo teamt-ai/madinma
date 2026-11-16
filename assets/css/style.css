@@ -2355,7 +2355,6 @@ img {
 
 /* Ensure foreground content floats over background with frosted glass */
 .minimal-msg-main,
-.apple-localnav,
 .apple-vision-footer {
   position: relative;
   z-index: 1;
