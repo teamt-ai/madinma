@@ -418,10 +418,85 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
+  // DYNAMIC CAROUSEL CATALOG SYNCHRONIZER
+  // Automatically syncs each category box with the first three product images
+  // from that category collection in MadinmaCatalog
+  // =========================================================================
+  function syncCarouselWithCatalog() {
+    if (!window.MadinmaCatalog || typeof window.MadinmaCatalog.getAll !== 'function') return;
+    const allProducts = window.MadinmaCatalog.getAll();
+    if (!allProducts || !allProducts.length) return;
+
+    const items = document.querySelectorAll('.apple-vision-item');
+    if (!items.length) return;
+
+    items.forEach((item) => {
+      const titleEl = item.querySelector('.apple-vision-overlay-title');
+      if (!titleEl) return;
+      const catName = titleEl.textContent.trim().toLowerCase();
+
+      // Find first 3 products in this category collection
+      const catProducts = allProducts.filter(p => (p.category || '').toLowerCase().trim() === catName);
+      const top3 = catProducts.slice(0, 3);
+      if (!top3.length) return;
+
+      const slidesContainer = item.querySelector('.apple-vision-slides');
+      const dotsContainer = item.querySelector('.apple-vision-dots');
+
+      if (slidesContainer) {
+        const existingImgs = Array.from(slidesContainer.querySelectorAll('.apple-vision-img'));
+        const activeIdx = existingImgs.findIndex(img => img.classList.contains('active'));
+        const targetActiveIdx = (activeIdx >= 0 && activeIdx < top3.length) ? activeIdx : 0;
+
+        slidesContainer.innerHTML = '';
+        top3.forEach((prod, idx) => {
+          const img = document.createElement('img');
+          img.className = `apple-vision-img ${idx === targetActiveIdx ? 'active' : ''}`;
+          img.src = prod.image;
+          img.alt = prod.title || `${catName} item ${idx + 1}`;
+          img.loading = 'eager';
+          img.draggable = false;
+          img.onerror = function() {
+            this.onerror = null;
+            this.src = 'assets/images/fragrances-1.jpg?v=11';
+          };
+          slidesContainer.appendChild(img);
+        });
+
+        if (dotsContainer) {
+          dotsContainer.innerHTML = '';
+          top3.forEach((_, idx) => {
+            const dot = document.createElement('span');
+            dot.className = `apple-vision-dot ${idx === targetActiveIdx ? 'active' : ''}`;
+            dotsContainer.appendChild(dot);
+          });
+        }
+      }
+    });
+  }
+
+  // Hook catalog sync events
+  window.addEventListener('madinma-catalog-updated', syncCarouselWithCatalog);
+  window.addEventListener('madinma-catalog-synced', syncCarouselWithCatalog);
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'madinma_catalog_v1') syncCarouselWithCatalog();
+  });
+
+  // Run initial sync from local catalog cache
+  syncCarouselWithCatalog();
+
+  // Background Cloud Synchronization from Supabase
+  if (window.MadinmaCatalog && typeof window.MadinmaCatalog.syncFromCloud === 'function') {
+    window.MadinmaCatalog.syncFromCloud().then(() => {
+      syncCarouselWithCatalog();
+    }).catch(err => console.warn('Supabase cloud sync background warning on homepage:', err));
+  }
+
+  // =========================================================================
   // 4. ALTERNATING DIRECTIONAL IMAGE SLIDESHOW
   // Box 1, 3, 5, 7...: Next slides in from RIGHT -> outgoing slides out to LEFT
   // Box 2, 4, 6, 8...: Next slides in from LEFT  -> outgoing slides out to RIGHT
-    // =========================================================================
+  // =========================================================================
   // 4. ACTIVE CATEGORY 5-SECOND IMAGE CYCLER & AUTO CUBE ROTATION
   // Exactly 5 seconds per image: Image 1 (5s) -> Image 2 (5s) -> Image 3 (5s) -> Next Category
   // =========================================================================
