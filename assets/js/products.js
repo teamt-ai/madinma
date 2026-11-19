@@ -503,6 +503,7 @@ window.MadinmaCatalog = {
   },
 
   // Get all products (instant read from localStorage or defaults)
+  // NEVER pushes default products to Supabase on read!
   getAll() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -515,17 +516,17 @@ window.MadinmaCatalog = {
     } catch (e) {
       console.warn("Could not load from localStorage, using defaults", e);
     }
-    this.saveAll(DEFAULT_PRODUCTS);
     return DEFAULT_PRODUCTS;
   },
 
-  // Save all products: updates localStorage and background syncs to Supabase Cloud
-  saveAll(products) {
+  // Save all products: updates localStorage and optionally pushes to Supabase Cloud
+  saveAll(products, pushCloud = false) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
       window.dispatchEvent(new CustomEvent("madinma-catalog-updated", { detail: products }));
-      // Push to Supabase Cloud
-      this.pushToCloud(products).catch(err => console.warn("Background cloud push error:", err));
+      if (pushCloud) {
+        this.pushToCloud(products).catch(err => console.warn("Background cloud push error:", err));
+      }
       return true;
     } catch (e) {
       console.error("Failed to save to localStorage", e);
@@ -533,8 +534,11 @@ window.MadinmaCatalog = {
     }
   },
 
-  // Add a new product
+  // Add a new product (always syncs latest cloud data first, then pushes update)
   async add(productData) {
+    try {
+      await this.syncFromCloud();
+    } catch (e) {}
     const products = this.getAll();
     const newProduct = {
       id: "prod-" + Date.now() + "-" + Math.random().toString(36).substr(2, 5),
@@ -547,19 +551,30 @@ window.MadinmaCatalog = {
       createdAt: new Date().toISOString()
     };
     products.unshift(newProduct);
-    this.saveAll(products);
-    await this.pushToCloud(products);
+    this.saveAll(products, false);
+    const pushed = await this.pushToCloud(products);
+    if (!pushed) {
+      console.warn("Notice: Saved locally, retrying cloud push in background...");
+      this.pushToCloud(products).catch(() => {});
+    }
     return newProduct;
   },
 
   // Update existing product
   async update(id, updatedFields) {
+    try {
+      await this.syncFromCloud();
+    } catch (e) {}
     const products = this.getAll();
     const idx = products.findIndex((p) => p.id === id);
     if (idx !== -1) {
       products[idx] = { ...products[idx], ...updatedFields };
-      this.saveAll(products);
-      await this.pushToCloud(products);
+      this.saveAll(products, false);
+      const pushed = await this.pushToCloud(products);
+      if (!pushed) {
+        console.warn("Notice: Saved locally, retrying cloud push in background...");
+        this.pushToCloud(products).catch(() => {});
+      }
       return products[idx];
     }
     return null;
@@ -567,16 +582,19 @@ window.MadinmaCatalog = {
 
   // Delete product
   async delete(id) {
+    try {
+      await this.syncFromCloud();
+    } catch (e) {}
     let products = this.getAll();
     products = products.filter((p) => p.id !== id);
-    this.saveAll(products);
-    await this.pushToCloud(products);
-    return true;
+    this.saveAll(products, false);
+    const pushed = await this.pushToCloud(products);
+    return pushed;
   },
 
   // Reset to default factory products
   async resetToDefaults() {
-    this.saveAll(DEFAULT_PRODUCTS);
+    this.saveAll(DEFAULT_PRODUCTS, false);
     await this.pushToCloud(DEFAULT_PRODUCTS);
     return DEFAULT_PRODUCTS;
   },
