@@ -10,7 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
   
   <!-- Apple Vision Pro Design System Stylesheet -->
-  <link rel="stylesheet" href="assets/css/style.css?v=143" />
+  <link rel="stylesheet" href="assets/css/style.css?v=144" />
 </head>
 <body class="admin-body">
 
@@ -82,12 +82,9 @@
         <div class="admin-stat-num" id="stat-total-instock">0</div>
         <div class="admin-stat-label">Active &bull; In Stock</div>
       </div>
-      <div class="admin-stat-card" style="border: 1px solid rgba(16,185,129,0.3); background: rgba(16,185,129,0.04);">
-        <div class="admin-stat-num" id="stat-cloud-status" style="font-size: 19px; color: #10b981;">● Connected</div>
-        <div class="admin-stat-label" style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-          <span>Supabase Storage</span>
-          <button type="button" id="admin-sync-cloud-btn" style="background: none; border: none; color: #0071e3; font-size: 11.5px; font-weight: 600; cursor: pointer; text-decoration: underline;">Sync Cloud</button>
-        </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-num" id="stat-total-outofstock">0</div>
+        <div class="admin-stat-label">Goods Out of Stock</div>
       </div>
     </section>
 
@@ -335,6 +332,7 @@
       const statTotalProds = document.getElementById('stat-total-products');
       const statTotalCats = document.getElementById('stat-total-categories');
       const statTotalStock = document.getElementById('stat-total-instock');
+      const statTotalOutOfStock = document.getElementById('stat-total-outofstock');
       const statCloudStatus = document.getElementById('stat-cloud-status');
       const syncCloudBtn = document.getElementById('admin-sync-cloud-btn');
 
@@ -529,11 +527,16 @@
         const products = MadinmaCatalog.getAll();
         const categories = MadinmaCatalog.getCategories();
         const inStockCount = products.filter(p => p.inStock !== false).length;
+        const outOfStockCount = products.filter(p => p.inStock === false).length;
 
         // Stats
         statTotalProds.textContent = products.length;
         statTotalCats.textContent = categories.length;
         statTotalStock.textContent = inStockCount;
+        if (statTotalOutOfStock) {
+          statTotalOutOfStock.textContent = outOfStockCount;
+          statTotalOutOfStock.style.color = outOfStockCount > 0 ? '#ef4444' : '#1d1d1f';
+        }
 
         // Filter Table
         const query = adminSearchFilter.value.toLowerCase().trim();

@@ -3825,10 +3825,6 @@ img {
     line-height: 1.3 !important;
   }
 
-  #stat-cloud-status {
-    font-size: 15px !important;
-  }
-
   /* Main container & cards on mobile */
   .admin-main {
     padding: 16px 12px 60px !important;
