@@ -10,7 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
   
   <!-- Apple Vision Pro Design System Stylesheet -->
-  <link rel="stylesheet" href="assets/css/style.css?v=142" />
+  <link rel="stylesheet" href="assets/css/style.css?v=143" />
 </head>
 <body class="admin-body">
 
@@ -218,29 +218,6 @@
             <!-- Dynamic product rows -->
           </tbody>
         </table>
-      </div>
-    </section>
-
-    <!-- Section 3: Backup & Recovery Tools -->
-    <section class="admin-card" style="border-top: 3px solid #10b981;">
-      <div class="admin-card-header">
-        <h2 class="admin-card-title">Catalog Backup &amp; Synchronization</h2>
-        <span style="font-size: 13px; color: #6e6e73;">Backup database to JSON &amp; restore</span>
-      </div>
-
-      <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
-        <button type="button" class="admin-icon-btn" id="export-json-btn" style="padding: 10px 18px; font-weight: 600;">
-          &darr; Export Catalog (JSON Backup)
-        </button>
-
-        <label class="admin-icon-btn" style="padding: 10px 18px; font-weight: 600; cursor: pointer;">
-          &uarr; Import Catalog (JSON File)
-          <input type="file" id="import-json-file" accept=".json" style="display: none;" />
-        </label>
-
-        <button type="button" class="admin-icon-btn danger" id="reset-factory-btn" style="padding: 10px 18px;">
-          Reset to Factory Defaults (42 Luxury Products)
-        </button>
       </div>
     </section>
 
@@ -725,56 +702,6 @@
           }
         });
       }
-
-      // Export JSON
-      document.getElementById('export-json-btn').addEventListener('click', () => {
-        const data = MadinmaCatalog.getAll();
-        const jsonStr = JSON.stringify(data, null, 2);
-        const blob = new Blob([jsonStr], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `madinma_catalog_backup_${new Date().toISOString().slice(0,10)}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-      });
-
-      // Import JSON
-      const importInput = document.getElementById('import-json-file');
-      importInput.addEventListener('change', (e) => {
-        const file = e.target.files && e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = async (evt) => {
-          try {
-            const imported = JSON.parse(evt.target.result);
-            if (Array.isArray(imported)) {
-              if (confirm(`Import ${imported.length} products to Supabase Cloud? This will replace current catalog.`)) {
-                MadinmaCatalog.saveAll(imported);
-                await MadinmaCatalog.pushToCloud(imported);
-                populateCategories();
-                renderAdminDashboard();
-                alert(`✅ Successfully imported ${imported.length} products to Supabase!`);
-              }
-            } else {
-              alert("Invalid JSON format. Expected an array of products.");
-            }
-          } catch (err) {
-            alert("Error parsing JSON file: " + err.message);
-          }
-        };
-        reader.readAsText(file);
-      });
-
-      // Reset to Factory
-      document.getElementById('reset-factory-btn').addEventListener('click', async () => {
-        if (confirm("Reset catalog to the factory 42 authentic luxury products on Supabase Cloud? Any custom additions will be cleared.")) {
-          await MadinmaCatalog.resetToDefaults();
-          populateCategories();
-          renderAdminDashboard();
-          alert("✅ Catalog reset to factory defaults on Supabase!");
-        }
-      });
 
       // Initial Load & Background Cloud Sync
       populateCategories();
