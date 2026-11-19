@@ -591,14 +591,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Explicitly initialize slideshow immediately
-  initAppleVisionSlideshow();
-  initMadinmaWiggle();
-  initHeroMottoTyping();
-  if (typeof updateWhatsAppTemplate === "function") { updateWhatsAppTemplate(); }
-  initElevateScrollAnimation();
-  initDirectMessagePage();
-
   // =========================================================================
   // 5. CHAT ON WHATSAPP WITH COLLECTIONS SELECTION MODAL
   // =========================================================================
@@ -653,6 +645,14 @@ document.addEventListener('DOMContentLoaded', () => {
     chatPreviewBox.textContent = message;
     chatSubmitBtn.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
   }
+
+  // Explicitly initialize slideshow immediately
+  initAppleVisionSlideshow();
+  initMadinmaWiggle();
+  initHeroMottoTyping();
+  updateWhatsAppTemplate();
+  initElevateScrollAnimation();
+  initDirectMessagePage();
 
   // Order navigation trigger (Full page order suite)
   window.openWhatsAppTemplateModal = function() {
