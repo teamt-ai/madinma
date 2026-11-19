@@ -3700,6 +3700,179 @@ img {
   background: rgba(255, 255, 255, 0.2);
 }
 
+@media (max-width: 768px) {
+  .admin-header {
+    padding: 12px 14px !important;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(17, 17, 19, 0.96) !important;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .admin-header-inner {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: auto auto !important;
+    gap: 10px 8px !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .admin-header-title {
+    grid-column: 1 / 2 !important;
+    grid-row: 1 / 2 !important;
+    font-size: clamp(13.5px, 4vw, 15px) !important;
+    font-weight: 700 !important;
+    gap: 6px !important;
+    white-space: nowrap !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .admin-header-badge {
+    font-size: 10px !important;
+    padding: 2px 6px !important;
+  }
+
+  .admin-header-actions {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 / 3 !important;
+    display: contents !important;
+  }
+
+  .admin-btn-lock {
+    grid-column: 2 / 3 !important;
+    grid-row: 1 / 2 !important;
+    padding: 5px 12px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    justify-self: end !important;
+    background: rgba(239, 68, 68, 0.14) !important;
+    border: 1px solid rgba(239, 68, 68, 0.32) !important;
+    color: #fca5a5 !important;
+    white-space: nowrap !important;
+  }
+
+  .admin-btn-lock:hover {
+    background: rgba(239, 68, 68, 0.24) !important;
+  }
+
+  .admin-btn-collections {
+    grid-column: 1 / 2 !important;
+    grid-row: 2 / 3 !important;
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    padding: 8px 10px !important;
+    font-size: 12.5px !important;
+    font-weight: 500 !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    white-space: nowrap !important;
+  }
+
+  .admin-btn-storefront {
+    grid-column: 2 / 3 !important;
+    grid-row: 2 / 3 !important;
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    padding: 8px 10px !important;
+    font-size: 12.5px !important;
+    font-weight: 500 !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    white-space: nowrap !important;
+  }
+
+  .desktop-only-word {
+    display: none !important;
+  }
+
+  /* Compact 2x2 Stats Grid on mobile */
+  .admin-stats-row {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .admin-stat-card {
+    padding: 14px 12px !important;
+    border-radius: 14px !important;
+  }
+
+  .admin-stat-num {
+    font-size: 22px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .admin-stat-label {
+    font-size: 11.5px !important;
+    line-height: 1.3 !important;
+  }
+
+  #stat-cloud-status {
+    font-size: 15px !important;
+  }
+
+  /* Main container & cards on mobile */
+  .admin-main {
+    padding: 16px 12px 60px !important;
+  }
+
+  .admin-card {
+    padding: 18px 14px !important;
+    border-radius: 16px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .admin-card-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    margin-bottom: 18px !important;
+    padding-bottom: 12px !important;
+  }
+
+  .admin-card-title {
+    font-size: 17px !important;
+  }
+
+  /* Form & inputs */
+  .admin-upload-zone {
+    padding: 18px 12px !important;
+    border-radius: 12px !important;
+  }
+
+  .admin-upload-icon {
+    width: 28px !important;
+    height: 28px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .admin-upload-text {
+    font-size: 12.5px !important;
+  }
+
+  .admin-upload-subtext {
+    font-size: 11px !important;
+  }
+}
+
 .admin-body {
   background: #fbfbfd;
   min-height: 100vh;
